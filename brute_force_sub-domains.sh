@@ -129,3 +129,73 @@ then
                 echo "File not found"
         fi
 fi
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+#!/bin/bash
+
+echo "Enter the domain name i.e. mega.com"
+read domain
+echo "Enter the file path for brute force"
+read file
+
+
+function lines {
+        echo "****************************************"
+}
+if [ -z "$domain" ] || [ -z "$file" ]
+then
+        if [ -n "$domain" ] && [ -z "$file" ]
+        then
+                lines
+                echo "File path field is empty"
+        elif [ -z "$domain" ] && [ -n "$file" ]
+        then
+                lines
+                echo "Domain name field is empty"
+        elif [ -z "$domain" ] && [ -z "$file" ]
+        then
+                lines
+                echo "Domain name field is empty"
+                echo "File path field is empty"
+        else
+                lines
+        fi
+elif [ -n "$domain" ] && [ -n "$file" ]
+then
+        if [ -e $file ]
+        then
+                if [ -d $file ]
+                then
+                        lines
+                        echo "$file --> its a directory"
+                elif [ -f $file ]
+                then
+                        for sub_domains in $(cat $file)
+                        do
+                                host $sub_domains.$domain &>/dev/null
+                                if [ $? -eq 0 ]
+                                then
+                                        lines
+                                        host $sub_domains.$domain | grep -iw "has address" | awk '{print $1 " --> " $4}'
+                                        sleep 0.5
+                                else
+                                        lines
+                                        echo "$sub_domains.$domain --> not found"
+                                        sleep 0.5
+                                fi
+                        done
+                else
+                        lines
+                        echo "$file --> Unable to identify the file type"
+                fi
+        else
+                lines
+                echo "File not found"
+        fi
+
+fi
+
+
+
+
+
+
