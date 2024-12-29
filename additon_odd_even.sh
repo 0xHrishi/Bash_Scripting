@@ -326,6 +326,93 @@ then
                 fi
         fi
 fi
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+#!/bin/bash
+
+echo "Enter the first number"
+read first
+echo "Enter the second number"
+read second
+
+
+function lines {
+        echo "**********************************"
+}
+
+function first_right {
+        [[ $first =~ ^[0-9-]+$ ]]
+}
+function first_wrong {
+        [[ ! $first =~ ^[0-9-]+$ ]]
+}
+function second_right {
+        [[ $second =~ ^[0-9-]+$ ]]
+}
+function second_wrong {
+        [[ ! $second =~ ^[0-9-]+$ ]]
+}
+
+if [ -z "$first" ] || [ -z "$second" ]
+then
+        if [ -n "$first" ] && [ -z "$second" ]
+        then
+                lines
+                echo "Second number field is empty"
+        elif [ -z "$first" ] && [ -n "$second" ]
+        then
+                lines
+                echo "First number field is empty"
+        elif [ -z "$first" ] && [ -z "$second" ]
+        then
+                lines
+                echo "First number field is empty"
+                echo "Second number field is empty"
+        else
+                lines
+                echo "Issues with the user input"
+        fi
+elif [ -n "$first" ] && [ -n "$second" ]
+then
+        if first_wrong || second_wrong
+        then
+                if first_right && second_wrong
+                then
+                        lines
+                        echo "Second number field can only contain numeric values"
+                elif first_wrong && second_right
+                then
+                        lines
+                        echo "First number field can only contain numeric values"
+                elif first_wrong && second_wrong
+                then
+                        lines
+                        echo "First number field can only contain numeric values"
+                        echo "Second number field can only contain numeric values"
+                else
+                        lines
+                        echo "Issues with the user input validation"
+                fi
+        elif first_right && second_right
+        then
+                ans=$(($first+$second))
+                if (($ans%2==0))
+                then
+                        lines
+                        echo "First number is --> $first"
+                        echo "Second number is --> $second"
+                        echo "$first plus $second --> $ans is even number"
+                elif (($ans%2!=0))
+                then
+                        lines
+                        echo "First number is --> $first"
+                        echo "Second number is --> $second"
+                        echo "$first plus $second --> $ans is odd number"
+                else
+                        lines
+                        echo "Something went wrong while calculation"
+                fi
+        fi
+fi
 
 
 
