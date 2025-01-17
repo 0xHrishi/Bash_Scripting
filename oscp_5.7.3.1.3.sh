@@ -79,3 +79,48 @@ else
 fi
 rm -rf ./javascript_files
 rm -rf ./1
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+#!/bin/bash
+
+echo "Enter the file path"
+read file
+
+function lines {
+        echo "***************************************"
+}
+
+if [ -z "$file" ]
+then
+        lines
+        echo "Filepath field is empty"
+else
+        if [ -e $file ]
+        then
+                if [ -f $file ]
+                then
+                        cat $file | grep -wi "js" | cut -d "/" -f 5 | cut -d " " -f1 |  sort | uniq > ./javascript_files
+                        if [ -s ./javascript_files ]
+                        then
+                                lines
+                                echo "JavaScript file found"
+                                cat ./javascript_files
+                        else
+                                lines
+                                echo "No JavaScript file found"
+                        fi
+                elif [ -d $file ]
+                then
+                        lines
+                        echo "Its a directory"
+                        echo "Nothing can be done"
+                else
+                        lines
+                        echo "$file --> Found"
+                        echo "Unable to identify the file type"
+                fi
+        else
+                lines
+                echo "$file not found"
+        fi
+fi
+
