@@ -1,462 +1,30 @@
-#username and uid_number input from the user
-#script tells whether the username and the uid_number is available for the next use. 
-
-#!/bin/bash
-echo "Enter the username"
-read username
-echo "Enter the uid number"
-read uid_number
-
-if [ -z "$username" ] || [ -z "$uid_number" ]
-then
-        if [ -n "$username" ] && [ -z "$uid_number" ]
-        then
-                echo "UID number field is empty"
-        elif [ -z "$username" ] && [ -n "$uid_number" ]
-        then
-                echo "Username field is empty"
-        else
-                echo "Issues with the user input"
-        fi
-elif [ -n "$username" ] && [ -n "$uid_number" ]
-then
-        cat /etc/passwd | grep -i "$username" | cut -d ":" -f1 > ./username_lists
-        cat /etc/passwd | grep -i "$uid_number" | cut -d ":" -f3 > ./uid_lists
-        if [ ! -s ./username_lists ] && [ ! -s ./uid_lists ]
-        then
-                echo "********************************************"
-                echo "Username is available --> $username"
-                echo "UID is available --> $uid_number"
-                echo "********************************************"
-        elif [ -s ./username_lists ] && [ ! -s ./uid_lists ]
-        then
-                echo "********************************************"
-                echo "Username is not available --> $username"
-                echo "UID is available --> $uid_number"
-                echo "********************************************"
-        elif [ ! -s ./username_lists ] && [ -s ./uid_lists ]
-        then
-                echo "********************************************"
-                echo "Username is available --> $username"
-                echo "UID is not available --> $uid_number"
-                echo "********************************************"
-        elif [ -s ./username_lists ] && [ -s ./uid_lists ]
-        then
-                echo "********************************************"
-                echo "Username is not available --> $username"
-                echo "UID is not available --> $uid_number"
-                echo "********************************************"
-        else
-                echo "********************************************"
-                echo "Snomething went wrong"
-                echo "********************************************"
-        fi
-fi
-rm -rf ./1
-rm -rf ./username_lists
-rm -rf ./uid_lists
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#advanced
-
 #!/bin/bash
 
+#scrit to check whether the username and uid is avialble for next use. 
+#User input --> username and user identification number i.e UID
+
+#User input --> $username
 echo "Enter the username"
 read username
-echo "Enter the uid number"
-read uid_number
 
-if [ -z "$username" ] || [ -z "$uid_number" ]
-then
-        if [ -n "$username" ] && [ -z "$uid_number" ]
-        then
-                echo "***************************************"
-                echo "UID field is empty"
-        elif [ -z "$username" ] && [ -n "$uid_number" ]
-        then
-                echo "***************************************"
-                echo "Username field is empty"
-        elif [ -z "$username" ] && [ -z "$uid_number" ]
-        then
-                echo "***************************************"
-                echo "Username field is empty"
-                echo "UID field is empty"
-        else
-                echo "***************************************"
-                echo "Issues with the user input"
-        fi
-elif [ -n "$username" ] && [ -n "$uid_number" ]
-then
-        if [[ "$username" =~ [a-zA-Z] ]] && [[ "$uid_number" =~ ^[0-9]+$ ]]
-        then
-                cat /etc/passwd | cut -d ":" -f1 | grep -i "$username" > ./username_lists
-                cat /etc/passwd | cut -d ":" -f3 | grep -i "$uid_number" > ./uid_number_lists
-                if [ ! -s ./username_lists ] && [ ! -s ./uid_number_lists ]
-                then
-                        echo "**********************************"
-                        echo "Username is available --> $username"
-                        echo "UID is available --> $uid_number"
-                elif [ -s ./username_lists ] && [ ! -s ./uid_number_lists ]
-                then
-                        echo "**********************************"
-                        echo "Username is not available --> $username"
-                        echo "UID is available --> $uid_number"
-                elif [ ! -s ./username_lists ] && [ -s ./uid_number_lists ]
-                then
-                        echo "**********************************"
-                        echo "Username is available --> $username"
-                        echo "UID is not available --> $uid_number"
-                elif [ -s ./username_lists ] && [ -s ./uid_number_lists ]
-                then
-                        echo "**********************************"
-                        echo "Username is not available --> $username"
-                        echo "UID is not available --> $uid_number"
-                else
-                        echo "**********************************"
-                        echo "Something went wrong"
-                fi
-        elif [[ ! "$username" =~ [a-zA-Z] ]] || [[ ! "$uid_number" =~ ^[0-9]+$ ]]
-        then
-                if [[ "$username" =~ [a-zA-Z] ]] && [[ ! "$uid_number" =~ ^[0-9]+$ ]]
-                then
-                        echo "************************************"
-                        echo "UID field can contain only numeric digits"
-                elif [[ ! "$username" =~ [a-zA-Z] ]] && [[ "$uid_number" =~ ^[0-9]+$ ]]
-                then
-                        echo "************************************"
-                        echo "Username field can only contain alpahbets"
-                else
-                        echo "************************************"
-                        echo "Issues with the user input"
-                fi
-        fi
-fi
-rm -rf ./1
-rm -rf ./username_lists
-rm -rf ./uid_number_lists
-
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#!/bin/bash
-
-echo "Enter the username"
-read username
+#user input --> uid number
 echo "Enter the UID number"
 read uid_number
 
-function username_right {
-        [[ $username =~ [a-zA-Z] ]]
-}
-function username_wrong {
-        [[ ! $username =~ [a-zA-Z] ]]
-}
-function uid_number_right {
-        [[ $uid_number =~ ^[0-9]+$ ]]
-}
-function uid_number_wrong {
-        [[ ! $uid_number =~ ^[0-9]+$ ]]
-}
-
-if [ -z "$username" ] || [ -z "$uid_number" ]
-then
-        if [ -n "$username" ] && [ -z "$uid_number" ]
-        then
-                echo "*********************************************"
-                echo "UID number field is empty"
-        elif [ -z "$username" ] && [ -n "$uid_number" ]
-        then
-                echo "*********************************************"
-                echo "Username field is empty"
-        elif [ -z "$username" ] && [ -z "$uid_number" ]
-        then
-                echo "*********************************************"
-                echo "Username field is empty"
-                echo "UID number field is empty"
-        else
-                echo "*********************************************"
-                echo "Issues with the user input"
-        fi
-elif [ -n "$username" ] && [ -n "$uid_number" ]
-then
-        if username_wrong || uid_number_wrong
-        then
-                if username_right && uid_number_wrong
-                then
-                        echo "*********************************************"
-                        echo "UID number field must contain only numeric digits"
-                elif username_wrong && uid_number_right
-                then
-                        echo "*********************************************"
-                        echo "Username field must contain only alphabets"
-                elif username_wrong && uid_number_wrong
-                then
-                        echo "*********************************************"
-                        echo "Username field must contain only alphabets"
-                        echo "UID number field must contain only numeric digits"
-                else
-                        echo "*********************************************"
-                        echo "Issues with the user input validation"
-                fi
-        elif username_right && uid_number_right
-        then
-
-                cat /etc/passwd | grep -w "$username" | cut -d ":" -f1 > ./username_lists
-                cat /etc/passwd | grep -w "$uid_number" | cut -d ":" -f3 > ./uid_number_lists
-                if [ ! -s ./username_lists ] && [ ! -s ./uid_number_lists ]
-                then
-                        echo "*******************************************"
-                        echo "Username is available --> $username"
-                        echo "UID is available --> $uid_number"
-                elif [ -s ./username_lists ] && [ ! -s ./uid_number_lists ]
-                then
-                        echo "*******************************************"
-                        echo "Username is not available --> $username"
-                        echo "UID is available --> $uid_number"
-                elif [ ! -s ./username_lists ] && [ -s ./uid_number_lists ]
-                then
-                        echo "*******************************************"
-                        echo "Username is available --> $username"
-                        echo "UID is not available --> $uid_number"
-                elif [ -s ./username_lists ] && [ -s ./uid_number_lists ]
-                then
-                        echo "*******************************************"
-                        echo "Username is not available --> $username"
-                        echo "UID is not available --> $uid_number"
-                else
-                        echo "*******************************************"
-                        echo "Issues with the user input checking"
-                fi
-        fi
-fi
-rm -rf ./1
-rm -rf ./username_lists
-rm -rf ./uid_number_lists
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#!/bin/bash
-
-echo "Enter the username"
-read username
-echo "Enter the UID number"
-read uid_number
-
-function username_right {
-        [[ $username =~ [a-zA-Z] ]]
-}
-function username_wrong {
-        [[ ! $username =~ [a-zA-Z] ]]
-}
-function uid_right {
-        [[ $uid_number =~ ^[0-9]+$ ]]
-}
-function uid_wrong {
-        [[ ! $uid_number =~ ^[0-9]+$ ]]
-}
-
-if [ -z "$username" ] || [ -z "$uid_number" ]
-then
-        if [ -n "$username" ] && [ -z "$uid_number" ]
-        then
-                echo "****************************************"
-                echo "UID number field is empty"
-        elif [ -z "$username" ] && [ -n "$uid_number" ]
-        then
-                echo "****************************************"
-                echo "Username field is empty"
-        elif [ -z "$username" ] && [ -z "$uid_number" ]
-        then
-                echo "****************************************"
-                echo "UID number field is empty"
-                echo "Username field is empty"
-        else
-                echo "****************************************"
-                echo "Issues with the user input"
-        fi
-elif [ -n "$username" ] && [ -n "$uid_number" ]
-then
-        if username_wrong || uid_wrong
-        then
-                if username_right && uid_wrong
-                then
-                        echo "***************************************"
-                        echo "UID number field must contain only numeric values"
-                elif username_wrong && uid_right
-                then
-                        echo "***************************************"
-                        echo "Username field must contain only alphabets"
-                elif username_wrong && uid_wrong
-                then
-                        echo "***************************************"
-                        echo "UID number field must contain only numeric values"
-                        echo "Username field must contain only alphabets"
-                else
-                        echo "***************************************"
-                        echo "Issues with the user inpuit validation"
-                fi
-        elif username_right && uid_right
-        then
-                if [ "$uid_number" -ge 0 ] && [ "$uid_number" -le 65535 ]
-                then
-                        cat /etc/passwd | grep -wi "$username" | cut -d ":" -f1 > ./username_lists
-                        cat /etc/passwd | grep -wi "$uid_number" | cut -d ":" -f3 > ./uid_number_lists
-                        if [ ! -s ./username_lists ] && [ ! -s ./uid_number_lists ]
-                        then
-                                echo "******************************************"
-                                echo "Username is available --> $username"
-                                echo "UID number is available --> $uid_number"
-                        elif [ -s ./username_lists ] && [ ! -s ./uid_number_lists ]
-                        then
-                                echo "******************************************"
-                                echo "Username is not available --> $username"
-                                echo "UID number is available --> $uid_number"
-                        elif [ ! -s ./username_lists ] && [ -s ./uid_number_lists ]
-                        then
-                                echo "******************************************"
-                                echo "Username is available --> $username"
-                                echo "UID number is not available --> $uid_number"
-                        elif [ -s ./username_lists ] && [ -s ./uid_number_lists ]
-                        then
-                                echo "******************************************"
-                                echo "Username is not available --> $username"
-                                echo "UID number is not available --> $uid_number"
-                        else
-                                echo "******************************************"
-                                echo "Issues while checking the user input"
-                        fi
-                elif (( ! $uid_number>=0)) || ((! $uid_number=<65535))
-                then
-                        echo "******************************************"
-                        echo "UID must be in range i.e. 0-65535"
-                fi
-        fi
-fi
------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#!/bin/bash
-
-echo "Enter the username"
-read username
-echo "Enter the uid number"
-read uid_number
-
-function username_right {
-        [[ $username =~ [a-zA-Z] ]]
-}
-function username_wrong {
-        [[ ! $username =~ [a-zA-Z] ]]
-}
-
-function uid_number_right {
-        [[ $uid_number =~ ^[0-9]+$ ]]
-}
-function uid_number_wrong {
-        [[ ! $uid_number =~ ^[0-9]+$ ]]
-}
-
-
-if [ -z "$username" ] || [ -z "$uid_number" ]
-then
-        if [ -n "$username" ] && [ -z "$uid_number" ]
-        then
-                echo "**************************************"
-                echo "UID number field is empty"
-        elif [ -z "$username" ] && [ -n "$uid_number" ]
-        then
-                echo "**************************************"
-                echo "Username field is empty"
-        elif [ -z "$username" ] && [ -z "$uid_number" ]
-        then
-                echo "**************************************"
-                echo "Username field is empty"
-                echo "UID number field is empty"
-        else
-                echo "**************************************"
-                echo "Issues with the user input"
-        fi
-elif [ -n "$username" ] && [ -n "$uid_number" ]
-then
-        if username_wrong || uid_number_wrong
-        then
-                if username_right && uid_number_wrong
-                then
-                        echo "***************************************"
-                        echo "UID number field must contain only numeric values"
-                elif username_wrong && uid_number_right
-                then
-                        echo "***************************************"
-                        echo "Username field must contain only Alphabets"
-                elif username_wrong && uid_number_wrong
-                then
-                        echo "***************************************"
-                        echo "Username field must contain only Alphabets"
-                        echo "UID number field must contain only numeric values"
-                else
-                        echo "***************************************"
-                        echo "Issues with the user input validation"
-                fi
-        elif username_right && uid_number_right
-        then
-                if [ $uid_number -gt 0 ] && [ $uid_number -le 65535 ]
-                then
-                        cat /etc/passwd | cut -d ":" -f1 | grep -w "$username" > ./username_lists
-                        cat /etc/passwd | cut -d ":" -f3 | grep -w "$uid_number" > ./uid_number_lists
-                        if [ ! -s ./username_lists ] && [ ! -s ./uid_number_lists ]
-                        then
-                                echo "*********************************************"
-                                echo "Username is available --> $username"
-                                echo "UID number is available --> $uid_number"
-                        elif [ -s ./username_lists ] && [ ! -s ./uid_number_lists ]
-                        then
-                                echo "*********************************************"
-                                echo "Username is not available --> $username"
-                                echo "UID number is available --> $uid_number"
-                        elif [ ! -s ./username_lists ] && [ -s ./uid_number_lists ]
-                        then
-                                echo "*********************************************"
-                                echo "Username is available --> $username"
-                                echo "UID number is not available --> $uid_number"
-                        elif [ -s ./username_lists ] && [ -s ./uid_number_lists ]
-                        then
-                                echo "*********************************************"
-                                echo "Username is not available --> $username"
-                                echo "UID number is not available --> $uid_number"
-                        fi
-                elif [ $uid_number -eq 0 ] || [ $uid_number -gt 65535 ]
-                then
-                        if [ $uid_number -eq 0 ]
-                        then
-                                echo "********************************"
-                                echo "UID number cannot be 0"
-                        elif [ $uid_number -gt 65535 ]
-                        then
-                                echo "********************************"
-                                echo "UID number cannot greather than 65535"
-                        fi
-                fi
-        fi
-fi
-rm -rf ./username_lists
-rm -rf ./uid_number_lists
-rm -rf ./1
-rm -rf ./1
-rm -rf ./username_lists
-rm -rf ./uid_number_lists
--------------------------------------------------------------------------------------------------------------------------------------------------------
-#!/bin/bash
-
-echo "Enter the username"
-read username
-echo "Enter the UID number"
-read uid_number
-
+#function to display lines
 function lines {
         echo "**************************************"
 }
 
+#created function to check that the username field must contain only alphabets
 function username_right {
-        [[ $username =~ [a-zA-Z] ]]
+        [[ $username =~ [a-z] ]]
 }
 function username_wrong {
-        [[ ! $username =~ [a-zA-Z] ]]
+        [[ ! $username =~ [a-z] ]]
 }
 
+#created function to check that the username field must contain only numbers
 function uid_number_right {
         [[ $uid_number =~ ^[0-9]+$ ]]
 }
@@ -464,6 +32,8 @@ function uid_number_wrong {
         [[ ! $uid_number =~ ^[0-9]+$ ]]
 }
 
+
+#Check the user input whether the length of the string or the user input is empty or not
 if [ -z "$username" ] || [ -z "$uid_number" ]
 then
         if [ -n "$username" ] && [ -z "$uid_number" ]
@@ -477,12 +47,16 @@ then
         elif [ -z "$username" ] && [ -z "$uid_number" ]
         then
                 lines
-                echo "Username field is empty"
                 echo "UID number field is empty"
+                echo "Username field is empty"
         else
                 lines
                 echo "Issues with the user input"
         fi
+
+#user input is not empty
+#check whether the user input fits the user creteria i.e. username must contain only alphabets and uid only numeric values 
+
 elif [ -n "$username" ] && [ -n "$uid_number" ]
 then
         if username_wrong || uid_number_wrong
@@ -490,26 +64,37 @@ then
                 if username_right && uid_number_wrong
                 then
                         lines
-                        echo "UID number field can only contain numeric values"
+                        echo "UID number field must contain only numeric values"
                 elif username_wrong && uid_number_right
                 then
                         lines
-                        echo "Username field can only contain alphabets"
+                        echo "Username field must contain only alphabets"
                 elif username_wrong && uid_number_wrong
                 then
                         lines
-                        echo "Username field can only contain numeric values"
-                        echo "UID number field can only contain numeric values"
+                        echo "UID number field must contain only numeric values"
+                        echo "Username field must contain only alphabets"
                 else
                         lines
                         echo "Issues with the user input validation"
                 fi
         elif username_right && uid_number_right
         then
-                if [[ "$uid_number" -ne 0 && "$uid_number" -le 65535 && "$username" != "root" ]]
+                #The UID number must not be equal to 0, not less than 999 and not greather than 65000
+                if [ $uid_number -eq 0 ]
                 then
-                        cat /etc/passwd | grep -wi "$username" | cut -d ":" -f1 > ./username_lists
-                        cat /etc/passwd | grep -wi "$uid_number" | cut -d ":" -f3 > ./uid_number_lists
+                        lines
+                        echo "User identification number cannot be 0"
+                elif [ $uid_number -le 999 ]
+                then
+                        lines
+                        echo "User identification number cannot be less than 999"
+
+                #UID number is greather or equal to 1000 and less than 65000, proceed with checking 
+                elif [ $uid_number -ge 1000 ] && [ $uid_number -le 65000 ]
+                then
+                        cat /etc/passwd | cut -d ":" -f1 | grep -i "$username" > ./username_lists
+                        cat /etc/passwd | cut -d ":" -f3 | grep -i "$uid_number" > ./uid_number_lists
                         if [ ! -s ./username_lists ] && [ ! -s ./uid_number_lists ]
                         then
                                 lines
@@ -532,28 +117,18 @@ then
                                 echo "UID number is not available --> $uid_number"
                         else
                                 lines
-                                echo "Issues while checking"
-                                echo "Check thje user input"
+                                echo "Issues with the user input validation"
                         fi
-                elif [ $uid_number -eq 0 ] || [ $uid_number -gt 65535 ]
+                elif [ $uid_number -gt 65000 ]
                 then
-                        if [ $uid_number -eq 0 ] && [ $uid_number -le 65535 ]
-                        then
-                                lines
-                                echo "UID number --> 0 is not available"
-                        elif [ $uid_number -ne 0 ] && [ $uid_number -gt 65535 ]
-                        then
-                                lines
-                                echo "UID number --> $uid_number number cannot be greather than 65535"
-                        elif [ $uid_number -eq 0 ] && [ $uid_number -gt 65535 ]
-                        then
-                                lines
-                                echo "UID number --> 0 is not available"
-                                echo "UID number --> $uid_number number cannot be greather than 65535"
-                        fi
+                        lines
+                        echo "USER identification number cannot be greather than 65000"
                 fi
         fi
 fi
+
+#Delete the files which were created and use for checking username and UID numbers
+
 rm -rf ./username_lists
 rm -rf ./uid_number_lists
 rm -rf ./1
