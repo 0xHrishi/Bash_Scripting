@@ -1,28 +1,24 @@
 #!/bin/bash
 
-#didplay even or odd numbers within range
-#User input first and second number
-#Ask user to print even or odd number
+#script to display even or odd numbers 
 
-#user input--> first and second number
+#user input
 echo "Enter the first number"
 read first
 echo "Enter the second number"
 read second
 
 function lines {
-        echo "*************************************"
+        echo "****************************************"
 }
 
-#function to check the first number contain only numeric values 
+#function to make sure that the user input must contain only numeric values
 function first_right {
         [[ $first =~ ^[0-9]+$ ]]
 }
 function first_wrong {
         [[ ! $first =~ ^[0-9]+$ ]]
 }
-
-#function to check the second number contain only numeric values 
 function second_right {
         [[ $second =~ ^[0-9]+$ ]]
 }
@@ -30,7 +26,7 @@ function second_wrong {
         [[ ! $second =~ ^[0-9]+$ ]]
 }
 
-#Check user input is empty 
+#user input if empty
 if [ -z "$first" ] || [ -z "$second" ]
 then
         if [ -n "$first" ] && [ -z "$second" ]
@@ -47,15 +43,13 @@ then
                 echo "First number field is empty"
                 echo "Second number field is empty"
         else
-                lines
                 echo "Issues with the user input"
         fi
 
-#user input is not empty
+#user input not empty
 elif [ -n "$first" ] && [ -n "$second" ]
 then
-
-        #User input must contain numeric values 
+        #check whether user input contains only numeric values
         if first_wrong || second_wrong
         then
                 if first_right && second_wrong
@@ -73,50 +67,50 @@ then
                         echo "Second number field must contain only numeric values"
                 else
                         lines
-                        echo "Issues with the user input validation"
+                        echo "Issues with user input validation"
                 fi
 
-        #User input contain numeric values 
+        #user input contains only numeric values
         elif first_right && second_right
         then
                 if [ $first -eq $second ]
                 then
                         lines
-                        echo "First number i.e. $first is equal to Second number i.e. $second"
-                        echo "Nothing to do"
+                        echo "$first is equal to $second"
+                        echo "Cannot do anything"
                 elif [ $first -gt $second ]
                 then
                         lines
-                        echo "First number i.e. $first is greather than Second number i.e. $second"
-                        echo "Nothing to do"
-                elif [ $first -le $second ]
+                        echo "$first is greather than $second"
+                        echo "Cannot do anything"
+                elif [ $first -lt $second ]
                 then
                         lines
-                        echo "Would you like to print odd or even numbers"
+                        echo "Would you like to print even or odd numbers"
                         read option
                         if [ "$option" == "even" ]
                         then
-
-                                #for loop to display even numbers
                                 for even_numbers in $(seq $first $second)
                                 do
                                         if (($even_numbers%2==0))
                                         then
-                                                echo "Even number is --> $even_numbers"
+                                                lines
+                                                echo "Even number --> $even_numbers"
                                                 sleep 0.5
                                         else
                                                 sleep 0.5
                                                 continue
                                         fi
+
                                 done
                         elif [ "$option" == "odd" ]
                         then
-                                #for loop to display even numbers
                                 for odd_numbers in $(seq $first $second)
                                 do
                                         if (($odd_numbers%2!=0))
                                         then
-                                                echo "Odd number is --> $odd_numbers"
+                                                lines
+                                                echo "Odd number --> $odd_numbers"
                                                 sleep 0.5
                                         else
                                                 sleep 0.5
@@ -127,6 +121,7 @@ then
                                 lines
                                 echo "Invalid user input"
                         fi
+
                 fi
         fi
 fi
