@@ -1,24 +1,23 @@
 #!/bin/bash
+#script --> Brute force to find hostname related to domain 
 
-#script to find out hostnames of a domain by using brute force attack on domain 
-
-#user input i.e. domain name and file path for brute force
-echo "Enter the domain i.e. google.com"
+#user input i.e. domain name and filepath which consits for most common sub domains lists
+echo "Enter the domain name i.e. google.com"
 read domain
-echo "Enter the file i.e. full path for brute force attack"
+echo "Enter the file path for brute force attack on domain"
 read filepath
 
 function lines {
-        echo "**********************************"
+        echo "************************************"
 }
 
-#Check user input i.e. domain and filepath 
+#user input empty
 if [ -z "$domain" ] || [ -z "$filepath" ]
 then
         if [ -n "$domain" ] && [ -z "$filepath" ]
         then
                 lines
-                echo "File path field is empty"
+                echo "Filepath field is empty"
         elif [ -z "$domain" ] && [ -n "$filepath" ]
         then
                 lines
@@ -27,48 +26,44 @@ then
         then
                 lines
                 echo "Domain name field is empty"
-                echo "File path field is empty"
+                echo "Filepath field is empty"
         else
                 lines
                 echo "Issues with the user input"
         fi
 
-#user input is ok i.e. the user input is greather than zero or not empty 
+#user input not empty
 elif [ -n "$domain" ] && [ -n "$filepath" ]
 then
-        if [ -e $filepath ]
+        if [ -f $filepath ]
         then
-                #check user input ie. filepath is a directory
-                if [ -d $filepath ]
-                then
-                        lines
-                        echo "$filepath --> Its a directory"
-                        echo "Nothing can be done"
+                #for loop 
+                for sub_domains in $(cat $filepath)
+                do
+                        host $sub_domains.$domain &>/dev/null
 
-                #user input filepath is file
-                elif [ -f $filepath ]
-                then
-
-                        #for loop to find out different hostname related to domain
-                        for subdomains in $(cat $filepath)
-                        do
-                                host $subdomains.$domain &>/dev/null
-                                if [ $? -eq 0 ]
-                                then
-                                        lines
-                                        host $subdomains.$domain | cut -d " " -f1,4
-                                        sleep 0.5
-                                else
-                                        lines
-                                        echo "$subdomains.$domain not found"
-                                        sleep 0.5
-                                fi
-                        done
-
-                else
-                        lines
-                        echo "$filepath --> File found"
-                        echo "Unable to identify the file path"
-                fi
+                        if [ $? -eq 0 ]
+                        then
+                                lines
+                                host $sub_domains.$domain | cut -d " " -f1,4
+                                host $sub_domains.$domain | cut -d " " -f1,4 >> ./sub_domains_lists
+                                sleep 0.5
+                        else
+                                lines
+                                echo "$sub_domains.$domain not found"
+                                host $sub_domains.$domain | cut -d " " -f1,4 >> ./sub_domains_lists
+                                continue
+                                sleep 0.5
+                        fi
+                done
+        elif [ -d $filepath ]
+        then
+                lines
+                echo "$filepath --> Its a directory"
+                echo "Nothing can be done"
+        else
+                lines
+                echo "$filepath --> Unable to find"
         fi
 fi
+rm -rf ./1
