@@ -1,57 +1,47 @@
 #!/bin/bash
+#script for calcation such as addition, subtraction, multiplication, power with case statements
 
-#script for calculation i.e. add, subtract, multiply, power
-
-
-#function to ask for user input i.e. first and second number
+#function for user input
 function user_input {
         echo "Enter the first number"
         read first
-
         echo "Enter the second number"
         read second
 }
 
-#function try_again, if user input is invalid or after successfull calculation,try again the operation 
+function lines {
+        echo "*********************************"
+}
+
+#function for try again i.e. do calculation one more time
 function try_again {
         lines
-        echo "Would you like to try again Y/y or N/n ?"
-        read again
-
-        #calculation will perform once again 
-        if [ "$again" == "Y" ] || [ "$again" == "y" ]
+        echo "Would you like to continue.y/n?"
+        read choice
+        if [ "$choice" == "y" ]
         then
-                lines
                 user_input
                 validation_1
                 validation_2
-
-        #script stop as the user would like not to continue with calculation
-        elif [ "$again" == "N" ] || [ "$again" == "n" ]
+        elif [ "$choice" == "n" ]
         then
                 lines
-                echo "You choose to quit, Bye"
+                echo "You choose to quit, bye"
                 exit
         else
                 lines
-                echo "Invalid user input, Bye"
+                echo "Invalid option, bye"
                 exit
         fi
 }
 
-function lines {
-        echo "********************************"
-}
-
-#function to check, first number must contain only numeric values
+#function to check first and second number must contain only positive numeric values
 function first_right {
         [[ $first =~ ^[0-9]+$ ]]
 }
 function first_wrong {
         [[ ! $first =~ ^[0-9]+$ ]]
 }
-
-#function to check, second number must contain only numeric values
 function second_right {
         [[ $second =~ ^[0-9]+$ ]]
 }
@@ -59,7 +49,7 @@ function second_wrong {
         [[ ! $second =~ ^[0-9]+$ ]]
 }
 
-#function to check the user input i.e whether they are empty or length of the string is equal to zero
+#function to check user input
 function validation_1 {
         if [ -z "$first" ] || [ -z "$second" ]
         then
@@ -87,49 +77,48 @@ function validation_1 {
         fi
 }
 
-#function to perform calculation
+#function for calculation
 function calculation {
         lines
-        echo "Enter 1 --> Addition"
-        echo "Enter 2 --> Subtraction"
-        echo "Enter 3 --> Multiplication"
-        echo "Enter 4 --> Power"
+        echo "Press 1 --> Addition"
+        echo "Press 2 --> Subtraction"
+        echo "Press 3 --> Multiplication"
+        echo "Press 4 --> Power"
         read option
 
         case $option in
                 1)
                         lines
-                        result=$(($first+$second))
-                        echo "First i.e. $first plus Second i.e. $second --> $result"
+                        sum=$(($first+$second))
+                        echo "$first plus $second --> $sum"
                         try_again
                         ;;
                 2)
                         lines
-                        result=$(($first-$second))
-                        echo "First i.e. $first minus Second i.e. $second --> $result"
+                        subtract=$(($first-$second))
+                        echo "$first subtract $second --> $subtract"
                         try_again
                         ;;
                 3)
                         lines
-                        result=$(($first*$second))
-                        echo "First i.e. $first multiply Second i.e. $second --> $result"
+                        multiply=$(($first*$second))
+                        echo "$first multiply $second --> $multiply"
                         try_again
                         ;;
                 4)
                         lines
-                        result=$(($first**$second))
-                        echo "First i.e. $first power Second i.e. $second --> $result"
+                        power=$(($first**$second))
+                        echo "$first power $second --> $power"
                         try_again
                         ;;
                 *)
                         lines
                         echo "Issues with the user input"
                         try_again
-                        ;;
         esac
 }
 
-#function to check whether the user input contain only numeric values, if doesnt then display error
+#function --> user input is not empty
 function validation_2 {
         if [ -n "$first" ] && [ -n "$second" ]
         then
@@ -153,7 +142,7 @@ function validation_2 {
                                 try_again
                         else
                                 lines
-                                echo "Issues with the user input validation"
+                                echo "Issues with user input validation"
                                 try_again
                         fi
                 elif first_right && second_right
@@ -162,7 +151,6 @@ function validation_2 {
                 fi
         fi
 }
-
 
 user_input
 validation_1
