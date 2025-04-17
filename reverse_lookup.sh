@@ -1,33 +1,35 @@
-#oscp reverse look up
 #!/bin/bash
 
-echo "Enter the HOst part i.e. 1.1.1"
-read host_part
-echo "Enter the first host_part"
+function lines {
+        echo "*********************************************"
+}
+
+
+echo "Enter the network part i.e. 1.1.1"
+read network
+echo "Enter the first host"
 read first
-echo "ENter the last host_part"
+echo "Enter the last host"
 read last
 
-if [ -z "$host_part" ] || [ -z "$first" ] || [ -z "$last" ]
+if [ -z "$network" ] || [ -z "$first" ] || [ -z "$last" ]
 then
-        if [ -z "$host_part" ] && ( [ -n "$first" ] && [ -n "$last" ] )
-        then
-                echo "Host field empty"
-        elif [ -z "$first" ] && ( [ -n "$host_part" ] && [ -n "$last" ] )
-        then
-                echo "First field empty"
-        elif [ -z "$last" ] && ( [ -n "$host_part" ] && [ -n "$first" ] )
-        then
-                echo "last field empty"
-        else
-                echo "SOmething wrong with user input"
-        fi
-
-elif [ -n "$host_part" ] && [ -n "$first" ] && [ -n "$last" ]
-then
-        for ip in $(seq $first $last)
+        lines
+        echo "User input missing, kindly check"
+else
+        for ip_address in $(seq $first $last)
         do
-                host $host_part.$ip
+                host $network.$ip_address &>/dev/null
+                if [ $? -eq 0 ]
+                then
+                        lines
+                        host $network.$ip_address
+                        sleep 0.5
+                else
+                        sleep 0.5
+                        continue
+                fi
 
         done
 fi
+
