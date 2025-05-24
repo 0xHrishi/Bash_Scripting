@@ -14,16 +14,16 @@ function lines {
 
 #function to make sure that the user input must contain only numeric values
 function first_right {
-        [[ $first =~ ^[0-9]+$ ]]
+        [[ $first =~ ^[0-9-]+$ ]]
 }
 function first_wrong {
-        [[ ! $first =~ ^[0-9]+$ ]]
+        [[ ! $first =~ ^[0-9-]+$ ]]
 }
 function second_right {
-        [[ $second =~ ^[0-9]+$ ]]
+        [[ $second =~ ^[0-9-]+$ ]]
 }
 function second_wrong {
-        [[ ! $second =~ ^[0-9]+$ ]]
+        [[ ! $second =~ ^[0-9-]+$ ]]
 }
 
 #user input if empty
