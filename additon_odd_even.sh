@@ -1,97 +1,126 @@
 #!/bin/bash
 
-#Script --> Add two numbers and result is odd or even number
 
-#User input i.e. first and second number
-echo "Enter the first number"
-read first
-echo "Enter the second number"
-read second
-
-#function
 function lines {
-        echo "************************************************"
+        echo "*************************************"
 }
 
-#Function to check i.e. first number must contain only numeric valies
-function first_right {
-        [[ $first =~ ^[0-9-]+$ ]]
+echo "Enter the username"
+read username
+
+echo "Enter the uid number"
+read uid_number
+
+function username_right {
+        [[ $username =~ [a-zA-Z] ]]
 }
-function first_wrong {
-        [[ ! $first =~ ^[0-9-]+$ ]]
+function username_wrong {
+        [[ ! $username =~ [a-zA-Z] ]]
+}
+function uid_number_right {
+        [[ $uid_number =~ ^[0-9]+$ ]]
+}
+function uid_number_wrong {
+        [[ ! $uid_number =~ ^[0-9]+$ ]]
 }
 
-#function i.e. second number must contain only numeric values
-function second_right {
-        [[ $second =~ ^[0-9-]+$ ]]
-}
-function second_wrong {
-        [[ ! $second =~ ^[0-9-]+$ ]]
-}
 
-#Check whether the user input is empty 
-if [ -z "$first" ] || [ -z "$second" ]
+if [ -z "$username" ] ||  [ -z "$uid_number" ]
 then
-        if [ -n "$first" ] && [ -z "$second" ]
+        if [ -n "$username" ] &&  [ -z "$uid_number" ]
         then
                 lines
-                echo "Second number field is empty"
-        elif [ -z "$first" ] && [ -n "$second" ]
+                echo "UID number field is empty"
+        elif [ -z "$username" ] &&  [ -n "$uid_number" ]
         then
                 lines
-                echo "First number field is empty"
-        elif [ -z "$first" ] && [ -z "$second" ]
+                echo "Username field is empty"
+        elif [ -z "$username" ] &&  [ -z "$uid_number" ]
         then
                 lines
-                echo "First number field is empty"
-                echo "Second number field is empty"
+                echo "Username field is empty"
+                echo "UID number field is empty"
         else
                 lines
                 echo "Issues with the user input"
         fi
 
-#User input is not empty 
-elif [ -n "$first" ] && [ -n "$second" ]
+elif [ -n "$username" ] &&  [ -n "$uid_number" ]
 then
-        #Check whether the user input i.e. first and second number contain only numeric values
-        if first_wrong || second_wrong
+        if username_wrong || uid_number_wrong
         then
-                if first_right && second_wrong
+                if username_right && uid_number_wrong
                 then
                         lines
-                        echo "Second number field must contain only numeric values"
-                elif first_wrong && second_right
+                        echo "Uid number field must contain only numeric values"
+                elif username_wrong && uid_number_right
                 then
                         lines
-                        echo "First number field must contain only numeric values"
-                elif first_wrong && second_wrong
+                        echo "Username field must contain only alphabets"
+                elif username_wrong && uid_number_wrong
                 then
                         lines
-                        echo "First number field must contain only numeric values"
-                        echo "Second number field must contain only numeric values"
-                else
-                        lines
-                        echo "Issues with user input validation"
+                        echo "Username field must contain only alphabets"
+                        echo "Uid number field must contain only numeric values"
                 fi
-
-        #user input i.e. first and second number contain numeric values
-        elif first_right && second_right
+        elif username_right && uid_number_right
         then
-                #Add two numbers, result dvidied by 2 and display whether the sum of first and second number is even or odd
-                ans=$(($first+$second))
-                if (($ans%2==0))
+                if [ "$username" == "root" ] || [ $uid_number -eq 0 ] || [ $uid_number -gt 65535 ]
                 then
-                        lines
-                        echo "$first plus $second --> $ans"
-                        echo "$ans --> Even number"
-                elif (($ans%2!=0))
+                        if [ "$username" == "root" ] && [ $uid_number -eq 0 ]
+                        then
+                                lines
+                                echo "Username cannot be root"
+                                echo "UID number cannot be zero"
+                        elif [ "$username" == "root" ] && [ $uid_number -gt 65535 ]
+                        then
+                                lines
+                                echo "Username cannot be root"
+                                echo "UID number cannot be greater than 65535"
+                        elif [ "$username" != "root" ] && [ $uid_number -eq 0 ]
+                        then
+                                lines
+                                echo "UID number cannot be zero"
+                        elif [ "$username" != "root" ] && [ $uid_number -gt 65535 ]
+                        then
+                                lines
+                                echo "UID number cannot be greater than 65535"
+                        elif [ "$username" == "root" ] && [ $uid_number -lt 65535 ]
+                        then
+                                lines
+                                echo "Username cannot be root"
+                        fi
+                elif [ "$username" != "root" ] && [ $uid_number -ne 0 ] && [ $uid_number -le 65535 ]
                 then
-                        lines
-                        echo "$first plus $second --> $ans"
-                        echo "$ans --> Odd number"
-                else
-                        lines
-                        echo "Something went wrong"
+                        cat /etc/passwd | grep -wi "$username" | cut -d " " -f1 > ./username_lists
+                        cat /etc/passwd | grep -wi "$uid_number" | cut -d " " -f3 > ./uid_number_lists
+                        if [ -s ./username_lists ] && [ -s ./uid_number_lists ]
+                        then
+                                lines
+                                echo "Username not available --> $username"
+                                echo "USER ID not available --> $uid_number"
+                        elif [ ! -s ./username_lists ] && [ -s ./uid_number_lists ]
+                        then
+                                lines
+                                echo "Username available --> $username"
+                                echo "USER ID not available --> $uid_number"
+                        elif [ -s ./username_lists ] && [ ! -s ./uid_number_lists ]
+                        then
+                                lines
+                                echo "Username not available --> $username"
+                                echo "USER ID available --> $uid_number"
+                        elif [ ! -s ./username_lists ] && [ ! -s ./uid_number_lists ]
+                        then
+                                lines
+                                echo "Username available --> $username"
+                                echo "USER ID available --> $uid_number"
+                        else
+                                lines
+                                echo "Issues while checking"
+                        fi
                 fi
         fi
 fi
+rm -rf ./1
+rm -rf ./username_lists
+rm -rf ./uid_number_lists
