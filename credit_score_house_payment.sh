@@ -80,21 +80,21 @@ then
                 then
                         lines
                         echo "Credit score cannot be greather than or equal to 1000"
-                elif [ $credit -eq 750 ] || [ $credit -gt 750 ]
+                elif [ $credit -ge 750 ]
                 then
                         lines
                         down_payment=$(($total*10/100))
                         echo "Total cost of the house --> $total"
                         echo "Credit score --> $credit"
                         echo "Down payment --> $down_payment"
-                elif [ $credit -eq 650 ] || [ $credit -gt 650 ]
+                elif [ $credit -ge 650 ] && [ $credit -le 749 ]
                 then
                         lines
                         down_payment=$(($total*20/100))
                         echo "Total cost of the house --> $total"
                         echo "Credit score --> $credit"
                         echo "Down payment --> $down_payment"
-                elif [ $credit -eq 600 ] || [ $credit -gt 600 ]
+                elif [ $credit -ge 600 ] && [ $credit -le 649 ]
                 then
                         lines
                         down_payment=$(($total*30/100))
