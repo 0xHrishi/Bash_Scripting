@@ -1,13 +1,7 @@
 #!/bin/bash
 
-#Script --> Check whether the username and User identificaton number is available or not 
-
-#user input i.e. username and uid number i.e. user identification number
-
-#!/bin/bash
-
 function lines {
-        echo "*******************************************"
+        echo "******************************************"
 }
 
 echo "Enter the username"
@@ -21,7 +15,6 @@ function username_right {
 function username_wrong {
         [[ ! $username =~ [a-zA-Z] ]]
 }
-
 function uid_number_right {
         [[ $uid_number =~ ^[0-9]+$ ]]
 }
@@ -68,39 +61,39 @@ then
                         echo "UID number field must contain only numeric values"
                 else
                         lines
-                        echo "Issues with user input validation"
+                        echo "Issues with the user input validation"
                 fi
         elif username_right && uid_number_right
         then
-                if [ $username == "root" ] || [ $uid_number -eq 0 ] || [ $uid_number -gt 65535 ]
+                if [ "$username" == "root" ] || [ $uid_number -eq 0 ] || [ $uid_number -gt 65535 ]
                 then
-                        if [ $username == "root" ] && [ $uid_number -eq 0 ]
+                        if [ "$username" == "root" ] && [ $uid_number -eq 0 ]
                         then
                                 lines
-                                echo "Username cannot be $username"
-                                echo "UID number cannot be $uid_number"
-                        elif [ $username == "root" ] && [ $uid_number -gt 65535 ]
-                        then
-                                lines
-                                echo "Username cannot be $username"
-                                echo "UID number cannot be greather than $uid_number"
-                        elif [ $username != "root" ] && [ $uid_number -gt 65535 ]
-                        then
-                                lines
-                                echo "UID number cannot be greather than $uid_number"
-                        elif [ $username != "root" ] && [ $uid_number -eq 0 ]
-                        then
-                                lines
+                                echo "Username cannot be root"
                                 echo "UID number cannot be zero"
-                        elif [ $username == "root" ] && [ $uid_number -lt 65535 ]
+                        elif [ "$username" == "root" ] && [ $uid_number -gt 65535 ]
                         then
                                 lines
-                                echo "Username cannot be --> $username"
+                                echo "Username cannot be root"
+                                echo "UID number greather than 65535"
+                        elif [ "$username" != "root" ] && [ $uid_number -gt 65535 ]
+                        then
+                                lines
+                                echo "UID number greather than 65535"
+                        elif [ "$username" != "root" ] && [ $uid_number -eq 0 ]
+                        then
+                                lines
+                                echo "UID number equal to zero"
+                        elif [ "$username" == "root" ] && [ $uid_number -ne 0 ] && [ $uid_number -le 65535 ]
+                        then
+                                lines
+                                echo "Username cannot be root"
                         fi
-                elif [ $username != "root" ] && [ $uid_number -ne 0 ] && [ $uid_number -le 65535 ]
+                elif [ "$username" != "root" ] && [ $uid_number -ne 0 ] && [ $uid_number -le 65535 ]
                 then
-                        cat /etc/passwd | cut -d ":" -f1 | grep -i "$username" > ./username_lists
-                        cat /etc/passwd | cut -d ":" -f3 | grep -i "$uid_number" > ./uid_number_lists
+                        cat /etc/passwd | cut -d ":" -f1 | grep -wi "$username" > ./username_lists
+                        cat /etc/passwd | cut -d ":" -f3 | grep -wi "$uid_number" > ./uid_number_lists
                         if [ -s ./username_lists ] && [ -s ./uid_number_lists ]
                         then
                                 lines
@@ -123,12 +116,12 @@ then
                                 echo "UID number available --> $uid_number"
                         else
                                 lines
-                                echo "Issues with the user input"
+                                echo "Issues while checking"
+
                         fi
                 fi
         fi
 fi
-rm -rf ./1
 rm -rf ./username_lists
 rm -rf ./uid_number_lists
-
+rm -rf ./1
