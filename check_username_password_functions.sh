@@ -1,143 +1,87 @@
 #!/bin/bash
 
-function user_input {
-        echo "Enter the username"
-        read username
-        echo "Enter the password"
-        read password
+function lines {
+        echo "*******************************************************"
 }
-function validation_1 {
-        if [ -z "$username" ] || [ -z "$password" ]
-        then
-                if [ -n "$username" ] && [ -z "$password" ]
-                then
-                        echo "password field is empty"
-                        try_again
-                elif [ -z "$username" ] && [ -n "$password" ]
-                then
-                        echo "username field is empty"
-                        try_again
-                else
-                        echo "Issues with the user input"
-                        try_again
-                fi
-        fi
-}
-function validation_2 {
-        if [ -n "$username" ] && [ -n "$password" ]
-        then
-                checking
-        fi
-}
-function checking {
-        if [ "$username" == "admin" ] && [ "$password" == "password" ]
-        then
-                echo "*******************************"
-                echo "Login success"
-        else
-                echo "*******************************"
-                echo "Incorrect login credentials"
-                try_again
-        fi
-}
-function try_again {
-        echo "Would you like to try again Y/y or N/n"
-        read option
-        if [ "$option" == "Y" ] || [ "$option" == "y" ]
-        then
-                user_input
-                validation_1
-                validation_2
-        elif [ "$option" == "N" ] || [ "$option" == "n" ]
-        then
-                echo "Bye for now"
-        else
-                echo "Invalid user input option"
-                echo "Quiting, bye"
-        fi
-}
-user_input
-validation_1
-validation_2
-------------------------------------------------------------------------------------------------------------------------------------------
-#does require some improvement
-#!/bin/bash
 
-function user_input {
-        echo "Enter the username"
-        read username
-        echo "Enter the password"
-        read password
-}
-function validation_1 {
-        if [ -z "$username" ] || [ -z "$password" ]
-        then
-                if [ -n "$username" ] && [ -z "$password" ]
-                then
-                        echo "password field is empty"
-                        try_again
-                        do_it_again
-                elif [ -z "$username" ] && [ -n "$password" ]
-                then
-                        echo "username field is empty"
-                        try_again
-                        do_it_again
-                else
-                        echo "Issues with the user input"
-                        try_again
-                        do_it_again
-                fi
-        fi
-}
-function validation_2 {
-        if [ -n "$username" ] && [ -n "$password" ]
-        then
-                checking
-        fi
-}
-function checking {
-        if [ "$username" == "admin" ] && [ "$password" == "password" ]
-        then
-                echo "*******************************"
-                echo "Login success"
-                exit
-        else
-                echo "*******************************"
-                echo "Incorrect login credentials"
-                try_again
-                do_it_again
-        fi
-}
+
+echo "Enter the username"
+read username
+echo "Enter the password"
+read password
+
 function try_again {
-        echo "Would you like to try again Y/y or N/n"
+        lines
+        echo "Would you like to try again y/n ?"
         read option
-        if [ "$option" == "Y" ] || [ "$option" == "y" ]
+        if [ "$option" == "y" ]
         then
-                user_input
-                validation_1
-                validation_2
-                do_it_again
-        elif [ "$option" == "N" ] || [ "$option" == "n" ]
+                count=0
+                while [ $count -le 3 ]
+                do
+                        echo "Enter username"
+                        read username
+                        echo "Enter password"
+                        read password
+                        if [ "$username" == "root" ] && [ "$password" == "pass" ]
+                        then
+                                lines
+                                echo "Login successfuly"
+                                exit
+                        elif [ $count -eq 3 ]
+                        then
+                                lines
+                                echo "Account lock for 5 minustes"
+                                echo "Bye for now"
+                                exit
+                        else
+                                echo "Invalid credentials"
+                                ((count++))
+                                continue
+                        fi
+                done
+        elif [ "$option" == "n" ]
         then
                 echo "Bye for now"
                 exit
         else
-                echo "Invalid user input option"
-                echo "Quiting, bye"
+                echo "Invalid option"
                 exit
         fi
 }
-function do_it_again {
-        count=0 
-        while [ $count -lt 3 ]
-        do
-                user_input
-                validation_1
-                validation_2
-                ((count++))
-        done
-}
-user_input
-validation_1
-validation_2
 
+if [ -z "$username" ] || [ -z "$password" ]
+then
+        if [ -n "$username" ] && [ -z "$password" ]
+        then
+                lines
+                echo "Password field is empty"
+        elif [ -z "$username" ] && [ -n "$password" ]
+        then
+                lines
+                echo "Username field is empty"
+        elif [ -z "$username" ] && [ -z "$password" ]
+        then
+                lines
+                echo "Username field is empty"
+                echo "Password field is empty"
+        else
+                lines
+                echo "Issues with the user input"
+        fi
+elif [ -n "$username" ] && [ -n "$password" ]
+then
+        if [ "$username" == "root" ] && [ "$password" == "pass" ]
+        then
+                lines
+                echo "Login successful"
+        elif [ "$username" != "root" ] || [ "$password" != "pass" ]
+        then
+                lines
+                echo "Login un-successful"
+                try_again
+        else
+                lines
+                echo "Issues with validation"
+        fi
+fi
