@@ -48,3 +48,5 @@ chmod +x script_name.sh
 📌 Example : Comparsion --> Click here to view the full script: [comparsion_operators.sh](<comparsion_operators.sh>)  
 📌 Example : Strings --> Click here to view the full script: [strings_operators.sh](<strings_operators.sh>)  
 📌 Example : Files --> Click here to view the full script: [file_test.sh](<file_test.sh>)  
+📌 Example : File permissions --> Click here to view the full script: [file_permissions.sh](<file_permissions.sh>)  
+
