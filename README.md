@@ -47,4 +47,4 @@ chmod +x script_name.sh
 📌 Example : Arithmetic --> Click here to view the full script: [arithmetic_operators.sh](<arithmetic_operators.sh>)  
 📌 Example : Comparsion --> Click here to view the full script: [comparsion_operators.sh](<comparsion_operators.sh>)  
 📌 Example : Strings --> Click here to view the full script: [strings_operators.sh](<strings_operators.sh>)  
-📌 Example : Files --> Click here to view the full script: [files_test.sh](<files_test.sh>)  
+📌 Example : Files --> Click here to view the full script: [file_test.sh](<file_test.sh>)  
