@@ -6,9 +6,9 @@ echo "Enter the second number"
 read second
 
 #Comparsion operators 
-#> --> greater than, >= greaer than equal to
-#< -- less than, <= less than equal to 
-# == --> eqaul to, != --> no equal to 
+#-gt --> greater than, -ge greaer than equal to
+#-lt -- less than, -le less than equal to 
+# -eq --> eqaul to, -ne --> no equal to 
 
 if [ $first -gt $second ]
 then
