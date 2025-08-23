@@ -1,36 +1,30 @@
-#This script is to understand how variables can be decalared
-#SYSTEM Defined Variables: $PWD, $HOME, $BASH, $BASH_VERSION, $0, $SHELL, 
-#$HOSTNAME, $HOSTTYPE, $PATH, $LANG, $USER, $LOGNAME, $UID, $RANDOM,
-# $HOSTSIZE, HISTFILESIZE, $HISTFILE, HISTIGNORE, $HISTCONTROL, $HISTTIMEFORMAT
-
 #!/bin/bash
+#Variables allows to store data temporaily
 
+#Variable created i.e. first_number
+#with the help of echo command, displayed the value for variable by using $ symbol
+first_number=10
+echo $first_number
+echo "*****************************************************************"
 
-a-10
-echo $a
-echo "*******************************************************"
-b="hrishi"
-echo $b
-echo "*******************************************************"
-c=$(date)
-echo $c
-echo "*******************************************************"
-d=$(date | cut -d " " -f1-3)
-echo $d
-echo "*******************************************************"
-e=$(cat /etc/passwd | head -n 3)
-echo $e
-echo "*******************************************************"
-echo "Current working directory: $PWD"
-echo "*******************************************************"
-f=$USER
-echo "Current login user is : $f"
-echo "*******************************************************"
-echo "Current login user: $(whoami)"
-echo "*******************************************************"
-a=$USER
-echo $a
-"*******************************************************
-a=/etc/ssh/sshd_config
-cat $a
+#variable full_name which stores user full name 
+#In bash scripting, there is no data type concept, so the values are stored as string by default 
+full_name="Hrishi Dilip Ghosalkar"
+echo $full_name
+echo "*****************************************************************"
+
+#command substitution
+#Assign output of a command as a value to the variable
+date_output=$(date)
+echo $date_output
+echo "*****************************************************************"
+
+#File output to a variable as value 
+file_output=$(cat /etc/resolv.conf | head -n 1)
+echo $file_output
+echo "*****************************************************************"
+
+#system defined variable i.e. $USER which displays the current login user
+echo "Hello $USER, todays date and time is: $(date)"
+echo "*****************************************************************"
 
