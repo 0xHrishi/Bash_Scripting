@@ -34,3 +34,7 @@ chmod +x script_name.sh
 
 ### 🔰 Basics
 📌 Example : Hello World and comments --> Click here to view the full script: [hello_world.sh](<hello_world.sh>)  
+
+### 🔰 Variables 
+📌 Example : Variables --> Click here to view the full script: [declaring_variables.sh](<declaring_variables.sh>)  
+📌 Example : Popular system defined variables --> Click here to view the full script: [system_defined_var.sh](<system_defined_var.sh>) 
