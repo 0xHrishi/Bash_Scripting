@@ -28,6 +28,8 @@ chmod +x script_name.sh
 # 2️⃣ Run the script
 ./script_name.sh
 
+```
+---
 - ## 📂 Examples by Topic
 
 ### 🔰 Basics
