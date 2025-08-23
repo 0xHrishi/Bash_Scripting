@@ -33,4 +33,4 @@ chmod +x script_name.sh
 - ## 📂 Examples by Topic
 
 ### 🔰 Basics
-📌 Example : Hello World and comments --> Click here to view the full script: [hello world.sh](<hello world.sh>)  
+📌 Example : Hello World and comments --> Click here to view the full script: [hello_world.sh](<hello_world.sh>)  
