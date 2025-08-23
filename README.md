@@ -27,3 +27,14 @@ chmod +x script_name.sh
 
 # 2️⃣ Run the script
 ./script_name.sh
+
+- ## 📂 Examples by Topic
+
+### 🔰 Basics
+📌 Example : Hello World --> Click here to view the full script: [hello world.py](<hello world.py>)  
+📌 Example: Single and multi lines comments --> Click here to view the full script: [comments.py](<comments.py>)
+
+### 🔰 Variables and Constant 
+📌 Example: Variables and Constant --> Click here to view the full script: [area_of_circle.py](<area_of_circle.py>)  
+📌 Example: Global and Local variable --> Click here to view the full script: [global_local_variable.py](<global_local_variable.py>)  
+📌 Example: Different Data types --> Click here to view the full script: [data_type.py](<data_type.py>)
