@@ -45,4 +45,4 @@ chmod +x script_name.sh
 
 ### 🔰 Operators
 📌 Example : Arithmetic --> Click here to view the full script: [arithmetic_operators.sh](<arithmetic_operators.sh>)  
-📌 Example : Comparsion --> Click here to view the full script: [comparsion.sh](<comparsion.sh>)  
+📌 Example : Comparsion --> Click here to view the full script: [comparsion_operators.sh](<comparsion_operators.sh>)  
