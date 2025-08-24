@@ -69,8 +69,9 @@ chmod +x script_name.sh
 📌 Example : Lowercase and uppercase --> Click here to view the full script: [lowercase_uppercase.sh](<lowercase_uppercase.sh>) 
 
 ### 🔰 Examples
-📌 Example : Add two numbers and find the result is odd or even number --> [sum_odd_even.sh](<sum_odd_even.sh>)  
-📌 Example : Username and UID number availablity --> [availability_username_uid.sh](<availability_username_uid.sh>)
+📌 Example : Add two numbers and find the result is odd or even number: [sum_odd_even.sh](<sum_odd_even.sh>)  
+📌 Example : Username and UID number availablity: [availability_username_uid.sh](<availability_username_uid.sh>)
+📌 Example : While loop --> Number multiplication: [while_number_multiplication.sh](<while_number_multiplication.sh>)
 
 
 
