@@ -65,6 +65,8 @@ chmod +x script_name.sh
 ### 🔰 Functions  
 📌 Example : Functions --> Click here to view the full script: [functions.sh](<functions.sh>) 
 
+### 🔰 Extras  
+📌 Example : Lowercase and uppercase --> Click here to view the full script: [lowercase_uppercase.sh](<lowercase_uppercase.sh>) 
 
 
 
