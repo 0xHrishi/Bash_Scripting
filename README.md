@@ -73,7 +73,7 @@ chmod +x script_name.sh
 📌 Example : Username and UID number availablity --> Click here to view the full script: [availability_username_uid.sh](<availability_username_uid.sh>)  
 📌 Example : While loop,  Number multiplication --> Click here to view the full script: [while_number_multiplication.sh](<while_number_multiplication.sh>)  
 📌 Example : For loop, Brute force attack on domain --> Click here to view the full script: [sub_domains.sh](<sub_domains.sh>)  
-📌 Example : Case statement, Arithmetic calculations --> Click here to view the full script: [calculation_with_case.sh](<calculation_with_case.sh>)  
+📌 Example : Case statement, Arithmetic calculations --> Click here to view the full script: [calculations_with_case.sh](<calculations_with_case.sh>)  
 
 
 
