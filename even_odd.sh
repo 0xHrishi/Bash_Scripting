@@ -1,119 +1,113 @@
 #!/bin/bash
 
-#script to display even or odd numbers 
+#Script output -- even or odd numbers based upon the user input 
+
+#function
+function lines {
+        echo "**************************************"
+}
 
 #user input
-echo "Enter the first number"
-read first
-echo "Enter the second number"
-read second
+read -p "Enter the first number: " first
+read -p "Enter the second number: " second
 
-function lines {
-        echo "****************************************"
+#check the user input only contains numeric values
+function first_integer {
+        [[ $first =~ ^[0-9]+$ ]]
 }
-
-#function to make sure that the user input must contain only numeric values
-function first_right {
-        [[ $first =~ ^[0-9-]+$ ]]
+function first_integer_wrong {
+        [[ ! $first =~ ^[0-9]+$ ]]
 }
-function first_wrong {
-        [[ ! $first =~ ^[0-9-]+$ ]]
+function second_integer {
+        [[ $second =~ ^[0-9]+$ ]]
 }
-function second_right {
-        [[ $second =~ ^[0-9-]+$ ]]
-}
-function second_wrong {
-        [[ ! $second =~ ^[0-9-]+$ ]]
+function second_integer_wrong {
+        [[ ! $second =~ ^[0-9]+$ ]]
 }
 
-#user input if empty
+#user input empty
 if [ -z "$first" ] || [ -z "$second" ]
 then
         if [ -n "$first" ] && [ -z "$second" ]
         then
                 lines
-                echo "Second number field is empty"
+                echo "User input --> Second number field is empty"
         elif [ -z "$first" ] && [ -n "$second" ]
         then
                 lines
-                echo "First number field is empty"
+                echo "User input --> First number field is empty"
         elif [ -z "$first" ] && [ -z "$second" ]
         then
                 lines
-                echo "First number field is empty"
-                echo "Second number field is empty"
-        else
-                echo "Issues with the user input"
+                echo "User input --> First number field is empty"
+                echo "User input --> Second number field is empty"
         fi
 
-#user input not empty
+#user input is not empty
+#check the user input contain only nuemric values
+#based upon the user input i.e. even or odd -- numbers are displayed. 
+
 elif [ -n "$first" ] && [ -n "$second" ]
 then
-        #check whether user input contains only numeric values
-        if first_wrong || second_wrong
+        if first_integer_wrong || second_integer_wrong
         then
-                if first_right && second_wrong
+                if first_integer && second_integer_wrong
                 then
                         lines
                         echo "Second number field must contain only numeric values"
-                elif first_wrong && second_right
+                elif first_integer_wrong && second_integer
                 then
                         lines
                         echo "First number field must contain only numeric values"
-                elif first_wrong && second_wrong
+                elif first_integer_wrong && second_integer_wrong
                 then
                         lines
                         echo "First number field must contain only numeric values"
                         echo "Second number field must contain only numeric values"
-                else
-                        lines
-                        echo "Issues with user input validation"
                 fi
-
-        #user input contains only numeric values
-        elif first_right && second_right
+        elif first_integer && second_integer
         then
                 if [ $first -eq $second ]
                 then
                         lines
                         echo "$first is equal to $second"
-                        echo "Cannot do anything"
+                        echo "Cant do anything"
                 elif [ $first -gt $second ]
                 then
                         lines
-                        echo "$first is greather than $second"
-                        echo "Cannot do anything"
+                        echo "$first number is greater than $second"
+                        echo "Cant do anything"
                 elif [ $first -lt $second ]
                 then
                         lines
                         echo "Would you like to print even or odd numbers"
-                        read option
-                        if [ "$option" == "even" ]
+                        read choice
+
+                        if [ "$choice" == "even" ]
                         then
                                 for even_numbers in $(seq $first $second)
                                 do
                                         if (($even_numbers%2==0))
                                         then
                                                 lines
-                                                echo "Even number --> $even_numbers"
-                                                sleep 0.5
+                                                echo "Even mumber --> $even_numbers"
+                                                sleep 0.3
                                         else
-                                                sleep 0.5
+                                                sleep 0.3
                                                 continue
                                         fi
-
                                 done
-                        elif [ "$option" == "odd" ]
+                        elif [ "$choice" == "odd" ]
                         then
                                 for odd_numbers in $(seq $first $second)
                                 do
                                         if (($odd_numbers%2!=0))
                                         then
                                                 lines
-                                                echo "Odd number --> $odd_numbers"
-                                                sleep 0.5
+                                                echo "Odd mumber --> $odd_numbers"
+                                                sleep 0.3
                                         else
-                                                sleep 0.5
+                                                sleep 0.3
                                                 continue
                                         fi
                                 done
@@ -121,7 +115,6 @@ then
                                 lines
                                 echo "Invalid user input"
                         fi
-
                 fi
         fi
 fi
