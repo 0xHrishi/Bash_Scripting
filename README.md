@@ -71,7 +71,7 @@ chmod +x script_name.sh
 ### 🔰 Examples
 📌 Example : Add two numbers and find the result is odd or even number --> Click here to view the full script: [sum_odd_even.sh](<sum_odd_even.sh>)  
 📌 Example : Username and UID number availablity --> Click here to view the full script: [availability_username_uid.sh](<availability_username_uid.sh>)  
-📌 Example : While loop,  Number multiplication --> Click here to view the full script: [while_number_multiplication.sh](<while_number_multiplication.sh>)
+📌 Example : While loop,  Number multiplication --> Click here to view the full script: [while_number_multiplication.sh](<while_number_multiplication.sh>)  
 📌 Example : For loop, Brute force attack on domain --> Click here to view the full script: [sub_domains.sh](<sub_domains.sh>)
 
 
