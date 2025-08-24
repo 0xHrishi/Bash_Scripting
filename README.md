@@ -59,6 +59,9 @@ chmod +x script_name.sh
 📌 Example : while --> Click here to view the full script: [while_loop.sh](<while_loop.sh>)  
 📌 Example : contunue and break --> Click here to view the full script: [continue_break.sh](<continue_break.sh>)  
 
+### 🔰 Arrays  
+📌 Example : Array --> Click here to view the full script: [array.sh](<array.sh>) 
+
 
 
 
