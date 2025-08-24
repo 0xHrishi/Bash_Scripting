@@ -16,6 +16,7 @@ read -p "Enter UID number: " uid_number
 
 #functions to check that the user input i.e username must contain only alphanumeric values 
 #function to check UID number must contain only integers
+#special characters such as underscore --    [[ ! $username =~ ^[a-zA-Z0-9_]+$ ]]
 function username_correct {
         [[ $username =~ ^[a-zA-Z0-9]+$ ]]
 }
