@@ -62,6 +62,9 @@ chmod +x script_name.sh
 ### 🔰 Arrays  
 📌 Example : Array --> Click here to view the full script: [array.sh](<array.sh>) 
 
+### 🔰 Functions  
+📌 Example : Functions --> Click here to view the full script: [functions.sh](<functions.sh>) 
+
 
 
 
