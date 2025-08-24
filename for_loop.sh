@@ -13,7 +13,7 @@ do
         echo $numbers
 done
 
-
+#Display the usernames 
 filename=/etc/passwd
 
 for usernames in $(cat $filename|cut -d ":" -f1)
