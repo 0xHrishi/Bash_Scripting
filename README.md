@@ -57,6 +57,7 @@ chmod +x script_name.sh
 ### 🔰 Loops --> for and while  
 📌 Example : for --> Click here to view the full script: [for_loop.sh](<for_loop.sh>)  
 📌 Example : while --> Click here to view the full script: [while_loop.sh](<while_loop.sh>)  
+📌 Example : contunue and break --> Click here to view the full script: [continue_break.sh](<continue_break.sh>)  
 
 
 
