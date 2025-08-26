@@ -8,9 +8,13 @@ function lines {
 
 echo "Script for zone file transfer"
 sleep 0.3
-
+#user input --> domain name 
 read -p "Enter the domain name such as google.com: " domain_name
 
+#check user input is empty
+#Find the name servers and stored them inside name_server file 
+#ask user to request a zone copy 
+#if yes, zone file transfer
 if [ -z "$domain_name" ]
 then
         echo "User input --> Domain name field empty"
