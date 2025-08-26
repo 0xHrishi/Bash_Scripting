@@ -1,39 +1,25 @@
 #!/bin/bash
 
-#In bash script there are two methods to create a function and it depends upon the user preference 
-#First method 
-function print_lines {
-        echo "*************************************"
+#non parameterized functions i.e. just display the output
+function lines {
+        echo "**************************************"
 }
 
-print_lines
+read -p "Enter the first number: " first
+read -p "Enter the second number: " second
 
-#second method
-lines(){
-        echo "*************************************"
-}
-
-lines
-
-#Functions with arguments 
+#parameterized functions i.e. take input from the user
 function add {
-        num1=$1
-        num2=$2
-        sum=$(($num1+$num2))
-        echo "$num1 plus $num2 --> $sum"
+        sum=$(($1+$2))
+        echo "$1 plus $2 --> $sum"
 }
 
-add 15 20
+add $first $second
 
-#function with arguments
-echo "Enter first number"
-read first_number
-echo "Enter second number"
-read second_number
 
 function addition {
-        sum=$(($1+$2))
-        echo "$sum"
+        result=$(($1+$2))
+        echo "$1 plus $2 --> $result"
 }
 
-addition $first_number $second_number
+addition 10 15
