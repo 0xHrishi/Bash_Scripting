@@ -15,6 +15,9 @@ echo "${array_1[@]:0:4}"
 array_1+=(36 37)
 echo "${array_1[@]}"
 
+#add a new value as per index
+array_1[0]=(40)
+echo "${array_1[@]}"
 #Replace an existing value with new value as per the index
 array_1[0]=39
 echo "${array_1[@]}"
