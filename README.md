@@ -38,6 +38,7 @@ chmod +x script_name.sh
 ### 🔰 Variables 
 📌 Example : Variables --> Click here to view the full script: [declaring_variables.sh](<declaring_variables.sh>)  
 📌 Example : Popular system defined variables --> Click here to view the full script: [system_defined_var.sh](<system_defined_var.sh>)  
+📌 Example : System defined variables --> Click here to view the full script: [system_defined_var.sh](<system_defined_var.sh>)  
 
 ### 🔰 User input
 📌 Example : User input --> Click here to view the full script: [user_input.sh](<user_input.sh>)  
