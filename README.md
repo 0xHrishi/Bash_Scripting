@@ -77,7 +77,7 @@ chmod +x script_name.sh
 📌 Example : Credit score check --> Click here to view the full script: [down_payment.sh](<down_payment.sh>)  
 📌 Example : Print even or odd numbers --> Click here to view the full script: [even_odd.sh](<even_odd.sh>)  
 📌 Example : Brute force attack on domain to find sub domains --> Click here to view the full script: [sub_domains.sh](<sub_domains.sh>)  
-📌 Example :OSCP - Zone file tarnsfer --> Click here to view the full script: [oscp_zone_file.sh](<oscp_zone_file.sh>) 
+📌 Example :OSCP - Zone file tarnsfer --> Click here to view the full script: [oscp_zone_file.sh](<oscp_zone_file.sh>)  
 📌 Example :OSCP - Network sweep --> Click here to view the full script: [network_sweep.sh](<network_sweep.sh>) 
 
 
