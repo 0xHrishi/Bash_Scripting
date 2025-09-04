@@ -82,6 +82,7 @@ chmod +x script_name.sh
 📌 Example : Keep adding numbers to the result --> Click here to view the full script: [keep_adding_numbers.sh](<keep_adding_numbers.sh>)  
 📌 Example :Basic username and password check --> Click here to view the full script: [username_password.sh](<username_password.sh>)  
 📌 Example :OSCP - Zone file tarnsfer --> Click here to view the full script: [oscp_zone_file.sh](<oscp_zone_file.sh>)  
-📌 Example :OSCP - Network sweep --> Click here to view the full script: [network_sweep.sh](<network_sweep.sh>) 
+📌 Example :OSCP - Network sweep --> Click here to view the full script: [network_sweep.sh](<network_sweep.sh>)   
+📌 Example :Keyword search --> Click here to view the full script: [keyword_search.sh](<keyword_search.sh>) 
 
 
