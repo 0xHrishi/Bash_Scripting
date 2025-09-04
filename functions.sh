@@ -5,6 +5,7 @@ function lines {
         echo "**************************************"
 }
 
+#parameterized functions i.e. take input from the user
 read -p "Enter the first number: " first
 read -p "Enter the second number: " second
 
