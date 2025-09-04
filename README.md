@@ -78,7 +78,7 @@ chmod +x script_name.sh
 📌 Example : Case statement, Arithmetic calculations --> Click here to view the full script: [calculations_with_case.sh](<calculations_with_case.sh>)  
 📌 Example : Down payment --> Click here to view the full script: [down_payment.sh](<down_payment.sh>)  
 📌 Example : Print even or odd numbers --> Click here to view the full script: [even_odd.sh](<even_odd.sh>)  
-📌 Example : Brute force attack on domain to find sub domains --> Click here to view the full script: [sub_domains.sh](<sub_domains.sh>)  
+📌 Example : Brute force attack on domain to find sub domains --> Click here to view the full script: [sub_domains.sh](<sub_domains.sh>)   
 📌 Example : Keep adding numbers to the result --> Click here to view the full script: [keep_adding_numbers.sh](<keep_adding_numbers.sh>) 
 📌 Example :Basic username and password check --> Click here to view the full script: [username_password.sh](<username_password.sh>)  
 📌 Example :OSCP - Zone file tarnsfer --> Click here to view the full script: [oscp_zone_file.sh](<oscp_zone_file.sh>)  
