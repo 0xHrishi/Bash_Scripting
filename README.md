@@ -3,7 +3,7 @@
 Welcome! 🚀  
 This repository is designed for **beginners** who want to learn Bash scripting by exploring simple and well-documented examples.  
 
-⚠️ **Note:** This repository focuses only on **Bash script examples for begineers level**.  
+⚠️ **Note:** This repository focuses only on **Bash scripting**.  
 It does **not** cover the installation of Linux or terminal basics.  
 For installation/OS setup, please check resources like YouTube or official documentation.  
 
