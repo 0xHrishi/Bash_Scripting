@@ -33,7 +33,7 @@ echo $LANG
 
 #HISTZIE --> Display the number of commands stored in the memory for the current session
 #HISTFILE --> Location of the history file
-$HISTFILEZIE --> Number of commands stored inside the history file 
+#$HISTFILEZIE --> Number of commands stored inside the history file 
 echo $HISTSIZE
 echo $HISTFILE
 echo $HISTFILESIZE
