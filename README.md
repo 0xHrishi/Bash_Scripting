@@ -70,8 +70,8 @@ chmod +x script_name.sh
 📌 Example : Lowercase and uppercase --> Click here to view the full script: [lowercase_uppercase.sh](<lowercase_uppercase.sh>) 
 
 ### 🔰 Examples
-📌 Example : Add two numbers and find the result is odd or even number --> Click here to view the full script: [sum_odd_even.sh](<sum_odd_even.sh>)   
-📌 Example : Addition until user choose to quit or provide invalid input --> Click here to view the full script: [addition_loop.sh](<addition_loop.sh>)  
+📌 Example : Add two numbers. Sum is odd or even number --> Click here to view the full script: [sum_odd_even.sh](<sum_odd_even.sh>)   
+📌 Example : Add numbers until user choose to quit --> Click here to view the full script: [addition_loop.sh](<addition_loop.sh>)  
 📌 Example : Username and UID number availablity --> Click here to view the full script: [availability_username_uid.sh](<availability_username_uid.sh>)  
 📌 Example : While loop,  Number multiplication --> Click here to view the full script: [while_number_multiplication.sh](<while_number_multiplication.sh>)  
 📌 Example : For loop, Brute force attack on domain --> Click here to view the full script: [sub_domains.sh](<sub_domains.sh>)  
