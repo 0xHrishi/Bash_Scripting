@@ -26,7 +26,7 @@ sleep 2
 #Variable created
 num=10
 
-#function created and within the function a local keyword is created with the local keyword
+#function created and within the function a local variable is created with the local keyword
 function nums {
         local num=20
         echo "Number wihtin the function --> $num"
