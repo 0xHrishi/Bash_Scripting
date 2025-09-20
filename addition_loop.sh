@@ -1,66 +1,74 @@
 #!/bin/bash
 
-#user display two numbers first and second
-#both numbers and add and the sum is added within another number as per the user choice
-#function 
+#User input two numbers i.e. first_number and second_number 
+#Sum is displayed 
+#Script ask user to enter a new number which will get added into the previous sum
+#script will keep on running, until the user would like to quit 
+
 function lines {
-        echo "**************************************"
+        echo "*************************************************"
 }
 
-#user input
-read -p "Enter the first number " first_number
-read -p "Enter the second number " second_number
-
-#user input to check the it contains only numeric values
-function first_right {
-        [[ $first_number =~ ^[0-9]+$ ]]
+#Function to make sure the user input i.e. first_number, second_number and new_number must contain only numeric values
+function first_number_right {
+        [[ $first_number =~ ^[0-9-]+$ ]]
 }
-function first_wrong {
-        [[ ! $first_number =~ ^[0-9]+$ ]]
+function first_number_wrong {
+        [[ ! $first_number =~ ^[0-9-]+$ ]]
 }
-function second_right {
-        [[ $second_number =~ ^[0-9]+$ ]]
+function second_number_right {
+        [[ $second_number =~ ^[0-9-]+$ ]]
 }
-function second_wrong {
-        [[ ! $second_number =~ ^[0-9]+$ ]]
+function second_number_wrong {
+        [[ ! $second_number =~ ^[0-9-]+$ ]]
 }
-
-#function to go through the additon process once again 
-#add the number to the result(sum) of first and second number
-function addition_again {
-        while [ "$option" == "y" ]
-        do
-                lines
-                echo "Enter the number"
-                read number
-                result=$(($sum+$number))
-                echo "$sum plus $number --> $result"
-                sum=$result
-                again
-        done
+function new_number_right {
+        [[ $new_number =~ ^[0-9-]+$ ]]
+}
+function new_number_wrong {
+        [[ ! $new_number =~ ^[0-9-]+$ ]]
 }
 
-#function to check whether the user would like to go through the additon once again 
+#Funtion if user would like to enter a new number which get added to previous result 
+#If user would like to continue, then the script will ask the user to enter a new number which will get added with previous sum 
+#If user does not want to continue or user provides invalid input, the script ends. 
+function try_again {
+        echo "Would you like to enter a new number and add into result y/n?"
+        read choice
 
-function again {
-        echo "Would you like to try again ? y/n"
-        read option
-
-        if [ "$option" == "y" ]
-        then
-                addition_again
-
-        elif [ "$option" == "n" ]
+        if [ "$choice" == "n" ]
         then
                 lines
                 echo "You choose to quit"
+        elif [ "$choice" == "y" ]
+        then
+                lines
+                read -p "Enter a new number: " new_number
+                if new_number_right
+                then
+                        result=$(($new_number+$sum))
+                        echo "Previous result:$sum plus new number:$new_number --> $result"
+                        sum=$result
+                        try_again
+                elif new_number_wrong
+                then
+                        lines
+                        echo "User input --> New number must contain only numeric values"
+                        try_again
+                fi
+
         else
                 lines
                 echo "Invalid user input"
         fi
+
 }
 
-#check user input, for any empty
+#user input --> First and second number
+read -p "Enter the first number:" first_number
+read -p "Enter the second number:" second_number
+
+#check whether the user input is empty or not
 if [ -z "$first_number" ] || [ -z "$second_number" ]
 then
         if [ -n "$first_number" ] && [ -z "$second_number" ]
@@ -78,33 +86,33 @@ then
                 echo "User input --> Second number field is empty"
         fi
 
-#user input is not empty 
-#also check the user contain only numeric values 
-#addition
+#User input is not empty
+#Also check whether the user provided only numeric values instead of sepcial characters or alphabets
 elif [ -n "$first_number" ] && [ -n "$second_number" ]
 then
-        if first_wrong || second_wrong
+        if first_number_wrong || second_number_wrong
         then
-                if first_right && second_wrong
+                if first_number_right && second_number_wrong
                 then
                         lines
-                        echo "Second number field must contain only numeric values"
-                elif first_wrong && second_right
+                        echo "User input --> Second number field must contaon only numeric values"
+                elif first_number_wrong && second_number_right
                 then
                         lines
-                        echo "First number field must contain only numeric values"
-                elif first_wrong && second_right
+                        echo "User input --> First number field must contaon only numeric values"
+                elif first_number_wrong && second_number_wrong
                 then
                         lines
-                        echo "First number field must contain only numeric values"
-                        echo "Second number field must contain only numeric values"
+                        echo "User input --> First number field must contaon only numeric values"
+                        echo "User input --> Second number field must contaon only numeric values"
                 fi
-        elif first_right && second_right
+        elif first_number_right && second_number_right
         then
+                lines
                 sum=$(($first_number+$second_number))
-                echo "$first_number plus $second_number --> $sum"
-                again
+                echo "First number:$first_number plus Second number:$second_number --> $sum"
+                try_again
         fi
 
-
 fi
+
