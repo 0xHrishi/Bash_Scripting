@@ -10,6 +10,7 @@ number=10
 # Now the variable name within the function is same as the previous, so it will be a gloabl variable 
 function numbers {
         number=20
+        echo "Number within the function --> $number"
 }
 
 echo "Number before the function called --> $number"
@@ -18,15 +19,17 @@ echo "Number after the function called --> $number"
 
 #Output
 #Number before the function called --> 10
+#Number within the function --> 20
 #Number after the function called --> 20
 
 echo "*********************************************************************************"
 sleep 2
 
+#Local variable concept 
 #Variable created
 num=10
 
-#function created and within the function a local variable is created with the local keyword
+#local variable created withhin the function with local keyword
 function nums {
         local num=20
         echo "Number wihtin the function --> $num"
