@@ -1,68 +1,66 @@
 #!/bin/bash
-#Very basic script to display arithmetic operators 
-#Basic such as for addition, subtraction, multiplication, power, divide for quotient and remainder
+#
+# Title: Basic Arithmetic Operations in Bash
+#   This script demonstrates basic arithmetic operations using Bash.
 
-#function to display lines
 function lines {
         echo "*************************************************"
 }
 
-#User input i.e. first_number and second_number
+# Function to check if the first number is numeric
+# Function to check if the second number is numeric
+function first_number_right {
+        [[ $first_number =~ ^[0-9]+$ ]]
+}
+function second_number_right {
+        [[ $second_number =~ ^[0-9]+$ ]]
+}
+
+# Display title and initial instructions
+echo "Arithmetic operations"
+echo "Enter any number except 0"
+sleep 1
+lines
 read -p "Enter the first number: " first_number
 read -p "Enter the second number: " second_number
 
-#function to check first and second_number contain only numeric values
-#If not, display error
-function first_number_right {
-        [[ $first_number =~ ^[0-9-]+$ ]]
-}
-function first_number_wrong {
-        [[ ! $first_number =~ ^[0-9-]+$ ]]
-}
-function second_number_right {
-        [[ $second_number =~ ^[0-9-]+$ ]]
-}
-function second_number_wrong {
-        [[ ! $second_number =~ ^[0-9-]+$ ]]
-}
-
-#User input empty 
+# Check if either input is empty
 if [ -z "$first_number" ] || [ -z "$second_number" ]
 then
-        if [ -z "$first_number" ] && [ -n "$second_number" ]
-        then
-                lines
-                echo "User input --> First number field is empty"
-        elif [ -n "$first_number" ] && [ -z "$second_number" ]
+        if [ -n "$first_number" ] && [ -z "$second_number" ]
         then
                 lines
                 echo "User input --> Second number field is empty"
+        elif [ -z "$first_number" ] && [ -n "$second_number" ]
+        then
+                lines
+                echo "User input --> First number field is empty"
         elif [ -z "$first_number" ] && [ -z "$second_number" ]
         then
                 lines
                 echo "User input --> First number field is empty"
                 echo "User input --> Second number field is empty"
         fi
-#User input is not empty
-#Also check, the user input must contain only numeric values
-#If contain only numeric values, than do arithmetic operations such as addition, subtraction, multiplication, power, divide for quotient and remainder
+# If both inputs are non-empty, validate numeric values
+# If both inputs are valid, perform arithmetic operations
+
 elif [ -n "$first_number" ] && [ -n "$second_number" ]
 then
-        if first_number_wrong || second_number_wrong
+        if ! first_number_right || ! second_number_right
         then
-                if first_number_right && second_number_wrong
+                if first_number_right && ! second_number_right
                 then
                         lines
-                        echo "User input --> Second number field must contain only numeric values"
-                elif first_number_wrong && second_number_right
+                        echo "Second number field must contain only numeric values"
+                elif ! first_number_right && second_number_right
                 then
                         lines
-                        echo "User input --> First number field must contain only numeric values"
-                elif first_number_wrong && second_number_wrong
+                        echo "First number field must contain only numeric values"
+                elif ! first_number_right && ! second_number_right
                 then
                         lines
-                        echo "User input --> First number field must contain only numeric values"
-                        echo "User input --> Second number field must contain only numeric values"
+                        echo "First number field must contain only numeric values"
+                        echo "Second number field must contain only numeric values"
                 fi
         elif first_number_right && second_number_right
         then
@@ -77,8 +75,8 @@ then
                 echo "First number:$first_number subtract Second number:$second_number --> $subtract"
                 echo "First number:$first_number multiply Second number:$second_number --> $multiply"
                 echo "First number:$first_number power Second number:$second_number --> $power"
-                echo "First number:$first_number divide (Quotient) Second number:$second_number --> $quotient"
-                echo "First number:$first_number divide (Remainder) Second number:$second_number --> $remainder"
-
+                echo "First number:$first_number divide (quotient) Second number:$second_number --> $quotient"
+                echo "First number:$first_number divide (remainder) Second number:$second_number --> $remainder"
         fi
 fi
+
