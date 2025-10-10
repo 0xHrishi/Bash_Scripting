@@ -1,13 +1,11 @@
 #!/bin/bash
-#Example for global and local variable
+#Example of global variable
 #Global variable can be used within as well as outside the function
-#local variable is cerated within the function with the local keyword and can be used within the function only 
 
 #variable created 
 number=10
 
-#function created and within function a variable is created
-# Now the variable name within the function is same as the previous, so it will be a gloabl variable 
+#function created and a variable which is global
 function numbers {
         number=20
         echo "Number within the function --> $number"
