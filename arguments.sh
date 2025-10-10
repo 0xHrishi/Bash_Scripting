@@ -6,3 +6,4 @@ $0 --> Name of the script
 $? --> Exit status of the previous command 
 $# --> Total number of arguments 
 $@ --> Display all the arguments 
+$$ --> Process identification number of the bash script
