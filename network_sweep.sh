@@ -1,5 +1,22 @@
 #!/bin/bash
 
+# ============================================================
+# Title: Simple Fast Network Scanner
+# Author: Hrishi Ghosalkar
+# Description:
+#   This script scans a range of IP addresses within a given network prefix using ICMP ping requests. It runs probes
+#   in parallel for speed and writes responsive hosts to
+#   'active_hosts.txt'.
+#
+# Usage:
+#   ./network_sweep.sh#
+# Example:
+#   Enter network (e.g. 192.168.1): 192.168.0
+#   Enter first host: 1
+#   Enter last host: 50
+
+# ============================================================
+
 #Prompt user to enter input i.e. network part, first and last host
 read -p "Enter the host part i.e. 1.1.1 : " network
 read -p "Enter the first host : " first
