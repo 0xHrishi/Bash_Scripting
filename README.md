@@ -43,6 +43,8 @@ chmod +x script_name.sh
 ### 🔰 User input
 📌 Example : User input --> Click here to view the full script: [user_input.sh](<user_input.sh>)  
 
+### 🔰 Display text
+📌 Example : Display text --> Click here to view the full script: [display_text.sh](<display_text.sh>)  
 
 ### 🔰 Operators
 📌 Example : Arithmetic --> Click here to view the full script: [arithmetic_operators.sh](<arithmetic_operators.sh>)  
