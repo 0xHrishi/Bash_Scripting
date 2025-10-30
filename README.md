@@ -19,7 +19,7 @@ For installation/OS setup, please check resources like YouTube or official docum
 
 ## 🚀 How to Run
 
-You can run the scripts in **Linux 🐧**, **macOS 🍎**, or **WSL (Windows Subsystem for Linux)**:
+You can run the scripts in **Linux 🐧**, or **macOS 🍎**:
 
 ```bash
 # 1️⃣ Make the script executable
