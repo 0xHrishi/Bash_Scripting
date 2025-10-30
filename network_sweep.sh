@@ -1,129 +1,127 @@
 #!/bin/bash
 
-#oscp exercise for network sweeping i.e. to identify active hosts
+#Prompt user to enter input i.e. network part, first and last host
+read -p "Enter the host part i.e. 1.1.1 : " network
+read -p "Enter the first host : " first
+read -p "Enter the last host : " last
 
+# Simple helper function to print a separator line
 function lines {
-        echo "**************************************"
+        echo "***********************************************************"
 }
 
-read -p "Enter the network address such as 192.168.100: " network
-read -p "Enter the first host: " first
-read -p "Enter the last host: " last
-
-function network_right {
+# network_check: ensure the network part contain only numeric values
+function network_check {
         [[ $network =~ ^[0-9.]+$ ]]
 }
-function network_wrong {
-        [[ ! $network =~ ^[0-9.]+$ ]]
-}
-function first_right {
+# first_check: ensure "first" is numeric
+function first_check {
         [[ $first =~ ^[0-9]+$ ]]
 }
-function first_wrong {
-        [[ ! $first =~ ^[0-9]+$ ]]
-}
-function last_right {
+# last_check: ensure "last" is numeric
+function last_check {
         [[ $last =~ ^[0-9]+$ ]]
 }
-function last_wrong {
-        [[ ! $last =~ ^[0-9]+$ ]]
-}
 
-
+# ------------------------------------------------------------------
+#User input check
+# If any user input is empty, display error message
+# ------------------------------------------------------------------
 if [ -z "$network" ] || [ -z "$first" ] || [ -z "$last" ]
 then
-        if [ -n "$network" ] && [ -n "$first" ] && [ -z "$last" ]
+        if [ -n "$network" ] && [ -z "$first" ] && [ -z "$last" ]
         then
                 lines
-                echo "User input --> Last host field is empty"
-        elif [ -n "$network" ] && [ -z "$first" ] && [ -z "$last" ]
+                echo "First host field is empty"
+                echo "Last host field is empty"
+        elif [ -n "$network" ] && [ -n "$first" ] && [ -z "$last" ]
         then
                 lines
-                echo "User input --> First host field is empty"
-                echo "User input --> Last host field is empty"
-        elif [ -z "$network" ] && [ -n "$first" ] && [ -n "$last" ]
-        then
-                lines
-                echo "User input --> Network field is empty"
-        elif [ -z "$network" ] && [ -z "$first" ] && [ -n "$last" ]
-        then
-                lines
-                echo "User input --> Network field is empty"
-                echo "User input --> First host field is empty"
-        elif [ -z "$network" ] && [ -n "$first" ] && [ -z "$last" ]
-        then
-                lines
-                echo "User input --> Network field is empty"
-                echo "User input --> Last host field is empty"
+                echo "Last host field is empty"
         elif [ -n "$network" ] && [ -z "$first" ] && [ -n "$last" ]
         then
                 lines
-                echo "User input --> First host field is empty"
+                echo "First host field is empty"
+        elif [ -z "$network" ] && [ -n "$first" ] && [ -n "$last" ]
+        then
+                lines
+                echo "Network field is empty"
+        elif [ -z "$network" ] && [ -z "$first" ] && [ -n "$last" ]
+        then
+                lines
+                echo "Network field is empty"
+                echo "First host field is empty"
+        elif [ -z "$network" ] && [ -n "$first" ] && [ -z "$last" ]
+        then
+                lines
+                echo "Network field is empty"
+                echo "Last host field is empty"
         elif [ -z "$network" ] && [ -z "$first" ] && [ -z "$last" ]
         then
                 lines
-                echo "User input --> Network field is empty"
-                echo "User input --> First host field is empty"
-                echo "User input --> Last host field is empty"
+                echo "Network field is empty"
+                echo "First host field is empty"
+                echo "Last host field is empty"
         fi
 
+# ------------------------------------------------------------------
+# Check user input i.e. it contains only nuemric values
+# If pass all conditions -- Loop through the host numbers using seq
+# Check the exit status of ping to determine reachability
+# ------------------------------------------------------------------
 elif [ -n "$network" ] && [ -n "$first" ] && [ -n "$last" ]
 then
-        if network_wrong || first_wrong || last_wrong
+        if ! network_check || ! first_check || ! last_check
         then
-                if network_right && first_right && last_wrong
+                if network_check && ! first_check && ! last_check
                 then
                         lines
-                        echo "Last host must contain only numeric values"
-                elif network_right && first_wrong && last_wrong
+                        echo "Kindly check first host field input"
+                        echo "Kindly check last host field input"
+                elif network_check && first_check && ! last_check
                 then
                         lines
-                        echo "First host must contain only numeric values"
-                        echo "Last host must contain only numeric values"
-                elif network_wrong && first_right && last_right
+                        echo "Kindly check last host field input"
+                elif network_check && ! first_check && last_check
                 then
                         lines
-                        echo "Network field must contain only numeric values"
-                elif network_wrong && first_wrong && last_right
+                        echo "Kindly check first host field input"
+                elif ! network_check && ! first_check && last_check
                 then
                         lines
-                        echo "Network field must contain only numeric values"
-                        echo "First host must contain only numeric values"
-                elif network_wrong && first_right && last_wrong
+                        echo "Kindly check network field input"
+                        echo "Kindly check first host field input"
+                elif ! network_check && first_check && ! last_check
                 then
                         lines
-                        echo "Network field must contain only numeric values"
-                        echo "Last host must contain only numeric values"
-                elif network_wrong && first_right && last_right
+                        echo "Kindly check network field input"
+                        echo "Kindly check last host field input"
+                elif ! network_check && ! first_check && ! last_check
                 then
                         lines
-                        echo "Network field must contain only numeric values"
-                elif network_wrong && first_wrong && last_wrong
-                then
-                        lines
-                        echo "Network field must contain only numeric values"
-                        echo "First host must contain only numeric values"
-                        echo "Last host must contain only numeric values"
+                        echo "Kindly check network field input"
+                        echo "Kindly check first host field input"
+                        echo "Kindly check last host field input"
                 fi
-        elif network_right && first_right && last_right
-        then
-                echo "Please wait, checking for active hosts"
-                for host_alive in $(seq $first $last)
-                do
-                        ping -c 1 $network.$host_alive | grep -i "64 bytes" | cut -d " " -f4 | tr -d ":" >> active_hosts 2>/dev/null &
-                        sleep 0.2
-                done
 
-                if [ -s active_hosts ] && [ -f active_hosts ]
-                then
+        elif network_check && first_check && last_check
+        then
+                for ip in $(seq $first $last)
+                do
                         lines
-                        echo "Host active"
-                        cat active_hosts | sort | uniq
-                else
-                        lines
-                        echo "Not active hosts found"
-                fi
+                        echo "Checking $network.$ip"
+
+                        ping -c 2 $network.$ip  &> /dev/null
+
+                        if [ $? -eq 0 ]
+                        then
+                                echo "$network.$ip -- Active"
+                                ping -c 2 $network.$ip | grep -i "64 bytes" | cut -d " " -f4 | tr ":" " " | uniq > ip_address &
+                        else
+                                echo "$network.$ip --> Not responding to ICMP probes"
+                                continue
+                        fi
+
+                done
         fi
 fi
-rm -rf ./1
-rm -rf ./active_hosts
