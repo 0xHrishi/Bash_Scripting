@@ -116,7 +116,7 @@ then
                         if [ $? -eq 0 ]
                         then
                                 echo "$network.$ip -- Active"
-                                ping -c 2 $network.$ip | grep -i "64 bytes" | cut -d " " -f4 | tr ":" " " | uniq > ip_address &
+                                ping -c 2 $network.$ip | grep -i "64 bytes" | cut -d " " -f4 | tr ":" " " | uniq >> ip_address &
                         else
                                 echo "$network.$ip --> Not responding to ICMP probes"
                                 continue
