@@ -1,114 +1,109 @@
 #!/bin/bash
 
-#Script output -- even or odd numbers based upon the user input 
+# This script accepts two numbers and prints either even or odd numbers between them (based on user choice). 
 
-#function
 function lines {
-        echo "**************************************"
+        echo "******************************************************************************"
 }
 
-#user input
-read -p "Enter the first number: " first
-read -p "Enter the second number: " second
+echo "Print even or odd numbers, First number must be greather than second number"
+sleep 0.2
 
-#check the user input only contains numeric values
-function first_integer {
-        [[ $first =~ ^[0-9]+$ ]]
+# Prompt user input
+read -p "Enter the first number: " first_number
+read -p "Enter the second number: " second_number
+
+# Function to check user input is correct i.e. only numeric values
+function first_number_check {
+        [[ $first_number =~ ^[0-9-]+$ ]]
 }
-function first_integer_wrong {
-        [[ ! $first =~ ^[0-9]+$ ]]
-}
-function second_integer {
-        [[ $second =~ ^[0-9]+$ ]]
-}
-function second_integer_wrong {
-        [[ ! $second =~ ^[0-9]+$ ]]
+function second_number_check {
+        [[ $second_number =~ ^[0-9-]+$ ]]
 }
 
-#user input empty
-if [ -z "$first" ] || [ -z "$second" ]
+# If user input is empty
+if [ -z "$first_number" ] || [ -z "$second_number" ]
 then
-        if [ -n "$first" ] && [ -z "$second" ]
+        if [ -n "$first_number" ] && [ -z "$second_number" ]
         then
                 lines
                 echo "User input --> Second number field is empty"
-        elif [ -z "$first" ] && [ -n "$second" ]
+        elif [ -z "$first_number" ] && [ -n "$second_number" ]
         then
                 lines
                 echo "User input --> First number field is empty"
-        elif [ -z "$first" ] && [ -z "$second" ]
+        elif [ -z "$first_number" ] && [ -z "$second_number" ]
         then
                 lines
                 echo "User input --> First number field is empty"
                 echo "User input --> Second number field is empty"
         fi
 
-#user input is not empty
-#check the user input contain only nuemric values
-#based upon the user input i.e. even or odd -- numbers are displayed. 
+# If both inputs are non-empty, proceed with numeric validation
+# Numeric Validation Passed — Proceed with Comparison
+# Based upon user input, print odd or even numbers 
 
-elif [ -n "$first" ] && [ -n "$second" ]
+elif [ -n "$first_number" ] && [ -n "$second_number" ]
 then
-        if first_integer_wrong || second_integer_wrong
+        if ! first_number_check || ! second_number_check
         then
-                if first_integer && second_integer_wrong
+                if first_number_check && ! second_number_check
                 then
                         lines
                         echo "Second number field must contain only numeric values"
-                elif first_integer_wrong && second_integer
+                elif ! first_number_check && second_number_check
                 then
                         lines
                         echo "First number field must contain only numeric values"
-                elif first_integer_wrong && second_integer_wrong
+                elif ! first_number_check && ! second_number_check
                 then
                         lines
                         echo "First number field must contain only numeric values"
                         echo "Second number field must contain only numeric values"
                 fi
-        elif first_integer && second_integer
+        elif first_number_check && second_number_check
         then
-                if [ $first -eq $second ]
+                if [ $first_number -eq $second_number ]
                 then
                         lines
-                        echo "$first is equal to $second"
-                        echo "Cant do anything"
-                elif [ $first -gt $second ]
+                        echo "First number: $first_number is equal to Second number: $second_number"
+                elif [ $first_number -gt $second_number ]
                 then
                         lines
-                        echo "$first number is greater than $second"
-                        echo "Cant do anything"
-                elif [ $first -lt $second ]
+                        echo "First number: $first_number is greather than Second number: $second_number"
+                elif [ $first_number -lt $second_number ]
                 then
                         lines
-                        echo "Would you like to print even or odd numbers"
-                        read choice
+                        echo "Would you like to print even or odd numbers?"
+                        read option
 
-                        if [ "$choice" == "even" ]
+                        if [ "$option" == "even" ]
                         then
-                                for even_numbers in $(seq $first $second)
+                                for even_numbers in $(seq $first_number $second_number)
                                 do
                                         if (($even_numbers%2==0))
                                         then
                                                 lines
-                                                echo "Even mumber --> $even_numbers"
+                                                echo "Even number --> $even_numbers"
                                                 sleep 0.3
+                                                continue
                                         else
                                                 sleep 0.3
                                                 continue
                                         fi
                                 done
-                        elif [ "$choice" == "odd" ]
+                        elif [ "$option" == "odd" ]
                         then
-                                for odd_numbers in $(seq $first $second)
+                                for odd_numbers in $(seq $first_number $second_number)
                                 do
                                         if (($odd_numbers%2!=0))
                                         then
                                                 lines
-                                                echo "Odd mumber --> $odd_numbers"
-                                                sleep 0.3
-                                        else
+                                                echo "Odd number --> $odd_numbers"
                                                 sleep 0.3
                                                 continue
+                                        else
+                                                sleep 0.3
                                         fi
                                 done
                         else
