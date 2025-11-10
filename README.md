@@ -87,6 +87,7 @@ chmod +x script_name.sh
 📌 Example : OSCP - Zone file tarnsfer --> Click here to view the full script: [oscp_zone_file.sh](<oscp_zone_file.sh>)  
 📌 Example : OSCP - Network sweep --> Click here to view the full script: [network_sweep.sh](<network_sweep.sh>)   
 📌 Example : OSCP - Search JavaScript files --> Click here to view the full script: [js_script.sh](<js_script.sh>)  
-📌 Example : Keyword search --> Click here to view the full script: [keyword_search.sh](<keyword_search.sh>) 
+📌 Example : Keyword search --> Click here to view the full script: [keyword_search.sh](<keyword_search.sh>)  
+📌 Example : Locate files --> Click here to view the full script: [find_files.sh](<find_files.sh>)  
 
 
