@@ -1,47 +1,45 @@
 #!/bin/bash
-#Brute force attack on domain to find different hostname 
+#This script checks if subdomains (listed in a file) have public DNS records.
 function lines {
-        echo "*********************************************"
+        echo "******************************************************************************"
 }
 
-#user input
-read -p "Enter the domain such as google.com: " domain_name
-read -p "Enter the filepath for brute force attack: " filepath
+# User prompt 
+read -p "Enter the domain name example - google.com: " domain_name
+read -p "Enter the filename with its full path: " file
 
-#check any user input missing
-if [ -z "$domain_name" ] ||  [ -z "$filepath" ]
+#Validate user input (both fields must not be empty)
+if [ -z "$domain_name" ] || [ -z "$file" ]
 then
-        if [ -n "$domain_name" ] &&  [ -z "$filepath" ]
+        if [ -n "$domain_name" ] && [ -z "$file" ]
         then
                 lines
-                echo "User input --> Filepath field is empty"
-        elif [ -z "$domain_name" ] &&  [ -n "$filepath" ]
+                echo "User input -- File name field is empty"
+        elif [ -z "$domain_name" ] && [ -n "$file" ]
         then
                 lines
-                echo "User input --> Domain name field is empty"
-        elif [ -z "$domain_name" ] &&  [ -z "$filepath" ]
+                echo "User input -- Domain name field is empty"
+        elif [ -z "$domain_name" ] && [ -z "$file" ]
         then
                 lines
-                echo "User input --> Domain name field is empty"
-                echo "User input --> Filepath field is empty"
+                echo "User input -- Domain name field is empty"
+                echo "User input -- File name field is empty"
         fi
 
-#user supplied input
-#check the filepath is a regular file or directory
-#If regular file, brute force attack on domain 
-#resolves the domain to IP address which indicates its a functional server 
-
-elif [ -n "$domain_name" ] &&  [ -n "$filepath" ]
+# Continue only if both inputs are provided
+# Check if the given file exists
+# Perform DNS lookup for subdomain.domain_name
+elif [ -n "$domain_name" ] && [ -n "$file" ]
 then
-        if [ -e $filepath ]
+        if [ -e "$file" ]
         then
-                if [ -d $filepath ]
+                if [ -d "$file" ]
                 then
                         lines
-                        echo "Its a directory --> $filepath"
-                elif [ -f $filepath ] && [ -s $filepath ]
+                        echo "$file -- Its a directory"
+                elif [ -s "$file" ] && [ -f "$file" ]
                 then
-                        for sub_domains in $(cat $filepath)
+                        for sub_domains in $(cat $file)
                         do
                                 host $sub_domains.$domain_name &>/dev/null
 
@@ -49,21 +47,18 @@ then
                                 then
                                         lines
                                         host $sub_domains.$domain_name
-                                        sleep 0.3
+                                        sleep 0.2
+                                        continue
                                 else
                                         lines
-                                        echo "$sub_domains.$domain_name not found"
-                                        sleep 0.3
+                                        echo "$sub_domains.$domain_name -- NO PUBLIC DNS RECORDS"
+                                        sleep 0.2
+                                        continue
                                 fi
-
                         done
-
-                else
-                        lines
-                        echo "File found, unable to identify the file type --> $filepath"
                 fi
         else
                 lines
-                echo "File not found --> $filepath"
+                echo "$file -- Not found"
         fi
 fi
