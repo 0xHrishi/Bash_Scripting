@@ -1,132 +1,55 @@
 #!/bin/bash
 
+# Performs reverse DNS lookup for a given network (x.x.x.1 to x.x.x.255)
 function lines {
-        echo "******************************************"
+        echo "******************************************************************************"
 }
 
-echo "Enter the first, second and third i.e. 1.1.1"
-read ip_address
-echo "Enter the fourth octet range i.e. start from"
-read first
-echo "Enter the fourth octet range i.e. end"
-read last
-
-
-function ip_address_right {
-        [[ $ip_address =~ ^[0-9.]+$ ]]
-}
-function ip_address_wrong {
-        [[ ! $ip_address =~ ^[0-9.]+$ ]]
-}
-function first_right {
-        [[ $first =~ ^[0-9]+$ ]]
-}
-function first_wrong {
-        [[ ! $first =~ ^[0-9]+$ ]]
-}
-function last_right {
-        [[ $last =~ ^[0-9]+$ ]]
-}
-function last_wrong {
-        [[ ! $last =~ ^[0-9]+$ ]]
+# Validate that user input contains only digits and dots 
+function network_check {
+        [[ $network =~ ^[0-9.]+$ ]]
 }
 
-if [ -z "$ip_address" ] || [ -z "$first" ] || [ -z "$last" ]
+# User input
+read -p "Enter the network part example - 1.1.1: " network
+
+# If user input is empty
+if [ -z "$network" ]
 then
-        if [ -n "$ip_address" ] && [ -z "$first" ] && [ -z "$last" ]
-        then
-                lines
-                echo "Fourth octet range field empty i.e. start from"
-                echo "Fourth octet range field empty i.e. end"
-        elif [ -n "$ip_address" ] && [ -n "$first" ] && [ -z "$last" ]
-        then
-                lines
-                echo "Fourth octet range field empty i.e. end"
-        elif [ -n "$ip_address" ] && [ -z "$first" ] && [ -n "$last" ]
-        then
-                lines
-                echo "Fourth octet range field empty i.e. start from"
-        elif [ -z "$ip_address" ] && [ -n "$first" ] && [ -n "$last" ]
-        then
-                lines
-                echo "First,second and third octet field empty"
-        elif [ -z "$ip_address" ] && [ -z "$first" ] && [ -n "$last" ]
-        then
-                lines
-                echo "First,second and third octet field empty"
-                echo "Fourth octet range field empty i.e. start from"
-        elif [ -z "$ip_address" ] && [ -n "$first" ] && [ -z "$last" ]
-        then
-                lines
-                echo "First,second and third octet field empty"
-                echo "Fourth octet range field empty i.e. end"
-        elif [ -z "$ip_address" ] && [ -z "$first" ] && [ -z "$last" ]
-        then
-                lines
-                echo "First,second and third octet field empty"
-                echo "Fourth octet range field empty i.e. start from"
-                echo "Fourth octet range field empty i.e. end"
-        else
-                lines
-                echo "Issues with the user input"
-        fi
-elif [ -n "$ip_address" ] && [ -n "$first" ] && [ -n "$last" ]
+        lines
+        echo "User input -- Network field is empty"
+
+# User input is not empty
+# If input is provided, validate format
+# If validation passes, start reverse DNS lookups
+# Try to resolve host using DNS (suppress errors)
+
+elif [ -n "$network" ]
 then
-        if ip_address_wrong || first_wrong || last_wrong
+        if ! network_check
         then
-                if ip_address_right && first_wrong && last_wrong
-                then
-                        lines
-                        echo "User input --> Fourth octet --> first range must include numeric values"
-                        echo "User input --> Fourth octet --> Last range must include numeric values"
-                elif ip_address_right && first_right && last_wrong
-                then
-                        lines
-                        echo "User input --> Fourth octet --> Last range must include numeric values"
-                elif ip_address_right && first_last && last_right
-                then
-                        lines
-                        echo "User input --> Fourth octet --> first range must include numeric values"
-                elif ip_address_wrong && first_right && last_right
-                then
-                        lines
-                        echo "User input --> First,second,third octet must include numeric values"
-                elif ip_address_wrong && first_wrong && last_right
-                then
-                        lines
-                        echo "User input --> First,second,third octet must include numeric values"
-                        echo "User input --> Fourth octet --> first range must include numeric values"
-                elif ip_address_wrong && first_right && last_wrong
-                then
-                        lines
-                        echo "User input --> First,second,third octet must include numeric values"
-                        echo "User input --> Fourth octet --> last range must include numeric values"
-                elif ip_address_wrong && first_wrong && last_wrong
-                then
-                        lines
-                        echo "User input --> First,second,third octet must include numeric values"
-                        echo "User input --> Fourth octet --> first range must include numeric values"
-                        echo "User input --> Fourth octet --> last range must include numeric values"
-                else
-                        lines
-                        echo "Issues with the user input validation"
-                fi
-        elif ip_address_right && first_right && last_right
+                lines
+                echo "Network field must contain only numeric values"
+        elif network_check
         then
-                for reverse_lookup in $(seq $first $last)
+                for reverse_lookup in $(seq 1 255)
                 do
-                        host $ip_address.$reverse_lookup &>/dev/null
+                        host $network.$reverse_lookup &>/dev/null
+
                         if [ $? -eq 0 ]
                         then
                                 lines
-                                host $ip_address.$reverse_lookup
+                                host $network.$reverse_lookup
                                 sleep 0.2
                                 continue
                         else
+                                lines
+                                echo "$network.$reverse_lookup -- NO RECORDS"
                                 sleep 0.2
                                 continue
                         fi
 
                 done
         fi
+
 fi
