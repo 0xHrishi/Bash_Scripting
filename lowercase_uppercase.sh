@@ -1,23 +1,38 @@
 #!/bin/bash
-#script helps to check whether user input is upper or in lower case 
 
-echo "Enter your name"
+# This script reads the user's full name, checks if it's in lowercase or uppercase, and converts it to the opposite case.
+
+function lines {
+        echo "**************************************************"
+}
+
+# Prompt the user for input
+echo "Enter your full name in lower or upper case"
 read name
 
-#condition to check userinput is in lowercase
-if [ "$name" == "${name,,}" ]
+# Check if the user entered something
+if [ -z "$name" ]
 then
-        echo "Your name: $name in lower case"
-#condition to check user input is in uppercase
-elif [ "$name" == "${name^^}" ]
+        lines
+        echo "User input -- Name field is empty"
+
+# User input not empty 
+# Compare input with its lowercase version
+# Compare input with its uppercase version
+
+elif [ -n "$name" ]
 then
-        echo "Your name: $name in upper case"
+        if [ "$name" == "${name,,}" ]
+        then
+                lines
+                echo "Your name in lower case -- $name"
+                echo "Lets convert to uppercase -- ${name^^}"
+        elif [ "$name" == "${name^^}" ]
+        then
+                lines
+                echo "Your name in upper case -- $name"
+                echo "Lets convert to lowercase -- ${name,,}"
+        fi
+
 fi
 
-#condition to check whether the first word in user input is capital  
-if [ "$name" == "${name^}" ]
-then
-        echo "First letter in name is capitalize"
-else
-        echo "First letter in name is not capitalize"
-fi
