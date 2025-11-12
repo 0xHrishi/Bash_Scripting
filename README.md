@@ -69,7 +69,8 @@ chmod +x script_name.sh
 📌 Example : Functions --> Click here to view the full script: [functions.sh](<functions.sh>) 
 
 ### 🔰 Extras  
-📌 Example : Lowercase and uppercase --> Click here to view the full script: [lowercase_uppercase.sh](<lowercase_uppercase.sh>) 
+📌 Example : Lowercase and uppercase --> Click here to view the full script: [lowercase_uppercase.sh](<lowercase_uppercase.sh>)   
+📌 Example : Length of the string --> Click here to view the full script: [length_of_string.sh](<length_of_string.sh>)
 
 ### 🔰 Examples
 📌 Example : Add two numbers. Sum is odd or even number --> Click here to view the full script: [sum_odd_even.sh](<sum_odd_even.sh>)   
