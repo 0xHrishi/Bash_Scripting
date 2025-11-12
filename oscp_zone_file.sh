@@ -1,56 +1,60 @@
 #!/bin/bash
 
-#zone file transfer for oscp exercise 
+# Checks domain reachability, lists name servers, and optionally attempts a DNS zone transfer.
 
 function lines {
-        echo "**************************************"
+        echo "**************************************************"
 }
 
-echo "Script for zone file transfer"
-sleep 0.3
-#user input --> domain name 
-read -p "Enter the domain name such as google.com: " domain_name
+# Prompt user for domain name
+read -p "Enter the domain name example abc.com: " domain_name
 
-#check user input is empty
-#Find the name servers and stored them inside name_server file 
-#ask user to request a zone copy 
-#if yes, zone file transfer
+# Check if domain name is empty
 if [ -z "$domain_name" ]
 then
-        echo "User input --> Domain name field empty"
-else
         lines
-        echo "Name servers for the $domain_name"
-        host -t ns $domain_name | cut -d " " -f4 | cut -d "." -f1-3
-        host -t ns $domain_name | cut -d " " -f4 | cut -d "." -f1-3 > name_server
-        lines
-        echo "Would you like to attempt zone file transfer ? y/n"
-        read option
-        if [ "$option" == "n" ]
-        then
-                lines
-                echo "You choose to exit, bye"
-        elif [ "$option" == "y" ]
-        then
-                for zone_transfer in $ $(cat name_server)
-                do
-                        host -l $domain_name $zone_transfer &>/dev/null
+        echo "User input -- Domain name field is empty"
 
-                        if [ $? -eq 0 ]
-                        then
+# Domain name is not empty
+# Test if the domain resolves (silently discard output)
+# Save nameservers to a temporary file
+# Attempt zone transfer for each nameserver
+ 
+elif [ -n "$domain_name" ]
+then
+        host www.$domain_name &>/dev/null
+
+        if [ $? -eq 0 ]
+        then
+                echo "***************** Name Servers ********************"
+                host -t ns $domain_name | cut -d " " -f4
+                lines
+                echo "Would you like to do a zone transfer y/n ?"
+                read option
+
+                if [ "$option" == "y" ]
+                then
+                        host -t ns $domain_name | cut -d " " -f4 > ./name_servers
+                        for zone_transfer in $(cat ./name_servers)
+                        do
                                 lines
                                 host -l $domain_name $zone_transfer
-                        else
-                                sleep 0.2
-                                continue
-                        fi
 
-                done
+                        done
+
+                elif [ "$option" == "n" ]
+                then
+                        lines
+                        echo "You choose to quit"
+                else
+                        lines
+                        echo "Invalid user input"
+                fi
         else
                 lines
-                echo "Invalid user input"
+                echo "Unable to connect -- $domain_name"
         fi
-
 fi
-rm -rf ./1
-rm -rf ./name_server
+
+# Clean up temporary file
+rm -rf ./name_servers
