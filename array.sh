@@ -33,3 +33,75 @@ echo "${array_1[@]}"
 unset array_1[0]
 echo "${array_1[@]}"
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+#!/bin/bash
+################################################################################################
+# Description : This script collects user input and stores values inside an
+#               array. The user can repeatedly add more values until choosing
+#               to quit.
+# Features:
+#   - Accepts space-separated values and stores them in an array
+#   - Checks if the initial input is empty
+#   - Allows repeated insertion using a controlled loop
+#   - Displays array contents after every insertion
+################################################################################################
+
+#!/bin/bash
+#  Prints a decorative separator line for better readability
+function lines {
+        echo "**********************************************************************"
+}
+
+
+# -----------------------------------------------------------------------------
+# Function: try_again
+# Purpose : Asks the user whether they want to add more values to the array.
+# -----------------------------------------------------------------------------
+
+function try_again {
+        lines
+        read -p "Would you like to add new values to an array y/n?: " choice
+        if [ "$choice" == "n" ]
+        then
+                lines
+                echo "You choose to quit, bye for now"
+        elif [ "$choice" == "y" ]
+        then
+                read -p "Enter the new values: " new_values
+                my_array+=($new_values)
+                echo "All values inside array --> ${my_array[@]}"
+                try_again
+        else
+                lines
+                echo "Invalid user input, try again"
+                try_again
+        fi
+}
+
+
+# -----------------------------------------------------------------------------
+# Main Program Starts Here
+# Ask user for initial values
+# -----------------------------------------------------------------------------
+my_array=()
+read -p "Enter the values to be inserted inside array: " user_input
+
+# Check for empty input
+if [ -z "$user_input" ]
+then
+        lines
+        echo "User input -- Field is empty"
+
+# User input --ok 
+# Insert values to the array
+ 
+elif [ -n "$user_input" ]
+then
+        lines
+        my_array+=($user_input)
+        echo "All values inside array --> ${my_array[@]}"
+        try_again
+fi
+
+
+
