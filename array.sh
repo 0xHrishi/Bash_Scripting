@@ -1,7 +1,6 @@
 #!/bin/bash
 
 #Declare a variable called array_1
-#In bash scripting, all the values are consider as string 
 array_1=("a" "b" "c" "d" 35)
 
 #print all the values inside array
