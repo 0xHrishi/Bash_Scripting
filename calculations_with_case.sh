@@ -23,6 +23,7 @@ function second_number_check {
 }
 
 # User input
+echo "Warning: Please do not provide input that starts with zero, eg:0,01,001"
 read -p "Enter the first number: " first_number
 read -p "Enter the second number: " second_number
 
