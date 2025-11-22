@@ -41,18 +41,18 @@ chmod +x script_name.sh
 📌 Example : Popular system defined variables --> Click here to view the full script: [system_defined_var.sh](<bash_scripts/04_system_defined_var.sh>)  
 
 ### 🔰 User input
-📌 Example : User input --> Click here to view the full script: [user_input.sh](<bash_scripts/04_user_input.sh>)  
+📌 Example : User input --> Click here to view the full script: [user_input.sh](<bash_scripts/05_user_input.sh>)  
 
 ### 🔰 Display text
-📌 Example : Display text --> Click here to view the full script: [display_text.sh](<bash_scripts/05_display_text.sh>)  
+📌 Example : Display text --> Click here to view the full script: [display_text.sh](<bash_scripts/06_display_text.sh>)  
 
 ### 🔰 Operators
-📌 Example : Arithmetic --> Click here to view the full script: [arithmetic_operators.sh](<bash_scripts/06_arithmetic_operators.sh>)  
-📌 Example : Comparsion --> Click here to view the full script: [comparsion_operators.sh](<bash_scripts/07_comparsion_operators.sh>)  
-📌 Example : Strings --> Click here to view the full script: [strings_operators.sh](<bash_scripts/08_strings_operators.sh>)  
-📌 Example : Files --> Click here to view the full script: [file_test.sh](<bash_scripts/09_file_test.sh>)  
-📌 Example : File permissions --> Click here to view the full script: [file_permissions.sh](<bash_scripts/10_file_permissions.sh>)  
-📌 Example : Arguments  --> Click here to view the full script: [arguments.sh](<bash_scripts/11_arguments.sh>)  
+📌 Example : Arithmetic --> Click here to view the full script: [arithmetic_operators.sh](<bash_scripts/07_arithmetic_operators.sh>)  
+📌 Example : Comparsion --> Click here to view the full script: [comparsion_operators.sh](<bash_scripts/08_comparsion_operators.sh>)  
+📌 Example : Strings --> Click here to view the full script: [strings_operators.sh](<bash_scripts/09_strings_operators.sh>)  
+📌 Example : Files --> Click here to view the full script: [file_test.sh](<bash_scripts/10_file_test.sh>)  
+📌 Example : File permissions --> Click here to view the full script: [file_permissions.sh](<bash_scripts/11_file_permissions.sh>)  
+📌 Example : Arguments  --> Click here to view the full script: [arguments.sh](<bash_scripts/12_arguments.sh>)  
 
 ### 🔰 Statements 
 📌 Example : If, if else, if elif else, nested  --> Click here to view the full script: [statements.sh](<statements.sh>)  
