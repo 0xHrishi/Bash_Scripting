@@ -1,91 +1,99 @@
 #!/bin/bash
-
-# ============================================================
-# Title: Simple Fast Network Scanner
-# Author: Hrishi Ghosalkar
-# Description:
-#   This script scans a range of IP addresses within a given network prefix using ICMP ping requests. It runs probes
-#   in parallel for speed and writes responsive hosts to
-#   'active_hosts.txt'.
+###############################################################
+# Script Name : Simple Network Host Scanner
 #
-# Usage:
-#   ./network_sweep.sh#
-# Example:
-#   Enter network (e.g. 192.168.1): 192.168.0
-#   Enter first host: 1
-#   Enter last host: 50
+# Description :
+#   - The user enters:
+#         1) Network part (e.g., 192.168.100)
+#         2) First host number
+#         3) Last host number
+#
+#   - The script validates:
+#         • Network input contains only digits and dots,
+#           and does not start with zero.
+#             → Regex used: ^[1-9][0-9.]*$
+#
+#         • First and last host must be ONLY digits.
+#             → Regex used: ^[0-9]+$
+#
+#   - If input is valid, it scans hosts using ping.
+#   - Active hosts are stored temporarily and printed at the end.
+###############################################################
 
-# ============================================================
-
-#Prompt user to enter input i.e. network part, first and last host
-read -p "Enter the host part i.e. 1.1.1 : " network
-read -p "Enter the first host : " first
-read -p "Enter the last host : " last
-
-# Simple helper function to print a separator line
+# Prints a separation line for clean output
 function lines {
-        echo "***********************************************************"
+        echo "*************************************************************"
 }
 
-# network_check: ensure the network part contain only numeric values
+# Checks if network part is valid (digits + dots, no leading zero)
 function network_check {
-        [[ $network =~ ^[0-9.]+$ ]]
+        [[ $network =~ ^[1-9][0-9.]*$ ]]
 }
-# first_check: ensure "first" is numeric
+
+# Checks if first host number is valid (digits only)
+# Checks if last host number is valid (digits only)
 function first_check {
         [[ $first =~ ^[0-9]+$ ]]
 }
-# last_check: ensure "last" is numeric
 function last_check {
         [[ $last =~ ^[0-9]+$ ]]
 }
 
-# ------------------------------------------------------------------
-#User input check
-# If any user input is empty, display error message
-# ------------------------------------------------------------------
+
+# --------------------------------------------------------------
+# User Input
+# --------------------------------------------------------------
+read -p "Enter the network part, eg 10.10.10: " network
+read -p "Enter the first host: " first
+read -p "Enter the last host: " last
+
+# --------------------------------------------------------------
+# EMPTY FIELD VALIDATION
+# If any of the fields are empty, print which ones are empty.
+# --------------------------------------------------------------
 if [ -z "$network" ] || [ -z "$first" ] || [ -z "$last" ]
 then
         if [ -n "$network" ] && [ -z "$first" ] && [ -z "$last" ]
         then
                 lines
-                echo "First host field is empty"
-                echo "Last host field is empty"
+                echo "User input -- First host field is empty"
+                echo "User input -- Last host field is empty"
         elif [ -n "$network" ] && [ -n "$first" ] && [ -z "$last" ]
         then
                 lines
-                echo "Last host field is empty"
+                echo "User input -- Last host field is empty"
         elif [ -n "$network" ] && [ -z "$first" ] && [ -n "$last" ]
         then
                 lines
-                echo "First host field is empty"
+                echo "User input -- First host field is empty"
         elif [ -z "$network" ] && [ -n "$first" ] && [ -n "$last" ]
         then
                 lines
-                echo "Network field is empty"
+                echo "User input -- Network part field is empty"
         elif [ -z "$network" ] && [ -z "$first" ] && [ -n "$last" ]
         then
                 lines
-                echo "Network field is empty"
-                echo "First host field is empty"
+                echo "User input -- Network part field is empty"
+                echo "User input -- First host field is empty"
         elif [ -z "$network" ] && [ -n "$first" ] && [ -z "$last" ]
         then
                 lines
-                echo "Network field is empty"
-                echo "Last host field is empty"
+                echo "User input -- Network part field is empty"
+                echo "User input -- Last host field is empty"
         elif [ -z "$network" ] && [ -z "$first" ] && [ -z "$last" ]
         then
                 lines
-                echo "Network field is empty"
-                echo "First host field is empty"
-                echo "Last host field is empty"
+                echo "User input -- Network part field is empty"
+                echo "User input -- First host field is empty"
+                echo "User input -- Last host field is empty"
         fi
 
-# ------------------------------------------------------------------
-# Check user input i.e. it contains only nuemric values
-# If pass all conditions -- Loop through the host numbers using seq
-# Check the exit status of ping to determine reachability
-# ------------------------------------------------------------------
+# --------------------------------------------------------------
+# INPUT FORMAT VALIDATION 
+# Valid input -- MAIN HOST SCANNING LOOP
+# Store only the IP address extracted from ping output
+# DISPLAY FINAL ACTIVE HOSTS
+# --------------------------------------------------------------
 elif [ -n "$network" ] && [ -n "$first" ] && [ -n "$last" ]
 then
         if ! network_check || ! first_check || ! last_check
@@ -93,52 +101,63 @@ then
                 if network_check && ! first_check && ! last_check
                 then
                         lines
-                        echo "Kindly check first host field input"
-                        echo "Kindly check last host field input"
+                        echo "User input -- First host field has invalid entry"
+                        echo "User input -- Last host field has invalid entry"
                 elif network_check && first_check && ! last_check
                 then
                         lines
-                        echo "Kindly check last host field input"
+                        echo "User input -- Last host field has invalid entry"
                 elif network_check && ! first_check && last_check
                 then
                         lines
-                        echo "Kindly check first host field input"
+                        echo "User input -- First host field has invalid entry"
+                elif ! network_check && first_check && last_check
+                then
+                        lines
+                        echo "User input -- Network part has invalid entry"
                 elif ! network_check && ! first_check && last_check
                 then
                         lines
-                        echo "Kindly check network field input"
-                        echo "Kindly check first host field input"
+                        echo "User input -- Network part has invalid entry"
+                        echo "User input -- First host field has invalid entry"
                 elif ! network_check && first_check && ! last_check
                 then
                         lines
-                        echo "Kindly check network field input"
-                        echo "Kindly check last host field input"
+                        echo "User input -- Network part has invalid entry"
+                        echo "User input -- Last host field has invalid entry"
                 elif ! network_check && ! first_check && ! last_check
                 then
                         lines
-                        echo "Kindly check network field input"
-                        echo "Kindly check first host field input"
-                        echo "Kindly check last host field input"
+                        echo "User input -- Network part has invalid entry"
+                        echo "User input -- First host field has invalid entry"
+                        echo "User input -- Last host field has invalid entry"
                 fi
-
         elif network_check && first_check && last_check
         then
-                for ip in $(seq $first $last)
+                for host_alive in $(seq $first $last)
                 do
-                        lines
-                        echo "Checking $network.$ip"
-
-                        ping -c 2 $network.$ip  &> /dev/null
+                        ping -c 2 $network.$host_alive &>/dev/null
 
                         if [ $? -eq 0 ]
                         then
-                                echo "$network.$ip -- Active"
-                                ping -c 2 $network.$ip | grep -i "64 bytes" | cut -d " " -f4 | tr ":" " " | uniq >> ip_address &
+                                lines
+                                echo "Active -- $network.$host_alive"
+                                ping -c 2 $network.$host_alive | grep -i "64" | cut -d " " -f4 | tr -d ":" >>./host_alive &
+                                sleep 0.1
                         else
-                                echo "$network.$ip --> Not responding to ICMP probes"
+                                lines
+                                echo "Not active -- $network.$host_alive"
+                                sleep 0.1
                                 continue
                         fi
-
                 done
+                lines
+                cat ./host_alive | sort | uniq
         fi
+
 fi
+
+# --------------------------------------------------------------
+# CLEANUP
+# --------------------------------------------------------------
+rm -rf ./host_alive
