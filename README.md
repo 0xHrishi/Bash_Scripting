@@ -70,7 +70,7 @@ chmod +x script_name.sh
 
 ### 🔰 Extras  
 📌 Example : Lowercase and uppercase --> Click here to view the full script: [lowercase_uppercase.sh](<bash_scripts/19_lowercase_uppercase.sh>)   
-📌 Example : Length of the string --> Click here to view the full script: [length_of_string.sh](<bash_scripts/20_length_of_string.sh>)
+📌 Example : Length of the string --> Click here to view the full script: [length_of_string.sh](<bash_scripts/20_length_of_string.sh>)    
 📌 Example : Display text in color --> Click here to view the full script: [length_of_string.sh](<bash_scripts/21_color_text.sh.sh>)
 
 ### 🔰 Examples
