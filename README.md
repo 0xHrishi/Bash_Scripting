@@ -33,24 +33,24 @@ chmod +x script_name.sh
 - ## 📂 Examples by Topic
 
 ### 🔰 Basics
-📌 Example : Hello World and comments --> Click here to view the full script: [hello_word.sh](<bash_scripts/1_hello_world.sh>)  
+📌 Example : Hello World and comments --> Click here to view the full script: [hello_word.sh](<bash_scripts/01_hello_world.sh>)  
 
 ### 🔰 Variables 
-📌 Example : Variables --> Click here to view the full script: [declaring_variables.sh](<bash_scripts/2_declaring_variables.sh>)  
-📌 Example : Variables, Global vs Local --> Click here to view the full script: [global_local.sh](<bash_scripts/3_global_local.sh>)  
-📌 Example : Popular system defined variables --> Click here to view the full script: [system_defined_var.sh](<bash_scripts/4_system_defined_var.sh>)  
+📌 Example : Variables --> Click here to view the full script: [declaring_variables.sh](<bash_scripts/02_declaring_variables.sh>)  
+📌 Example : Variables, Global vs Local --> Click here to view the full script: [global_local.sh](<bash_scripts/03_global_local.sh>)  
+📌 Example : Popular system defined variables --> Click here to view the full script: [system_defined_var.sh](<bash_scripts/04_system_defined_var.sh>)  
 
 ### 🔰 User input
-📌 Example : User input --> Click here to view the full script: [user_input.sh](<bash_scripts/4_user_input.sh>)  
+📌 Example : User input --> Click here to view the full script: [user_input.sh](<bash_scripts/04_user_input.sh>)  
 
 ### 🔰 Display text
-📌 Example : Display text --> Click here to view the full script: [display_text.sh](<bash_scripts/5_display_text.sh>)  
+📌 Example : Display text --> Click here to view the full script: [display_text.sh](<bash_scripts/05_display_text.sh>)  
 
 ### 🔰 Operators
-📌 Example : Arithmetic --> Click here to view the full script: [arithmetic_operators.sh](<bash_scripts/6_arithmetic_operators.sh>)  
-📌 Example : Comparsion --> Click here to view the full script: [comparsion_operators.sh](<bash_scripts/7_comparsion_operators.sh>)  
-📌 Example : Strings --> Click here to view the full script: [strings_operators.sh](<bash_scripts/8_strings_operators.sh>)  
-📌 Example : Files --> Click here to view the full script: [file_test.sh](<bash_scripts/9_file_test.sh>)  
+📌 Example : Arithmetic --> Click here to view the full script: [arithmetic_operators.sh](<bash_scripts/06_arithmetic_operators.sh>)  
+📌 Example : Comparsion --> Click here to view the full script: [comparsion_operators.sh](<bash_scripts/07_comparsion_operators.sh>)  
+📌 Example : Strings --> Click here to view the full script: [strings_operators.sh](<bash_scripts/08_strings_operators.sh>)  
+📌 Example : Files --> Click here to view the full script: [file_test.sh](<bash_scripts/09_file_test.sh>)  
 📌 Example : File permissions --> Click here to view the full script: [file_permissions.sh](<bash_scripts/10_file_permissions.sh>)  
 📌 Example : Arguments  --> Click here to view the full script: [arguments.sh](<bash_scripts/11_arguments.sh>)  
 
