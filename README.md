@@ -86,6 +86,4 @@ chmod +x script_name.sh
 📌 Example : Reverse lookup --> Click here to view the full script: [reverse_lookup.sh](<bash_scripts/31_reverse_lookup.sh>)   
 📌 Example : OSCP - Zone file tarnsfer --> Click here to view the full script: [oscp_zone_file.sh](<bash_scripts/32_oscp_zone_file.sh>)  
 📌 Example : OSCP - Network sweep --> Click here to view the full script: [network_sweep.sh](<bash_scripts/33_network_sweep.sh>)   
-📌 Example : Keyword search --> Click here to view the full script: [keyword_search.sh](<bash_scripts/34_keyword_search.sh>)  
-
 
