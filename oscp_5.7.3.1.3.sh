@@ -1,126 +1,50 @@
-#oscp exercise looking for javascript files
-
 #!/bin/bash
 
-echo "Enter the filepath"
-read filepath
+#########################################################################
+# Description:
+# This script accepts a file path as input and checks the following:
+#   1. Whether the file path is empty.
+#   2. Whether the path exists.
+#   3. Whether it is a regular non-empty file.
+#   4. If it is a valid file, the script searches for lines containing
+#      the keyword "js" (case-insensitive), assuming they refer to
+#      JavaScript file paths.
+#########################################################################
 
-if [ -z "$filepath" ]
-then
-        echo "************************************"
-        echo "File path field is empty"
-        echo "************************************"
-else
-        if [ -e $filepath ]
-        then
-                if [ -f $filepath ]
-                then
-                        cat $filepath | grep -i ".js" | cut -d "/" -f5 | sort | uniq | cut -d " " -f1 > ./javascript-files
-                        echo "************************************"
-                        if [ -s ./javascript-files ]
-                        then
-                                echo "******Javascript files found******"
-                                cat ./javascript-files
-                        else
-                                echo "******No Javascript files found******"
-                        fi
-                elif [ -d $filepath ]
-                then
-                        echo "************************************"
-                        echo "Its a directory, nothing to do"
-                        echo "************************************"
-                else
-                        echo "************************************"
-                        echo "Unable to identify the file type"
-                        echo "************************************"
-                fi
-        else
-                echo "******Invalid file path**************"
-        fi
-
-fi
-rm -rf ./1
-rm -rf ./javascript-files
-
------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-#!/bin/bash
-
-echo "Enter the filepath"
-read filepath
-
-if [ -z "$filepath" ]
-then
-        echo "*********************************************"
-        echo "File path field is empty"
-else
-        if [ -f $filepath ]
-        then
-                echo "********Looking for JavaScript files*******"
-                sleep 0.5
-                cat $filepath | grep -i "js" | cut -d "/" -f5 | cut -d " " -f1 | sort |uniq > ./javascript_files
-                if [ -s ./javascript_files ]
-                then
-                        cat ./javascript_files
-                else
-                        echo "*******No javascript files found**********"
-                fi
-        elif [ -d $filepath ]
-        then
-                echo "*************************************"
-                echo "its a directory, nothing can be done"
-        elif [ -e $filepath ]
-        then
-                echo "*************************************"
-                echo "Unable to identify the file type"
-        else
-                echo "*************************************"
-                echo "File not found"
-        fi
-fi
-rm -rf ./javascript_files
-rm -rf ./1
-----------------------------------------------------------------------------------------------------------------------------------------------------------
-#!/bin/bash
-
-echo "Enter the file path"
-read file
-
+# Function to print a separator line
 function lines {
-        echo "***************************************"
+        echo "*************************************************************"
 }
 
-if [ -z "$file" ]
+# Read user input for the file path
+read -p "Enter the filepath: " filepath
+
+# Check if filepath input is empty
+if [ -z "$filepath" ]
 then
         lines
-        echo "Filepath field is empty"
-else
-        if [ -e $file ]
+        echo "User input -- Filepath field is empty"
+
+# If user entered something
+# Check if the path exists
+# Check if it is a file and not empty, Extract JavaScript-related entries
+elif [ -n "$filepath" ]
+then
+        if [ -e "$filepath" ]
         then
-                if [ -f $file ]
+                if [ -f "$filepath" ] && [ -s "$filepath" ]
                 then
-                        cat $file | grep -wi "js" | cut -d "/" -f 5 | cut -d " " -f1 |  sort | uniq > ./javascript_files
-                        if [ -s ./javascript_files ]
-                        then
-                                lines
-                                echo "JavaScript file found"
-                                cat ./javascript_files
-                        else
-                                lines
-                                echo "No JavaScript file found"
-                        fi
-                elif [ -d $file ]
+                        cat $filepath | grep -i "js" | cut -d "/" -f5 | cut -d " " -f1 | sort | uniq
+                elif [ -d "$filepath" ]
                 then
                         lines
-                        echo "Its a directory"
-                        echo "Nothing can be done"
+                        echo "$filepath -- Its a directory"
                 else
                         lines
-                        echo "$file --> Found"
-                        echo "Unable to identify the file type"
+                        echo "$filepath -- Unable to identify the file type"
                 fi
         else
                 lines
-                echo "$file not found"
+                echo "$filepath -- File does not exist"
         fi
 fi
-
