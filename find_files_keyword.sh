@@ -1,62 +1,66 @@
-#user enter the filepath and filename
-#script checks whether its a normal file, exists or not
-# if file found, check for the keyword
-#if keyword found, display the keyword with the line number where the match is found 
+#!/bin/bash
+###########################################################################
+# This script accepts a file's absolute path and a keyword from the user.
+# It performs multiple validations:
+#     - Ensures both inputs are provided.
+#     - Checks if the file/directory exists.
+#     - Detects whether the path is a directory or a file.
+#     - Ensures the file is not empty.
+#     - Searches the file for the given keyword (case-insensitive).
+###########################################################################
 
-!/bin/bash
+# Function to print a separator line for cleaner output
+function lines {
+        echo "*************************************************************"
+}
 
-echo "Enter the filepath"
-read filepath
-echo "Enter the keyword"
-read keyword
+# Taking user input (file absolute path and keyword)
+read -p "Enter the file absolute path: " filepath
+read -p "Enter the keyword: " keyword
 
+# ----------------------------- INPUT VALIDATION -----------------------------
 if [ -z "$filepath" ] || [ -z "$keyword" ]
 then
         if [ -n "$filepath" ] && [ -z "$keyword" ]
         then
-                echo "Keyword field is empty"
+                lines
+                echo "User input -- Keyword field is empty"
         elif [ -z "$filepath" ] && [ -n "$keyword" ]
         then
-                echo "Filepath field is empty"
-        else
-                echo "Issues with the user input"
-        fi
-elif [ -n "$filepath" ] && [ -n "$keyword" ]
-then
-        if [ -e $filepath ]
+                lines
+                echo "User input -- Filepath field is empty"
+        elif [ -z "$filepath" ] && [ -z "$keyword" ]
         then
-                if [ -f $filepath ]
+                lines
+                echo "User input -- Filepath field is empty"
+                echo "User input -- Keyword field is empty"
+        fi
+        
+# ------------------------- PROCESSING VALID INPUTS --------------------------
+# If file exist and its not empty, Perform case-insensitive keyword search
+
+elif [ -n "$filepath" ] &&[ -n "$keyword" ]
+then
+        if [ -e "$filepath" ]
+        then
+                if [ -d "$filepath" ]
                 then
-                        if [ -s $filepath ]
+                        lines
+                        echo "$filepath -- Its a directory"
+                elif [ -f "$filepath" ]
+                then
+                        if [ -s "$filepath" ]
                         then
-                                cat $filepath | grep -ni "$keyword" > something_found 
-                                echo "*********************************"
-                                if [ -s ./something_found ]
-                                then
-                                        echo "Would you like to view the file contents"
-                                        read option 
-                                        if [ "$option" == "y" ]
-                                        then
-                                                echo "---------------------------"
-                                                cat ./something_found
-                                        else
-                                                echo "Bye for now"
-                                        fi
-                                else
-                                        echo "Empty"
-                                fi
-                        else
-                                echo "FIle found but its empty"
+                                lines
+                                cat $filepath | grep -i "$keyword"
+                        elif [ ! -s "$filepath" ]
+                        then
+                                lines
+                                echo "$filepath -- File exists, but its empty"
                         fi
-                elif [ -d "$filepath" ]
-                then
-                        echo "Its a directory, cannot do anything"
-                else
-                        echo "Cannot recognize, something is wrong"
                 fi
         else
-                echo "FIle not found"
+                lines
+                echo "$filepath -- File not found"
         fi
 fi
-rm -rf ./something_found
-rm -rf ./1
