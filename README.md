@@ -79,7 +79,7 @@ chmod +x script_name.sh
 📌 Example : Username and UID number availablity --> Click here to view the full script: [availability_username_uid.sh](<bash_scripts/24_uid_username_check.sh>)  
 📌 Example : While loop,  Number multiplication --> Click here to view the full script: [while_number_multiplication.sh](<bash_scripts/25_while_number_multiplication.sh>)  
 📌 Example : For loop, Brute force attack on domain --> Click here to view the full script: [sub_domains.sh](<bash_scripts/26_sub_domains.sh>)  
-📌 Example : Arithmetic operations using case statement --> Click here to view the full script: [calculations_with_case.sh](<bash_scripts/27_calculations_with_case.sh>)  
+📌 Example : Case statements - Arithmetic operations --> Click here to view the full script: [calculations_with_case.sh](<bash_scripts/27_calculations_with_case.sh>)   
 📌 Example : Down payment --> Click here to view the full script: [down_payment.sh](<bash_scripts/28_down_payment.sh>)   
 📌 Example : File permission --> Click here to view the full script: [file_permission.sh](<bash_scripts/29_file_permission.sh>)   
 📌 Example : Print even or odd numbers --> Click here to view the full script: [even_odd.sh](<bash_scripts/30_even_odd.sh>)  
