@@ -41,10 +41,10 @@ chmod +x script_name.sh
 📌 Example : Popular system defined variables --> Click here to view the full script: [system_defined_var.sh](<bash_scripts/4_system_defined_var.sh>)  
 
 ### 🔰 User input
-📌 Example : User input --> Click here to view the full script: [user_input.sh](<user_input.sh>)  
+📌 Example : User input --> Click here to view the full script: [user_input.sh](<bash_scripts/4_user_input.sh>)  
 
 ### 🔰 Display text
-📌 Example : Display text --> Click here to view the full script: [display_text.sh](<display_text.sh>)  
+📌 Example : Display text --> Click here to view the full script: [display_text.sh](<bash_scripts/5_display_text.sh>)  
 
 ### 🔰 Operators
 📌 Example : Arithmetic --> Click here to view the full script: [arithmetic_operators.sh](<arithmetic_operators.sh>)  
