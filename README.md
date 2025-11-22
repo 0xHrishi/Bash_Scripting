@@ -47,12 +47,12 @@ chmod +x script_name.sh
 📌 Example : Display text --> Click here to view the full script: [display_text.sh](<bash_scripts/5_display_text.sh>)  
 
 ### 🔰 Operators
-📌 Example : Arithmetic --> Click here to view the full script: [arithmetic_operators.sh](<arithmetic_operators.sh>)  
-📌 Example : Comparsion --> Click here to view the full script: [comparsion_operators.sh](<comparsion_operators.sh>)  
-📌 Example : Strings --> Click here to view the full script: [strings_operators.sh](<strings_operators.sh>)  
-📌 Example : Files --> Click here to view the full script: [file_test.sh](<file_test.sh>)  
-📌 Example : File permissions --> Click here to view the full script: [file_permissions.sh](<file_permissions.sh>)  
-📌 Example : Arguments  --> Click here to view the full script: [arguments.sh](<arguments.sh>)  
+📌 Example : Arithmetic --> Click here to view the full script: [arithmetic_operators.sh](<bash_scripts/6_arithmetic_operators.sh>)  
+📌 Example : Comparsion --> Click here to view the full script: [comparsion_operators.sh](<bash_scripts/7_comparsion_operators.sh>)  
+📌 Example : Strings --> Click here to view the full script: [strings_operators.sh](<bash_scripts/8_strings_operators.sh>)  
+📌 Example : Files --> Click here to view the full script: [file_test.sh](<bash_scripts/9_file_test.sh>)  
+📌 Example : File permissions --> Click here to view the full script: [file_permissions.sh](<bash_scripts/10_file_permissions.sh>)  
+📌 Example : Arguments  --> Click here to view the full script: [arguments.sh](<bash_scripts/11_arguments.sh>)  
 
 ### 🔰 Statements 
 📌 Example : If, if else, if elif else, nested  --> Click here to view the full script: [statements.sh](<statements.sh>)  
