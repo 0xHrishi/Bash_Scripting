@@ -55,21 +55,21 @@ chmod +x script_name.sh
 📌 Example : Arguments  --> Click here to view the full script: [arguments.sh](<bash_scripts/12_arguments.sh>)  
 
 ### 🔰 Statements 
-📌 Example : If, if else, if elif else, nested  --> Click here to view the full script: [statements.sh](<statements.sh>)  
+📌 Example : If, if else, if elif else, nested  --> Click here to view the full script: [statements.sh](<bash_scripts/13_statements.sh>)  
 
 ### 🔰 Loops --> for and while  
-📌 Example : for --> Click here to view the full script: [for_loop.sh](<for_loop.sh>)  
-📌 Example : while --> Click here to view the full script: [while_loop.sh](<while_loop.sh>)  
-📌 Example : contunue and break --> Click here to view the full script: [continue_break.sh](<continue_break.sh>)  
+📌 Example : for --> Click here to view the full script: [for_loop.sh](<bash_scripts/14_for_loop.sh>)  
+📌 Example : while --> Click here to view the full script: [while_loop.sh](<bash_scripts/15_while_loop.sh>)  
+📌 Example : contunue and break --> Click here to view the full script: [continue_break.sh](<bash_scripts/16_continue_break.sh>)  
 
 ### 🔰 Arrays  
-📌 Example : Array --> Click here to view the full script: [array.sh](<array.sh>) 
+📌 Example : Array --> Click here to view the full script: [array.sh](<bash_scripts/17_array.sh>) 
 
 ### 🔰 Functions  
-📌 Example : Functions --> Click here to view the full script: [functions.sh](<functions.sh>) 
+📌 Example : Functions --> Click here to view the full script: [functions.sh](<bash_scripts/18_functions.sh>) 
 
 ### 🔰 Extras  
-📌 Example : Lowercase and uppercase --> Click here to view the full script: [lowercase_uppercase.sh](<lowercase_uppercase.sh>)   
+📌 Example : Lowercase and uppercase --> Click here to view the full script: [lowercase_uppercase.sh](<bash_scripts/19_lowercase_uppercase.sh>)   
 📌 Example : Length of the string --> Click here to view the full script: [length_of_string.sh](<length_of_string.sh>)
 
 ### 🔰 Examples
