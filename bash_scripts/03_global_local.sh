@@ -1,45 +1,53 @@
 #!/bin/bash
-#Example of global variable
-#Global variable can be used within as well as outside the function
 
-#variable created 
+# -------------------------------------------------------
+# Demonstrates how global variables behave inside functions in Bash. 
+# Variables are global by default unless 'local' keyword is used.
+# -------------------------------------------------------
+
 number=10
 
-#function created and a variable which is global
-function numbers {
+function global_example {
         number=20
-        echo "Number within the function --> $number"
+        echo "Number value, within the function -- $number"
 }
 
-echo "Number before the function called --> $number"
-numbers
-echo "Number after the function called --> $number"
+# Display variable before function call
+echo "Before the function called, value of the number -- $number"
+# Call the function
+global_example
+# Display variable after function call
+echo "After the function, value of the number -- $number"
 
-#Output
-#Number before the function called --> 10
-#Number within the function --> 20
-#Number after the function called --> 20
+# Output 
+# Before the function called, value of the number -- 10
+# Number value, within the function -- 20
+# After the function, value of the number -- 20
 
-echo "*********************************************************************************"
-sleep 2
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+#!/bin/bash
+# -------------------------------------------------------------------
+# Description: Demonstrates the difference between global and local variables inside a Bash function.
+# -------------------------------------------------------------------
 
-#Local variable concept 
-#Variable created
-num=10
+# Global variable
+number=10
 
-#local variable created withhin the function with local keyword
-function nums {
-        local num=20
-        echo "Number wihtin the function --> $num"
+# Function that declares a local variable with the same name
+function global_example {
+        local number=20
+        echo "Number value, within the function -- $number"
 }
 
-echo "Number before the function called --> $num"
-nums
-echo "Number after the function called --> $num"
+# Display variable before function call
+echo "Before the function called, value of the number -- $number"
+# Call the function
+global_example
+# Display variable after function call
+# The global value remains unchanged because 'local' was used inside the function
+echo "After the function, value of the number -- $number"
 
-#output
-#Number before the function called --> 10
-#Number wihtin the function --> 20
-#Number after the function called --> 10
-
-
+# Output 
+# Before the function called, value of the number -- 10
+# Number value, within the function -- 20
+# After the function, value of the number -- 10
