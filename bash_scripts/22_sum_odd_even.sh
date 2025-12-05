@@ -1,94 +1,82 @@
 #!/bin/bash
-#User input two numbers first and second 
-#Both numbers and add, the sum is even or odd number 
+# Prompt for user input i.e. first_number and second_number
+# Add the two numbers and display whether the sum is odd or even number 
 
-#function to print lines
+# Function: Draw a separator line
 function lines {
-        echo "*********************************************"
+        echo "*************************************************************"
 }
 
-#short discription about the script
-echo "This script adds two numbers and display whether the sum of two numbers is odd or even"
-sleep 0.2
-
-#user input
-read -p "Enter the first number: " first
-read -p "Enter the second number: " second
-
-#functions, user input i.e. first and second must contain only numeric values
-function first_integer {
-        [[ $first =~ ^[0-9-]+$ ]]
+# Function -- first_number_check, second_number_check
+# Ensures: number does NOT start with zero and is numeric (positive or negative)
+function first_number_check {
+        [[ $first_number =~ ^[1-9-][0-9]*$ ]]
 }
-function first_not_integer {
-        [[ ! $first =~ ^[0-9-]+$ ]]
-}
-function second_integer {
-        [[ $second =~ ^[0-9-]+$ ]]
-}
-function second_not_integer {
-        [[ ! $second =~ ^[0-9-]+$ ]]
+function second_number_check {
+        [[ $second_number =~ ^[1-9-][0-9]*$ ]]
 }
 
-#function to add the first and second number
-function add {
-        echo "First number is --> $first"
-        echo "Second number is --> $second"
-        sum=$(($first+$second))
-        echo "$first plus $second --> $sum "
-}
+# Display message -- User input should not start with zero
+echo "***** Script add two numbers, Display the sum whether is odd or even *****"
+echo "User input must not start with 0"
+sleep 1
+lines
 
-#Check whether the user input is empty
-if [ -z "$first" ] || [ -z "$second" ]
+# Prompt for user input
+read -p "Enter the first number: " first_number
+read -p "Enter the second number: " second_number
+
+# If user input is empty 
+if [ -z "$first_number" ] || [ -z "$second_number" ]
 then
-        if [ -n "$first" ] && [ -z "$second" ]
+        if [ -n "$first_number" ] && [ -z "$second_number" ]
         then
                 lines
-                echo "User input --> Second number field is empty"
-        elif [ -z "$first" ] && [ -n "$second" ]
+                echo "User input -- Second number field is empty"
+        elif [ -z "$first_number" ] && [ -n "$second_number" ]
         then
                 lines
-                echo "User input --> First number field is empty"
-        elif [ -z "$first" ] && [ -z "$second" ]
+                echo "User input -- First number field is empty"
+        elif [ -z "$first_number" ] && [ -z "$second_number" ]
         then
                 lines
-                echo "User input --> First number field is empty"
-                echo "User input --> Second number field is empty"
+                echo "User input -- First number field is empty"
+                echo "User input -- Second number field is empty"
         fi
-#User input is not empty
-#Inside the elif statment, first and second number must contain only numeric values
-#With first and seocnd number as valid input, call the add function which add first and second number 
-
-elif [ -n "$first" ] && [ -n "$second" ]
+        
+# Both fields have values → Validate numbers
+# Both are valid numbers → Perform addition
+elif [ -n "$first_number" ] && [ -n "$second_number" ]
 then
-        if first_not_integer || second_not_integer
+        if ! first_number_check || ! second_number_check
         then
-                if first_integer && second_not_integer
+                if first_number_check && ! second_number_check
                 then
                         lines
-                        echo "User input --> Second number field must contain numeric values"
-                elif first_not_integer && second_integer
+                        echo "Second number field must contain only numeric(positive or negative) values"
+                elif ! first_number_check && second_number_check
                 then
                         lines
-                        echo "User input --> First number field must contain numeric values"
-                elif first_not_integer && second_not_integer
+                        echo "First number field must contain only numeric(positive or negative) values"
+                elif ! first_number_check && ! second_number_check
                 then
                         lines
-                        echo "User input --> First number field must contain numeric values"
-                        echo "User input --> Second number field must contain numeric values"
+                        echo "First number field must contain only numeric(positive or negative) values"
+                        echo "Second number field must contain only numeric(positive or negative) values"
                 fi
-        elif first_integer && second_integer
+        elif first_number_check && second_number_check
         then
-                sum=$(($first+$second))
+                lines
+                sum=$(($first_number+$second_number))
+                echo "First number: $first_number plus Second number: $second_number --> $sum"
                 if (($sum%2==0))
                 then
-                        lines
-                        add
-                        echo "$sum is even number"
+                        echo "$sum --> Even number"
                 elif (($sum%2!=0))
                 then
-                        lines
-                        add
-                        echo "$sum is odd number"
+                        echo "$sum --> Odd number"
+                else
+                        echo "Something went wrong"
                 fi
         fi
 fi
