@@ -1,42 +1,35 @@
 #!/bin/bash
+# This script allows the user to enter a Linux username and UID number.
+# It validates:
+#   - Username: must start with a lowercase letter, only letters and numbers allowed, no special characters
+#   - UID number: must be numeric and positive
+#   - Disallows: username "root", UID 0, UID greater than 65000
+# It also checks if the username or UID already exists in the system.
 
-# -----------------------------------------------
-# Simple User/UID Validation Script
-# -----------------------------------------------
-# Validates:
-#   - username must start with lowercase letter
-#   - username may contain A-Z a-z 0-9
-#   - UID must be numeric, cannot start with zero
-#   - UID must NOT exceed 65500
-#   - Username "root" is not allowed
-#   - Checks if username/UID already exist in /etc/passwd
 
 function lines {
-        echo "**********************************************************************"
+        echo "*************************************************************"
 }
 
-# Username must start with [a-z], followed by alphanumeric characters
-# UID must be numeric, cannot start with 0
-
+# Function to validate username i.e. username_check and uid number i.e. uid_number_check
+# Rules:
+#   - Starts with lowercase letter
+#   - Contains only letters and digits
+#   - UID number input Must be numeric
 function username_check {
         [[ $username =~ ^[a-z][a-zA-Z0-9]*$ ]]
 }
+
 function uid_number_check {
-        [[ $uid_number =~ ^[1-9][0-9]*$ ]]
+        [[ $uid_number =~ ^[0-9]+$ ]]
 }
 
-lines
-echo "Username must start with a lowercase letter (a-z)"
-lines
-sleep 0.5
-
-# User input
+# Pormpt user for the input
 read -p "Enter the username: " username
 read -p "Enter the UID number: " uid_number
 
-# -------------------------------------------------------------
-# Empty Input Checks
-# -------------------------------------------------------------
+
+# User input empty
 if [ -z "$username" ] || [ -z "$uid_number" ]
 then
         if [ -n "$username" ] && [ -z "$uid_number" ]
@@ -51,14 +44,11 @@ then
         then
                 lines
                 echo "User input -- Username field is empty"
-                echo "User input -- UID number field is empty"
+                echo "USer input -- UID number field is empty"
         fi
-
-# -------------------------------------------------------------
-# Input Checks
-# Username must not be root and UID number must not be greater than 65000
-# -------------------------------------------------------------
-
+# User input supplied
+# Validate username and UID format 
+# Check if username or UID already exists in the system 
 elif [ -n "$username" ] && [ -n "$uid_number" ]
 then
         if ! username_check || ! uid_number_check
@@ -66,63 +56,74 @@ then
                 if username_check && ! uid_number_check
                 then
                         lines
-                        echo "User input -- Invalid UID number input"
+                        echo "UID number field must contain only numeric values(positive)"
                 elif ! username_check && uid_number_check
                 then
                         lines
-                        echo "User input -- Invalid username input"
+                        echo "Username field must contain first alpabets and next numeric values"
+                        echo "No special characters"
                 elif ! username_check && ! uid_number_check
                 then
                         lines
-                        echo "User input -- Invalid username input"
-                        echo "User input -- Invalid UID number input"
+                        echo "Username field must contain first alpabets and next numeric values"
+                        echo "No special characters"
+                        echo "UID number field must contain only numeric values(positive)"
                 fi
         elif username_check && uid_number_check
         then
-                if [ "$username" == "root" ] || [ $uid_number -gt 65500 ]
+                if [ "$username" == "root" ] || [ $uid_number -eq 0 ] || [ $uid_number -gt 65000 ]
                 then
-                        if [ "$username" == "root" ] && [ $uid_number -gt 65500 ]
+                        if [ "$username" == "root" ] && [ $uid_number -eq 0 ]
                         then
                                 lines
                                 echo "Username cannot be root"
-                                echo "UID number cannot be greater than 65500"
-                        elif [ "$username" == "root" ] && [ $uid_number -lt 65500 ]
+                                echo "UID number cannot be 0"
+                        elif [ "$username" != "root" ] && [ $uid_number -eq 0 ]
+                        then
+                                lines
+                                echo "UID number cannot be 0"
+                        elif [ "$username" == "root" ] && [ $uid_number -ne 0 ] && [ $uid_number -le 65000 ]
                         then
                                 lines
                                 echo "Username cannot be root"
-                        elif [ "$username" != "root" ] && [ $uid_number -gt 65500 ]
+                        elif [ "$username" != "root" ] && [ $uid_number -gt 65000 ]
                         then
                                 lines
-                                echo "UID number cannot be greater than 65500"
+                                echo "UID number cannot be greater than 65000"
+                        elif [ "$username" == "root" ] && [ $uid_number -ge 65000 ]
+                        then
+                                lines
+                                echo "Username cannot be root"
+                                echo "UID number cannot be greater than 65000"
                         fi
-                elif [ "$username" != "root" ] && [ $uid_number -le 65500 ]
+                elif [ "$username" != "root" ] || [ $uid_number -ne 0 ] || [ $uid_number -le 65000 ]
                 then
-                        cat /etc/passwd | grep -w "$username" | cut -d ":" -f1 > ./username_lists
-                        cat /etc/passwd | grep -w "$uid_number" | cut -d ":" -f3 > ./uid_number_lists
+                        cat /etc/passwd | cut -d ":" -f1 | grep -wi "$username" > ./username_list
+                        cat /etc/passwd | cut -d ":" -f3 | grep -wi "$uid_number" > ./uid_number_list
 
-                        if [ -s ./username_lists ] && [ -s ./uid_number_lists ]
+                        if [ -s ./username_list ] && [ -s ./uid_number_list ]
                         then
                                 lines
-                                echo "Username not available -- $username"
-                                echo "UID number not available -- $uid_number"
-                        elif [ ! -s ./username_lists ] && [ -s ./uid_number_lists ]
+                                echo "Username not available --> $username"
+                                echo "UID number not available --> $uid_number"
+                        elif [ ! -s ./username_list ] && [ -s ./uid_number_list ]
                         then
                                 lines
-                                echo "Username available -- $username"
-                                echo "UID number not available -- $uid_number"
-                        elif [ -s ./username_lists ] && [ ! -s ./uid_number_lists ]
+                                echo "Username available --> $username"
+                                echo "UID number not available --> $uid_number"
+                        elif [ -s ./username_list ] && [ ! -s ./uid_number_list ]
                         then
                                 lines
-                                echo "Username not available -- $username"
-                                echo "UID number available -- $uid_number"
-                        elif [ ! -s ./username_lists ] && [ ! -s ./uid_number_lists ]
+                                echo "Username not available --> $username"
+                                echo "UID number available --> $uid_number"
+                        elif [ ! -s ./username_list ] && [ ! -s ./uid_number_list ]
                         then
                                 lines
-                                echo "Username available -- $username"
-                                echo "UID number available -- $uid_number"
+                                echo "Username available --> $username"
+                                echo "UID number available --> $uid_number"
                         fi
                 fi
         fi
 fi
-rm -rf ./username_lists
-rm -rf ./uid_number_lists
+rm -rf ./username_list
+rm -rf ./uid_number_list
