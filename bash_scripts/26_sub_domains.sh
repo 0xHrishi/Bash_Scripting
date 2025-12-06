@@ -1,20 +1,23 @@
 #!/bin/bash
-#This script checks if subdomains (listed in a file) have public DNS records.
+
+# SCRIPT -- brute force attack on domain to find sub domains 
+
 function lines {
-        echo "******************************************************************************"
+        echo "*************************************************************"
 }
 
-# User prompt 
-read -p "Enter the domain name example - google.com: " domain_name
-read -p "Enter the filename with its full path: " file
+# Asking the user to enter a domain name (e.g., example.com)
+# Asking the user to enter the path of the file that contains subdomains
+read -p "Enter the domain name such as abc.com: " domain_name
+read -p "Enter the filepath: " file
 
-#Validate user input (both fields must not be empty)
+# Check if the user input is empty
 if [ -z "$domain_name" ] || [ -z "$file" ]
 then
         if [ -n "$domain_name" ] && [ -z "$file" ]
         then
                 lines
-                echo "User input -- File name field is empty"
+                echo "User input -- Filepath field is empty"
         elif [ -z "$domain_name" ] && [ -n "$file" ]
         then
                 lines
@@ -23,21 +26,21 @@ then
         then
                 lines
                 echo "User input -- Domain name field is empty"
-                echo "User input -- File name field is empty"
+                echo "User input -- Filepath field is empty"
         fi
 
-# Continue only if both inputs are provided
-# Check if the given file exists
-# Perform DNS lookup for subdomain.domain_name
+# IF BOTH INPUTS ARE PROVIDED, CONTINUE
+# Check if the file actually exists i.e. whether its a directory or a file
+ # If the path is a non-empty file and a regular file, Loop through each subdomain in the file
 elif [ -n "$domain_name" ] && [ -n "$file" ]
 then
-        if [ -e "$file" ]
+        if [ -e $file ]
         then
-                if [ -d "$file" ]
+                if [ -d $file ]
                 then
                         lines
                         echo "$file -- Its a directory"
-                elif [ -s "$file" ] && [ -f "$file" ]
+                elif [ -s $file ] && [ -f $file ]
                 then
                         for sub_domains in $(cat $file)
                         do
@@ -48,17 +51,16 @@ then
                                         lines
                                         host $sub_domains.$domain_name
                                         sleep 0.2
-                                        continue
                                 else
                                         lines
-                                        echo "$sub_domains.$domain_name -- NO PUBLIC DNS RECORDS"
+                                        echo "$sub_domains.$domain_name NO VALID DNS RECORDS"
                                         sleep 0.2
-                                        continue
                                 fi
                         done
+                else
+                        lines
+                        echo "$file found -- Unable to identify the filetype"
                 fi
-        else
-                lines
-                echo "$file -- Not found"
         fi
 fi
+
