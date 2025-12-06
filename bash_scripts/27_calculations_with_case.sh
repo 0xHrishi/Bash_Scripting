@@ -1,44 +1,43 @@
 #!/bin/bash
-###############################################################################
-# This script performs basic arithmetic operations (addition, subtraction,
-# multiplication, power, quotient, and remainder) on two user-provided
-# numbers.
-# Once both inputs are validated, the script displays a menu and performs
-# the selected operation
-###############################################################################
 
-# Function to print a separator line
+# Script --- Basic Arithmetic calculations using case statements
 function lines {
         echo "*************************************************************"
 }
 
 # Function -- first_number_check, second_number_check
-# Make sure it allows positive or negative numbers, numbers should not start with 0
-# No alphabets, only numeric 
+# Only positive or negative numbers are alllowed, no alphabets
 function first_number_check {
-        [[ $first_number =~ ^-?[1-9][0-9]*$ ]]
+        [[ $first_number =~ ^[1-9-][0-9]*$ ]]
 }
 function second_number_check {
-        [[ $second_number =~ ^-?[1-9][0-9]*$ ]]
+        [[ $second_number =~ ^[1-9-][0-9]*$ ]]
 }
 
-# User input
-echo "Warning: Please do not provide input that starts with zero, eg:0,01,001"
+# Text Foreground color -- Red
+RED='\033[0;31m'
+NF='\033[0m'
+
+# Display warning i.e. do not enter numbers statrting with zero
+echo -e "${RED}User input must not start with zero e.g. 0, 01, 001${NF}"
+sleep 0.3
+
+# Prompt user input
 read -p "Enter the first number: " first_number
 read -p "Enter the second number: " second_number
 
 
-# If user input is empty
+# User input empty
 if [ -z "$first_number" ] || [ -z "$second_number" ]
 then
         if [ -n "$first_number" ] && [ -z "$second_number" ]
         then
                 lines
-                echo "User input -- First number field is empty"
+                echo "User input -- Second number field is empty"
         elif [ -z "$first_number" ] && [ -n "$second_number" ]
         then
                 lines
-                echo "User input -- Second number field is empty"
+                echo "User input -- First number field is empty"
         elif [ -z "$first_number" ] && [ -z "$second_number" ]
         then
                 lines
@@ -46,8 +45,10 @@ then
                 echo "User input -- Second number field is empty"
         fi
 
-# Both inputs are non-empty — validate numeric format
-# Both inputs valid — show menu and perform calculation
+# user input not empty
+# Check validation i.e. user input contain valid numeric values 
+# Both user input valid -- Show menu using case statements for operations 
+# Perform the arithmetic operation selected by user
 elif [ -n "$first_number" ] && [ -n "$second_number" ]
 then
         if ! first_number_check || ! second_number_check
@@ -55,63 +56,56 @@ then
                 if first_number_check && ! second_number_check
                 then
                         lines
-                        echo "Second number field -- Invalid entry"
+                        echo "Second number field must contain only numeric(positive or negative) numbers"
                 elif ! first_number_check && second_number_check
                 then
                         lines
-                        echo "First number field -- Invalid entry"
+                        echo "First number field must contain only numeric(positive or negative) numbers"
                 elif ! first_number_check && ! second_number_check
                 then
                         lines
-                        echo "First number field -- Invalid entry"
-                        echo "Second number field -- Invalid entry"
+                        echo "First number field must contain only numeric(positive or negative) numbers"
+                        echo "Second number field must contain only numeric(positive or negative) numbers"
                 fi
         elif first_number_check && second_number_check
         then
-                liness
-                echo "Enter 1 -- Addition"
-                echo "Enter 2 -- Subtraction"
-                echo "Enter 3 -- Multiply"
-                echo "Enter 4 -- Power"
-                echo "Enter 5 -- Quotient"
-                echo "Enter 6 -- Remainder"
-                read choice
+                lines
+                echo "Press 1 -- Addition"
+                echo "Press 2 -- Subtraction"
+                echo "Press 3 -- Multiply"
+                echo "Press 4 -- Power"
+                echo "Press 5 -- Divide(Quotient)"
+                echo "Press 6 -- Divide(Remainder)"
+                read option
+                lines
 
-                case $choice in
+                case $option in
                         1)
-                                lines
                                 sum=$(($first_number+$second_number))
-                                echo "First number: $first_number plus Second number: $second_number -- $sum"
+                                echo "First number: $first_number plus Second number: $second_number --> $sum"
                                 ;;
                         2)
-                                lines
                                 subtract=$(($first_number-$second_number))
-                                echo "First number: $first_number minus Second number: $second_number -- $subtract"
+                                echo "First number: $first_number minus Second number: $second_number --> $subtract"
                                 ;;
                         3)
-                                lines
                                 multiply=$(($first_number*$second_number))
-                                echo "First number: $first_number multiply Second number: $second_number -- $multiply"
+                                echo "First number: $first_number multiply Second number: $second_number --> $multiply"
                                 ;;
                         4)
-                                lines
                                 power=$(($first_number**$second_number))
-                                echo "First number: $first_number power Second number: $second_number -- $power"
+                                echo "First number: $first_number power Second number: $second_number --> $power"
                                 ;;
                         5)
-                                lines
                                 quotient=$(($first_number/$second_number))
-                                echo "First number: $first_number divide (quotient) Second number: $second_number -- $quotient"
+                                echo "First number: $first_number divide(Quotient) Second number: $second_number --> $quotient"
                                 ;;
                         6)
-                                lines
                                 remainder=$(($first_number%$second_number))
-                                echo "First number: $first_number divide (remainder) Second number: $second_number -- $remainder"
-                                ;;
-                        *)
-                                lines
-                                echo "Invalid user input"
+                                echo "First number: $first_number divide(Remainder) Second number: $second_number --> $remainder"
                                 ;;
                 esac
+
         fi
 fi
+
