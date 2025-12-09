@@ -85,5 +85,6 @@ chmod +x script_name.sh
 📌 Example : Print even or odd numbers --> Click here to view the full script: [even_odd.sh](<bash_scripts/30_even_odd.sh>)  
 📌 Example : Reverse lookup --> Click here to view the full script: [reverse_lookup.sh](<bash_scripts/31_reverse_lookup.sh>)   
 📌 Example : OSCP - Zone file transfer --> Click here to view the full script: [oscp_zone_file.sh](<bash_scripts/32_oscp_zone_file.sh>)  
-📌 Example : OSCP - Network sweep --> Click here to view the full script: [network_sweep.sh](<bash_scripts/33_network_sweep.sh>)   
+📌 Example : OSCP - Network sweep --> Click here to view the full script: [network_sweep.sh](<bash_scripts/33_network_sweep.sh>)    
+📌 Example : Password strength calculator --> Click here to view the full script: [password_strength.sh](<bash_scripts/30_password_strength.sh>)    
 
