@@ -1,12 +1,12 @@
 #!/bin/bash
-
+# Purpose   : Validates user input for total classes and attended classes, calculates attendance percentage, and prints eligibility status.
 function lines {
         echo "*************************************************************"
 
 }
 
-# Function total_class_check, attend_class_check
-# User prompt must contain only numeric values
+# Function total_class_check, attend_class_check 
+# Make sure the user input contain only numeric values and the number should not start with zero
 function total_class_check {
         [[ $total_class =~ ^[1-9][0-9]*$ ]]
 }
@@ -14,7 +14,7 @@ function attend_class_check {
         [[ $attend_class =~ ^[1-9][0-9]*$ ]]
 }
 
-# prompt user input
+# Prompt for user input
 read -p "Enter the total number of classes: " total_class
 read -p "Enter the number of classes attended: " attend_class
 
@@ -36,9 +36,10 @@ then
                 echo "User input --> Number of class attended field empty"
         fi
 
-# User input is not empty
-# Validate the user input i.e. Must contain only numeric values
-# After validation, calculate the attendance 
+# User input not empty
+# Validation check i.e. User input must contain only numeric values and not starting with zero
+# Calulate attendance in percentage based upon the user input
+
 elif [ -n "$total_class" ] && [ -n "$attend_class" ]
 then
         if ! total_class_check || ! attend_class_check
