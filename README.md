@@ -89,5 +89,7 @@ chmod +x script_name.sh
 📌 Example : Password strength calculator --> Click here to view the full script: [password_strength.sh](<bash_scripts/34_password_strength.sh>)    
 📌 Example : Attendance checker --> Click here to view the full script: [attendance checker.sh](<bash_scripts/35_attendance_checker.sh>)    
 📌 Example : Movie ticket --> Click here to view the full script: [movie ticket.sh](<bash_scripts/36_movie_ticket.sh>)    
+📌 Example : Find sub domains --> Click here to view the full script: [find_hostnames.sh](<bash_scripts/37_find_hostnames.sh>)  
+
 
 
