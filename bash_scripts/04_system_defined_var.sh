@@ -37,3 +37,10 @@ echo $LANG
 echo $HISTSIZE
 echo $HISTFILE
 echo $HISTFILESIZE
+
+# HISTIGNORE -- Allows the user to specify the commands, and those commands will not get stored inside the history file as well as not get stored inside history command
+HISTIGNORE="ls:pwd:cd"
+#HISTCONTROL -- Allows the user to make sure the duplicate commands are not recorded inside history command as well as history file
+HISTCONTROL=ignoredups
+
+
