@@ -25,6 +25,7 @@ echo "Username is --> $username"
 # Section 4 - Colored text
 lines
 RED='\033[0;31m'
+RED='\033[0;31;41m'
 NC='\033[0m'
 
 read -p "Enter the username: " username
