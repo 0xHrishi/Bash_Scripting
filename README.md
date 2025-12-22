@@ -33,7 +33,7 @@ chmod +x script_name.sh
 - ## 📂 Examples by Topic
 
 ### 🔰 Basics
-📌 Example : Hello World and comments --> Click here to view the full script: [hello_word.sh](<bash_scripts/01_hello_world.sh>)  
+📌 Example : Hello World and comments --> Click here to view the full script: [hello_world.sh](<bash_scripts/01_hello_world.sh>)  
 
 ### 🔰 Variables 
 📌 Example : Variables --> Click here to view the full script: [declaring_variables.sh](<bash_scripts/02_declaring_variables.sh>)  
