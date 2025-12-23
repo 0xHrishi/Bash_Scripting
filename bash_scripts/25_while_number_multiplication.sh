@@ -1,13 +1,16 @@
 #!/bin/bash
+# Performs multiplication using a multiplicand and multiplier
+# and continues multiplying until the result exceeds a stop number.
 
-# Multiplication of number using while loop
-# PURPOSE : Print a visual separator for readability.
 function lines {
-        echo "*************************************************************"
+        echo "****************************************************************************"
 }
 
-# Function -- multiplicand_check, stop_number_check, multiplier_check
-# PURPOSE : Validate that multiplicand is a positive integer and does NOT start with 0 
+# color codes for error messages
+red='\033[0;31m'
+nf='\033[0m'
+
+# Function to make sure only numeric values are expected
 function multiplicand_check {
         [[ $multiplicand =~ ^[1-9][0-9]*$ ]]
 }
@@ -18,115 +21,77 @@ function stop_number_check {
         [[ $stop_number =~ ^[1-9][0-9]*$ ]]
 }
 
-echo "Warning: Do not enter numbers which starts with 0 e.g. 0,01,001"
-sleep 0.5
-# Prompt user for input
+echo "User input must not start with zero i.e. 0, 01, 001 .."
+sleep 0.2 
+# Prompt user input
 read -p "Enter the multiplicand number: " multiplicand
-read -p "Enter the multiplier number:" multiplier
-read -p "Enter the stop number:" stop_number
+read -p "Enter the multiplier number: " multiplier
+read -p "Enter the stop number: " stop_number
 
-# CHECK : Any empty fields?
+# User input empty
 if [ -z "$multiplicand" ] || [ -z "$multiplier" ] || [ -z "$stop_number" ]
 then
-        if [ -n "$multiplicand" ] && [ -z "$multiplier" ] && [ -z "$stop_number" ]
+        lines
+        if [ -z "$multiplicand" ]
         then
-                lines
-                echo "User input -- Multiplier number is empty"
-                echo "User input -- Stop number is empty"
-        elif [ -n "$multiplicand" ] && [ -n "$multiplier" ] && [ -z "$stop_number" ]
-        then
-                lines
-                echo "User input -- Stop number is empty"
-        elif [ -n "$multiplicand" ] && [ -z "$multiplier" ] && [ -n "$stop_number" ]
-        then
-                lines
-                echo "User input -- Multiplier number is empty"
-        elif [ -z "$multiplicand" ] && [ -n "$multiplier" ] && [ -n "$stop_number" ]
-        then
-                lines
-                echo "User input -- Multiplicand number is empty"
-        elif [ -z "$multiplicand" ] && [ -z "$multiplier" ] && [ -n "$stop_number" ]
-        then
-                lines
-                echo "User input -- Multiplicand number is empty"
-                echo "User input -- Multiplier number is empty"
-        elif [ -z "$multiplicand" ] && [ -n "$multiplier" ] && [ -z "$stop_number" ]
-        then
-                lines
-                echo "User input -- Multiplicand number is empty"
-                echo "User input -- Stop number is empty"
-        elif [ -z "$multiplicand" ] && [ -z "$multiplier" ] && [ -z "$stop_number" ]
-        then
-                lines
-                echo "User input -- Multiplicand number is empty"
-                echo "User input -- Multiplier number is empty"
-                echo "User input -- Stop number is empty"
-
+                echo -e "${red}User input -- Multiplicand number field is empty${nf}"
         fi
-# ALL THREE FIELDS ARE NON-EMPTY → NOW VALIDATE THEM
-# ALL INPUTS VALID → PERFORM MULTIPLICATION LOGIC
+        if [ -z "$multiplier" ]
+        then
+                echo -e "${red}User input -- multiplier number field is empty${nf}"
+        fi
+        if [ -z "$stop_number" ]
+        then
+                echo -e "${red}User input -- Stop number field is empty${nf}"
+        fi
+
+# User input not empty
+# Validate the user input i.e. check whether they are numeric or not
+# If numeric, 
+# Case 1: Result equals stop number
+# Case 2: Result already greater than stop number
+# Case 3: Keep multiplying until result exceeds stop number
 elif [ -n "$multiplicand" ] && [ -n "$multiplier" ] && [ -n "$stop_number" ]
 then
         if ! multiplicand_check || ! multiplier_check || ! stop_number_check
         then
-                if multiplicand_check && ! multiplier_check && ! stop_number_check
+                lines
+                if ! multiplicand_check
                 then
-                        lines
-                        echo "Multiplier field must contains only numeric(positive) numbers"
-                        echo "Stop number field must contains only numeric(positive) numbers"
-                elif multiplicand_check && multiplier_check && ! stop_number_check
+                        echo -e "${red}Multiplicand number field must contain only numeric values ${nf}"
+                fi
+                if ! multiplier_check
                 then
-                        lines
-                        echo "Stop number field must contains only numeric(positive) numbers"
-                elif multiplicand_check && ! multiplier_check && stop_number_check
+                        echo -e "${red}Multiplier number field must contain only numeric values ${nf}"
+                fi
+                if ! stop_number_check
                 then
-                        lines
-                        echo "Multiplier field must contains only numeric(positive) numbers"
-                elif ! multiplicand_check && multiplier_check && stop_number_check
-                then
-                        lines
-                        echo "Multiplicand field must contains only numeric(positive) numbers"
-                elif ! multiplicand_check && ! multiplier_check && stop_number_check
-                then
-                        lines
-                        echo "Multiplicand field must contains only numeric(positive) numbers"
-                        echo "Multiplier field must contains only numeric(positive) numbers"
-                elif ! multiplicand_check && multiplier_check && ! stop_number_check
-                then
-                        lines
-                        echo "Multiplicand field must contains only numeric(positive) numbers"
-                        echo "Stop number field must contains only numeric(positive) numbers"
-                elif ! multiplicand_check && ! multiplier_check && ! stop_number_check
-                then
-                        lines
-                        echo "Multiplicand field must contains only numeric(positive) numbers"
-                        echo "Multiplier field must contains only numeric(positive) numbers"
-                        echo "Stop number field must contains only numeric(positive) numbers"
+                        echo -e "${red}Stop number field must contain only numeric values ${nf}"
                 fi
         elif multiplicand_check && multiplier_check && stop_number_check
         then
-                multiply=$(($multiplicand*$multiplier))
-                if [ $multiply -eq $stop_number ]
+                lines
+                multiply_result=$(($multiplicand*$multiplier))
+
+                if [ $multiply_result -eq $stop_number ]
                 then
-                        lines
-                        echo "Multiplicand number: $multiplicand times Multiplier number: $multiplier --> $multiply"
-                        echo "Result: $multiply and Stop number: $stop_number are equal"
-                elif [ $multiply -gt $stop_number ]
+                        echo "Multiplicand: $multiplicand times $multiplier --> $multiply_result"
+                        echo "Stop number --> $stop_number"
+                        echo "Both number are equal"
+                elif [ $multiply_result -gt $stop_number ]
                 then
-                        lines
-                        echo "Multiplicand number: $multiplicand times Multiplier number: $multiplier --> $multiply"
-                        echo "Result: $multiply is greater than Stop number: $stop_number"
-                elif [ $multiply -lt $stop_number ]
+                        echo "Multiplicand: $multiplicand times $multiplier --> $multiply_result"
+                        echo "Stop number --> $stop_number"
+                        echo "Multiply result: $multiply_result is greater than $stop_number"
+                elif [ $multiply_result -le $stop_number ]
                 then
-                        while [ $multiply -lt $stop_number ]
+                        while [ $multiply_result -le $stop_number ]
                         do
-                                lines
-                                echo "Multiplicand number: $multiplicand times Multiplier number: $multiplier --> $multiply"
+                                echo "Multiplicand: $multiplicand times $multiplier --> $multiply_result"
                                 ((multiplier++))
-                                multiply=$(($multiplicand*$multiplier))
+                                multiply_result=$(($multiplicand*$multiplier))
                                 sleep 0.2
                         done
                 fi
         fi
 fi
-
