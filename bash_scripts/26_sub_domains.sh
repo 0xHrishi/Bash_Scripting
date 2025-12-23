@@ -1,66 +1,65 @@
 #!/bin/bash
-
-# SCRIPT -- brute force attack on domain to find sub domains 
+# Performs subdomain brute-forcing using a wordlist
+# and checks for public DNS records using the `host` command.
 
 function lines {
-        echo "*************************************************************"
+        echo "****************************************************************************"
 }
 
-# Asking the user to enter a domain name (e.g., example.com)
-# Asking the user to enter the path of the file that contains subdomains
-read -p "Enter the domain name such as abc.com: " domain_name
-read -p "Enter the filepath: " file
+# color code for error messages
+red='\033[0;31m'
+nf='\033[0m'
 
-# Check if the user input is empty
-if [ -z "$domain_name" ] || [ -z "$file" ]
+# Read user input
+read -p "Enter the domain name: " domain_name
+read -p "Enter the filepath for brute force: " filepath
+
+# User input empty
+if [ -z "$domain_name" ] || [ -z "$filepath" ]
 then
-        if [ -n "$domain_name" ] && [ -z "$file" ]
+        lines
+        if [ -z "$domain_name" ]
         then
-                lines
-                echo "User input -- Filepath field is empty"
-        elif [ -z "$domain_name" ] && [ -n "$file" ]
+                echo -e "${red}User input -- Domain name field is empty${nf}"
+        fi
+        if [ -z "$file_path" ]
         then
-                lines
-                echo "User input -- Domain name field is empty"
-        elif [ -z "$domain_name" ] && [ -z "$file" ]
-        then
-                lines
-                echo "User input -- Domain name field is empty"
-                echo "User input -- Filepath field is empty"
+                echo -e "${red}User input -- Filepath field is empty${nf}"
         fi
 
-# IF BOTH INPUTS ARE PROVIDED, CONTINUE
-# Check if the file actually exists i.e. whether its a directory or a file
- # If the path is a non-empty file and a regular file, Loop through each subdomain in the file
-elif [ -n "$domain_name" ] && [ -n "$file" ]
+# User input not empty
+# Valid regular file and its not empty, 
+# Read each subdomain from the wordlist
+# Suppress output, check only exit status
+elif [ -n "$domain_name" ] && [ -n "$filepath" ]
 then
-        if [ -e $file ]
+        if [ -e $filepath ]
         then
-                if [ -d $file ]
+                lines
+                if [ -d $filepath ]
                 then
-                        lines
-                        echo "$file -- Its a directory"
-                elif [ -s $file ] && [ -f $file ]
+                        echo "$filepath --> Its a directory"
+                elif [ -f $filepath ] && [ -s $filepath ]
                 then
-                        for sub_domains in $(cat $file)
+                        for sub_domains in $(cat $filepath)
                         do
+                                lines
                                 host $sub_domains.$domain_name &>/dev/null
 
                                 if [ $? -eq 0 ]
                                 then
-                                        lines
                                         host $sub_domains.$domain_name
                                         sleep 0.2
                                 else
-                                        lines
-                                        echo "$sub_domains.$domain_name NO VALID DNS RECORDS"
+                                        echo "$sub_domains.$domain_name --> No public dns records"
                                         sleep 0.2
+                                        continue
                                 fi
+
                         done
+
                 else
-                        lines
-                        echo "$file found -- Unable to identify the filetype"
+                        echo "$filepath --> File found, but unable to identify the filetype"
                 fi
         fi
 fi
-
