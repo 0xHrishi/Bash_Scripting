@@ -1,48 +1,52 @@
 #!/bin/bash
+# Performs reverse DNS lookups for a given network prefix
+# Iterates from .1 to .255 and checks for PTR records
 
 function lines {
-        echo "*************************************************************"
+        echo "****************************************************************"
 }
 
-function reverse_lookup_check {
-        [[ $reverse_lookup =~ ^[0-9.]+$ ]]
+# color codes for error messages
+red='\033[0;31m'
+nf='\033[0m'
+
+# Function to validate user input format
+function network_check {
+        [[ $network =~ ^[1-9][0-9]*$ ]]
 }
 
-# Prompt for user input
-read -p "Enter the IP address for reverse loopkup: " reverse_lookup
+# Read network prefix from user
+read -p "Enter the network part from reverse lookup such as 1.1.1: " network
 
-# User input empty
-if [ -z "$reverse_lookup" ]
+# user input empty
+if [ -z "$network" ]
 then
         lines
-        echo "User input -- Reverse lookup field is empty"
-        
-# Input is NOT empty
-# If the input contains characters other than digits and dots
-# Loop from 1 to 255 for DNS reverse scanning
-elif [ -n "$reverse_lookup" ]
-then
-        if ! reverse_lookup_check
+        echo -e "${red}User input --> Network field is empty${nf}"
+# user iput not empty
+# Validate network input
+# If validation passes, perform reverse lookup
+else
+        lines
+        if ! network_check
         then
-                lines
-                echo "Reverse lookup field must contain only numeric values"
-        elif reverse_lookup_check
+                echo -e "${red}Kindy check the network field format${nf}"
+        elif network_check
         then
-
-                for ip in $(seq 1 255)
+                for reverse_lookup in {1..255}
                 do
-                        host $reverse_lookup.$ip &>/dev/null
-
+                        lines
+                        host $network.$reverse_lookup &>/dev/null
                         if [ $? -eq 0 ]
                         then
-                                lines
-                                host $reverse_lookup.$ip
-                                sleep 0.2
+                                host $network.$reverse_lookup
+                                sleep 0.1
                         else
-                                echo "$reverse_lookup.$ip -- No DNS Record"
-                                sleep 0.2
+                                echo -e "${red}$network.$reverse_lookup --> No DNS records${nf}"
+                                sleep 0.1
                                 continue
                         fi
                 done
+
         fi
 fi
