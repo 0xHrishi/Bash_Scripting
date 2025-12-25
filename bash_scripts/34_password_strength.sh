@@ -11,63 +11,72 @@
 # - Special characters (! @ # $ % ^ & *)
 # Each category contributes 1 point to the total strength score.
 
+#!/bin/bash
 
 function lines {
-        echo "*************************************************************"
+        echo "****************************************************************"
 }
-# Checks if the password contains at least one uppercase letter (A-Z)
+# Color codes for error messages
+red='\033[0;31m'
+nf='\033[0m'
+
+# Check for at least one uppercase letter
+# Check for at least one lowercase letter
+# Check for at least one numeric
+# Check for at least one special character
 function uppercase {
-        [[ $password =~ [A-Z] ]]
+        [[ $passwd =~ [A-Z] ]]
 }
-# Checks if the password contains at least one lowercase letter (a-z)
 function lowercase {
-        [[ $password =~ [a-z] ]]
+        [[ $passwd =~ [a-z] ]]
 }
-# Checks if the password contains at least one numeric digit (0‑9)
-function numeric {
-        [[ $password =~ [0-9] ]]
+function numbers {
+        [[ $passwd =~ [0-9] ]]
 }
-# Checks if the password contains at least one special characters
 function special_characters {
-        [[ $password =~ [\!\@\#\$\%\^\&\*] ]]
+        [[ $passwd =~ [\`\!\@\#\$\%\^\&\*\(\)\_\+\] ]]
 }
 
 # Prompt user input
-# Silent prompt so password does not appear on the screen
-read -sp "Enter the password: " password
-echo
+read -sp "Enter the password: " passwd
 
-# Empty user input
-if [ -z "$password" ]
+# User input empty
+if [ -z "$passwd" ]
 then
         lines
-        echo "User input --> Password field is empty"
+        echo -e "${red}User input --> Password field is empty${nf}"
 
-# Check for uppercase & lowercase letters, digits and special characters
-# Display the final score 
-elif [ -n "$password" ]
+# If user input is provided
+# Password length validation
+# If password length is valid, evaluate strength
+elif [ -n "$passwd" ]
 then
-        strength=0
-        if uppercase
+        lines
+        password_strength=0
+        if [ "${#passwd}" -lt 8 ]
         then
-                ((strength++))
-        fi
+                echo "Password is too weak as its less than 8 characters"
 
-        if lowercase
+        elif [ "${#passwd}" -ge 8 ]
         then
-                ((strength++))
+                ((password_strength++))
+                if uppercase
+                then
+                        ((password_strength++))
+                fi
+                if lowercase
+                then
+                        ((password_strength++))
+                fi
+                if numbers
+                then
+                        ((password_strength++))
+                fi
+                if special_characters
+                then
+                        ((password_strength++))
+                fi
         fi
-
-        if numeric
-        then
-                ((strength++))
-        fi
-
-        if special_characters
-        then
-                ((strength++))
-        fi
-
-echo "Strength of the password --> $strength"
-
+        echo "Password length is greater than 8 characters"
+        echo "Password strength points --> $password_strength "
 fi
