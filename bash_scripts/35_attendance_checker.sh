@@ -1,12 +1,14 @@
 #!/bin/bash
-# Purpose   : Validates user input for total classes and attended classes, calculates attendance percentage, and prints eligibility status.
+# Calculates attendance percentage based on total classes held and attended, then decides exam eligibility.
 function lines {
-        echo "*************************************************************"
-
+        echo "****************************************************************"
 }
 
-# Function total_class_check, attend_class_check 
-# Make sure the user input contain only numeric values and the number should not start with zero
+# color codes for error messages
+red='\033[0;31m'
+nf='\033[0m'
+
+# function to make sure that the user input must contain only numeric values
 function total_class_check {
         [[ $total_class =~ ^[1-9][0-9]*$ ]]
 }
@@ -14,75 +16,61 @@ function attend_class_check {
         [[ $attend_class =~ ^[1-9][0-9]*$ ]]
 }
 
-# Prompt for user input
-read -p "Enter the total number of classes: " total_class
+# Prompt user input
+read -p "Enter the total number of classes held: " total_class
 read -p "Enter the number of classes attended: " attend_class
 
-# User input empty
+# user input empty
 if [ -z "$total_class" ] || [ -z "$attend_class" ]
 then
-        if [ -n "$total_class" ] && [ -z "$attend_class" ]
+        lines
+        if [ -z "$total_class" ]
         then
-                lines
-                echo "User input --> Number of class attended field empty"
-        elif [ -z "$total_class" ] && [ -n "$attend_class" ]
+                echo -e "${red}User input --> Total number of classes held field is empty${nf}"
+        fi
+        if [ -z "$attend_class" ]
         then
-                lines
-                echo "User input --> Total number of classes field empty"
-        elif [ -z "$total_class" ] && [ -z "$attend_class" ]
-        then
-                lines
-                echo "User input --> Total number of classes field empty"
-                echo "User input --> Number of class attended field empty"
+                echo -e "${red}User input --> Total number of classes attended field is empty${nf}"
         fi
 
-# User input not empty
-# Validation check i.e. User input must contain only numeric values and not starting with zero
-# Calulate attendance in percentage based upon the user input
-
+# user input not empty
+# validation check -- user input must contain only numeric values
+# Calculate attendance percentage
 elif [ -n "$total_class" ] && [ -n "$attend_class" ]
 then
         if ! total_class_check || ! attend_class_check
         then
-                if total_class_check && ! attend_class_check
+                lines
+                if ! total_class_check
                 then
-                        lines
-                        echo "Number of classes attended field must contain only numeric values"
-                elif ! total_class_check && attend_class_check
-                then
-                        lines
-                        echo "Total number of classes field must contain only numeric values"
-                elif ! total_class_check && ! attend_class_check
-                then
-                        lines
-                        echo "Total number of classes field must contain only numeric values"
-                        echo "Number of classes attended field must contain only numeric values"
+                        echo -e "${red}Total number of classes held field must contain only numeric values${nf}"
                 fi
-
+                if ! attend_class_check
+                then
+                        echo -e "${red}Total number of classes attended field must contain only numeric values${nf}"
+                fi
         elif total_class_check && attend_class_check
         then
-                attendance_checker=$(($attend_class * 100 / $total_class))
-                if [ $attendance_checker -ge 75 ]
+                lines
+                attendance_percentage=$(($attend_class*100/$total_class))
+                if [ $attendance_percentage -ge 75 ]
                 then
-                        lines
-                        echo "Total number of classes --> $total_class"
-                        echo "Number of classes attend --> $attend_class"
-                        echo "Attendance checker --> $attendance_checker"
+                        echo "Total number of classes held $total_class"
+                        echo "Total number of classes attended $attend_class"
+                        echo "Attendance percentage --> $attendance_percentage"
                         echo "You are eligible for writing exam"
-                elif [ $attendance_checker -le 74 ] && [ $attendance_checker -ge 60 ]
+                elif [ $attendance_percentage -ge 65 ] && [ $attendance_percentage -le 74 ]
                 then
-                        lines
-                        echo "Total number of classes --> $total_class"
-                        echo "Number of classes attend --> $attend_class"
-                        echo "Attendance checker --> $attendance_checker"
-                        echo "Attendace too low, but can be improved"
-                elif [ $attendance_checker -le 59 ]
+                        echo "Total number of classes held $total_class"
+                        echo "Total number of classes attended $attend_class"
+                        echo "Attendance percentage --> $attendance_percentage"
+                        echo "Attendance is low, can be improved"
+                elif [ $attendance_percentage -le 64 ]
                 then
-                        lines
-                        echo "Total number of classes --> $total_class"
-                        echo "Number of classes attend --> $attend_class"
-                        echo "Attendance checker --> $attendance_checker"
-                        echo "CONTACT PRINCIPAL"
+                        echo "Total number of classes held $total_class"
+                        echo "Total number of classes attended $attend_class"
+                        echo "Attendance percentage --> $attendance_percentage"
+                        echo "Contact principal"
                 fi
         fi
 fi
