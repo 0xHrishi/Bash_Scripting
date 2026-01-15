@@ -20,3 +20,6 @@ echo "Current working directory -- $(pwd)"
 
 # Print the current user's UID using id command
 echo "Current login user UID number -- $(id -u)"
+
+# Print the shell name
+echo "Current login user UID number -- $0 and $SHELL"
