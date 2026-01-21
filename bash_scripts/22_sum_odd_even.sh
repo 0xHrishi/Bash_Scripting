@@ -1,50 +1,53 @@
 #!/bin/bash
-# Accept two numbers from the user
-# Validate the user input
-# Calculate the sum of the two numbers
-# Based upon the sum, display whether it is an even or odd number 
+# -----------------------------------------------------------------------------
+# Script Name: sum_even_odd_checker.sh
+# Description: 
+#   This Bash script prompts the user to enter two integers (positive or negative, 
+#   non-zero, no decimals, no leading zeros). It validates the input and calculates 
+#   the sum. The script then determines whether the sum is even or odd.
+#-----------------------------------------------------------------------------
 
 function lines {
-        echo "****************************************************************************"
+        echo "****************************************************************"
 }
 
 # Color codes for error messages
-red='\033[0;31m'
-nf='\033[0m'
+RED='\033[0;31m'
+NF='\033[0m'
 
-# Function to check, that the user input must contain only numeric values i.e. postive or negative
+# Function i.e. first_number_check and second_number_check to validate the user input
 function first_number_check {
-        [[ $first_number =~ ^[1-9-][0-9]*$ ]]
+        [[ $first_number =~ ^-?[1-9][0-9]*$ ]]
 }
 function second_number_check {
-        [[ $second_number =~ ^[1-9-][0-9]*$ ]]
+        [[ $second_number =~ ^-?[1-9][0-9]*$ ]]
 }
 
-# Display a warning 
-echo "*****User input should not start with zero i.e. 0, 01, 001 ..*****"
+# User instructions
+echo -e "${NF}Do not enter numbers starting with zero or Decimal numbers${NF}"
 sleep 0.2
-lines
-# Prompt user input
+
+# User input
 read -p "Enter the first number: " first_number
 read -p "Enter the second number: " second_number
 
-# If user input is empty
+# If any user input is empty
 if [ -z "$first_number" ] || [ -z "$second_number" ]
 then
         lines
         if [ -z "$first_number" ]
         then
-                echo -e "${red}User input --> First number field is empty${nf}"
+                echo -e "${RED}User input --> First number field is empty${NF}"
         fi
         if [ -z "$second_number" ]
         then
-                echo -e "${red}User input --> Second number field is empty${nf}"
+                echo -e "${RED}User input --> Second number field is empty${NF}"
         fi
 
-# User input is not empty
+# User input not empty
 # Validate the user input
-# Once the user input is numeric, calculate the sum
-# Based upon the sum, display whether it is even or odd number
+# Validation passes -- calculate the sum
+# If both numbers are valid, perform sum and check even/odd
 elif [ -n "$first_number" ] && [ -n "$second_number" ]
 then
         if ! first_number_check || ! second_number_check
@@ -52,24 +55,23 @@ then
                 lines
                 if ! first_number_check
                 then
-                        echo -e "${red}First number must contain only numeric values i.e. postive or negative numbers${nf}"
+                        echo -e "${RED}The first number field must contain only positive or negative integers${NF}"
                 fi
                 if ! second_number_check
                 then
-                        echo -e "${red}Second number must contain only numeric values i.e. positive or negative numbers${nf}"
+                        echo -e "${RED}The second number field must contain only positive or negative integers${NF}"
                 fi
         elif first_number_check && second_number_check
         then
-                lines
                 sum=$(($first_number+$second_number))
+                lines
+                echo "First number: $first_number plus Second number: $second_number --> $sum"
                 if (($sum%2==0))
                 then
-                        echo "First number: $first_number plus Second number: $second_number --> $sum"
-                        echo "Result is Even number"
+                        echo "Sum: $sum is Even number"
                 elif (($sum%2!=0))
                 then
-                        echo "First number: $first_number plus Second number: $second_number --> $sum"
-                        echo "Result is Odd number"
+                        echo "Sum: $sum is Odd number"
                 fi
 
         fi
