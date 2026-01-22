@@ -1,5 +1,5 @@
 #!/bin/bash
-=================================================================
+#=================================================================
 # Description:
 #   This script calculates the down payment for a house based on 
 #   the user's total house cost and credit score.
