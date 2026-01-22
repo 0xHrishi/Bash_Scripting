@@ -89,7 +89,8 @@ chmod +x script_name.sh
 📌 Example : Password strength calculator --> Click here to view the full script: [password_strength.sh](<bash_scripts/34_password_strength.sh>)    
 📌 Example : Attendance checker --> Click here to view the full script: [attendance checker.sh](<bash_scripts/35_attendance_checker.sh>)       
 📌 Example : Find sub domains --> Click here to view the full script: [find_hostnames.sh](<bash_scripts/36_find_hostnames.sh>)    
-📌 Example : Buidget calculator --> Click here to view the full script: [budget_calc.sh](<bash_scripts/37_budget_calc.sh>)  
+📌 Example : Budget calculator --> Click here to view the full script: [budget_calc.sh](<bash_scripts/37_budget_calc.sh>)   
+📌 Example : Temperature conversion i.e. Celsuis to Fahrenheit and vice versa --> Click here to view the full script: [temp_con.sh](<bash_scripts/38_temp_con.sh>)
 
 
 
