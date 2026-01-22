@@ -1,73 +1,93 @@
 #!/bin/bash
-# Identifies file type (regular file or directory)
-# and displays read, write, and execute permissions
+
+# Description : 
+#   This script checks whether a given filepath exists.
+#   If it exists, it identifies whether it is a directory
+#   or a regular file and displays its read, write, and
+#   execute permissions.
+
 function lines {
-        echo "****************************************************************"
+        echo "***************************************************************"
 }
 
 # color codes for error messages
-red='\033[0;31m'
-nf='\033[0m'
+RED='\033[0;31m'
+NF='\033[0m'
 
-# Prompt user input
-read -p "Enter the file full path: " file_path
+# user iput
+read -p "Enter the filepath: " filepath
 
-# User input field empty
-if [ -z "$file_path" ]
+# user input empty
+if [ -z "$filepath" ]
 then
         lines
-        echo -e "${red}File path field is empty${nf}"
+        echo -e "${RED}User input --> Filepath field is empty${NF}"
 
-# User input is not empty
-# Check if the file or directory exists
-# Based upon file / directory, display permissions the user have 
-elif [ -n "$file_path" ]
-then
+# user input not empty
+# Check if the path exists
+# File/Directory found --- based upon that display permissions
+else
         lines
-        if [ -e "$file_path" ]
+        if [ -e "$filepath" ]
         then
-                if [ -f "$file_path" ]
+                if [ -d "$filepath" ]
                 then
-                        echo "$file_path --> Regular file"
-                        if [ -r "$file_path" ]
+                        echo -e "${RED}Its a directory${NF}"
+                        if [ -r "$filepath" ]
                         then
-                                echo "$file_path --> Got read permission"
+                                echo "Read permission"
                         fi
-                        if [ -w "$file_path" ]
+                        if [ -w "$filepath" ]
                         then
-                                echo "$file_path --> Got write permission"
+                                echo "Write permission"
                         fi
-                        if [ -x "$file_path" ]
+                        if [ -x "$filepath" ]
                         then
-                                echo "$file_path --> Got execute permission"
+                                echo "Execute permission"
                         fi
-                        if [ ! -r "$file_path" ] && [ ! -w "$file_path" ] && [ ! -x "$file_path" ]
+                        if [ ! -r "$filepath" ]
                         then
-                                echo "$file_path --> No red, write, execute permission"
+                                echo "No Read permission"
                         fi
-                elif [ -d "$file_path" ]
+                        if [ ! -w "$filepath" ]
+                        then
+                                echo "No Write permission"
+                        fi
+                        if [ ! -x "$filepath" ]
+                        then
+                                echo "No Execute permission"
+                        fi
+                elif [ -f "$filepath" ]
                 then
-                        echo "$file_path --> Directory"
-                        if [ -r "$file_path" ]
+                        echo -e "${RED}Its a regular file${NF}"
+                        if [ -r "$filepath" ]
                         then
-                                echo "$file_path --> Got read permission"
+                                echo "Read permission"
                         fi
-                        if [ -w "$file_path" ]
+                        if [ -w "$filepath" ]
                         then
-                                echo "$file_path --> Got write permission"
+                                echo "Write permission"
                         fi
-                        if [ -x "$file_path" ]
+                        if [ -x "$filepath" ]
                         then
-                                echo "$file_path --> Got execute permission"
+                                echo "Execute permission"
                         fi
-                        if [ ! -r "$file_path" ] && [ ! -w "$file_path" ] && [ ! -x "$file_path" ]
+                        if [ ! -r "$filepath" ]
                         then
-                                echo "$file_path --> No red, write, execute permission"
+                                echo "No Read permission"
+                        fi
+                        if [ ! -w "$filepath" ]
+                        then
+                                echo "No Write permission"
+                        fi
+                        if [ ! -x "$filepath" ]
+                        then
+                                echo "No Execute permission"
                         fi
                 else
-                        echo -e "${red}$file_path -- File found, unable to identify the file type${nf}"
+                        echo "$filepath --> File found, but unable to identify the filepath"
                 fi
         else
-                echo -e "${red}$file_path --> File not found${nf}"
+                echo -e "${RED}File not found${NF}"
         fi
 fi
