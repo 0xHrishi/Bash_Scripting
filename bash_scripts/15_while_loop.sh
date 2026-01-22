@@ -10,3 +10,10 @@ do
         echo "$number_1"
         ((number_1++))
 done
+
+# read a file
+	
+while read -r names
+do
+        echo " $names"
+done < $file_name
