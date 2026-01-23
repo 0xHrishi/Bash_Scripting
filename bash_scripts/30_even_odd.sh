@@ -1,14 +1,21 @@
 #!/bin/bash
-# Print even or odd numbers based upon the user input
+# Description : 
+#   - Takes two numbers from the user
+#   - Validates empty and non-numeric input
+#   - Compares the two numbers
+#   - If first number is less than second number,
+#     prints even or odd numbers between them based on user choice
+
 function lines {
-        echo "****************************************************************"
+        echo "***************************************************************"
 }
 
 # color codes for error messages
-red='\033[0;31m'
-nf='\033[0m'
+RED='\033[0;31m'
+NF='\033[0m'
 
-# function to check, user input must contain only numeric values i.e. postive or negative
+# function to validate the user input
+# Allows positive and negative integers (excluding 0)
 function first_number_check {
         [[ $first_number =~ ^-?[1-9][0-9]*$ ]]
 }
@@ -16,86 +23,77 @@ function second_number_check {
         [[ $second_number =~ ^-?[1-9][0-9]*$ ]]
 }
 
-# Warning
-echo "User input -- should not start with leading 0 i.e. 0,01, 001"
-echo "First number must be lesser than second number"
-sleep 0.5
-# Prompt user input
+# user input
 read -p "Enter the first number: " first_number
 read -p "Enter the second number: " second_number
 
-# User input empty 
+# user input empty
 if [ -z "$first_number" ] || [ -z "$second_number" ]
 then
         lines
         if [ -z "$first_number" ]
         then
-                echo -e "${red}User input --> First number field is empty${nf}"
+                echo -e "${RED}User input --> First number field is empty${NF}"
         fi
         if [ -z "$second_number" ]
         then
-                echo -e "${red}User input --> Second number field is empty${nf}"
+                echo -e "${RED}User input --> Second number field is empty${NF}"
         fi
 
-# Inputs are not empty
-# validation check
-# validation passed, compare the input 
-# Ask user choice i.e. print even or odd numbers 
+# user input not empty
+# Check for numeric validation
+# If both numbers are valid integers -- compare
+# Ask user choice for even or odd numbers
 elif [ -n "$first_number" ] && [ -n "$second_number" ]
 then
         if ! first_number_check || ! second_number_check
         then
-                lines
                 if ! first_number_check
                 then
-                        echo -e "${red}First number field must contain numeric values${nf}"
+                        echo -e "${RED}First number field must contain numeric values${NF}"
                 fi
                 if ! second_number_check
                 then
-                        echo -e "${red}Second number field must contain numeric values${nf}"
+                        echo -e "${RED}Second number field must contain numeric values${NF}"
                 fi
+
         elif first_number_check && second_number_check
         then
                 lines
                 if [ $first_number -eq $second_number ]
                 then
-                        echo -e "${red}First number: $first_number is equal to Second number: $second_number${nf}"
-                elif [ $first_number -gt $second_number ]
+                        echo -e "${RED}First number: $first_number is equal to Second number: $second_number${NF}"
+                elif [ $first_number -ge $second_number ]
                 then
-                        echo -e "${red}First number: $first_number is greater than Second number: $second_number${nf}"
+                        echo -e "${RED}First number: $first_number is greater than Second number: $second_number${NF}"
                 elif [ $first_number -lt $second_number ]
                 then
-                        read -p "Print even or odd number: " choice
+                        read -p "Would you like to print even or odd number: even or odd? " choice
+
                         if [ "$choice" == "even" ]
                         then
-                                lines
                                 for even_numbers in $(seq $first_number $second_number)
                                 do
                                         if (($even_numbers%2==0))
                                         then
-                                                echo "Even number --> $even_numbers"
+                                                echo "Even number is --> $even_numbers"
+                                                lines
                                                 sleep 0.2
-                                        else
-                                                sleep 0.2
-                                                continue
                                         fi
                                 done
                         elif [ "$choice" == "odd" ]
                         then
-                                lines
                                 for odd_numbers in $(seq $first_number $second_number)
                                 do
                                         if (($odd_numbers%2!=0))
                                         then
-                                                echo "Odd number --> $odd_numbers"
+                                                echo "Odd number is --> $odd_numbers"
+                                                lines
                                                 sleep 0.2
-                                        else
-                                                sleep 0.2
-                                                continue
                                         fi
                                 done
                         else
-                                echo -e "${red}Invalid user input${nf}"
+                                echo -e "${RED}Invalid user input${NF}"
                         fi
                 fi
         fi
