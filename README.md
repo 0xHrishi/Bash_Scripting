@@ -60,6 +60,7 @@ chmod +x script_name.sh
 ### 🔰 Loops --> for and while  
 📌 Example : for --> Click here to view the full script: [for_loop.sh](<bash_scripts/14_for_loop.sh>)  
 📌 Example : while --> Click here to view the full script: [while_loop.sh](<bash_scripts/15_while_loop.sh>)  
+📌 Example : until --> Click here to view the full script: [until.sh](<bash_scripts/39_until.sh>)  
 📌 Example : contunue and break --> Click here to view the full script: [continue_break.sh](<bash_scripts/16_continue_break.sh>)  
 
 ### 🔰 Arrays  
