@@ -1,77 +1,72 @@
 #!/bin/bash
+# Description : Accepts two integer inputs from the user, Calculates the sum of the first two numbers
+# Allows the user to continuously add new numbers to the previous result
+# User can choose to continue or exit at any time
 
-# =============================================================================
-# Script Name : interactive_sum_calculator.sh
-#
-# Description :
-#   This Bash script accepts two integers (positive or negative, non-zero,
-#   no leading zeros, no decimals), validates the input, and calculates their sum.
-#   The user is then repeatedly prompted to add additional numbers to the
-#   previous result until they choose to stop.
-# =============================================================================
 
 function lines {
-        echo "****************************************************************"
+        echo "*******************************************************"
 }
 
-# color codes for error messages
-RED='\033[0;31m'
+# color codes for error 
+RED='\033[1;31m'
 NF='\033[0m'
 
-# Function i.e. first_number_check, second_number_check, number_check
-# To validate the user input
+# function to check user input i.e. integer values only 
 function first_number_check {
         [[ $first_number =~ ^-?[1-9][0-9]*$ ]]
 }
 function second_number_check {
         [[ $second_number =~ ^-?[1-9][0-9]*$ ]]
 }
-function number_check {
-        [[ $number =~ ^-?[1-9][0-9]*$ ]]
+function new_number_check {
+        [[ $new_number =~ ^-?[1-9][0-9]*$ ]]
 }
 
-# Function to continuously accept new numbers and add them to the total sum
-function new_number {
+# Function that allows the user to keep adding numbers
+# A new number must contain only integer value
+# Add the new number to the previous result 
+# This keep on going, until user choose to quit
+function try_again {
+        read -p "Would you like to add a new number to the previous result y/n ?: " choice
+
         lines
-        read -p "Would you like to enter a new number and add it to the previous result. y/n?: " choice
         if [ "$choice" == "n" ]
         then
-                echo -e "${RED}You choose not to continue${NF}"
-                echo -e "${RED}Final result: $sum${NF}"
+                echo -e "${RED}You choose to quit, bye for now${NF}"
                 exit
-
         elif [ "$choice" == "y" ]
         then
-                read -p "Enter the number: " number
-                lines
-                if [ -z "$number" ]
+                read -p "Enter a new number: " new_number
+                if [ -z "$new_number" ]
                 then
-                        echo -e "${RED}User input--> New number field is empty, try again${NF}"
-                        new_number
-                elif [ -n "$number" ]
-                then
-                        if ! number_check
+                        echo -e "${RED}User input --> New number field is empty, try again${NF}"
+                        try_again
+                else
+                        if ! new_number_check
                         then
-                                echo -e "${RED}Number field must contain only positive or negative integers, try again${NF}"
-                                new_number
-                        elif number_check
+                                echo -e "${RED}New number field must contain only numeric values, try again${NF}"
+                                try_again
+                        fi
+                        if new_number_check
                         then
-                                new_sum=$(($sum+$number))
-                                echo "Previous result: $sum plus New number: $number --> $new_sum"
-                                sum=$new_sum
-                                new_number
+                                result=$(($sum+$new_number))
+                                echo "Previous result: $sum plus New number: $new_number --> $result"
+                                sum=$result
+                                try_again
                         fi
                 fi
-
         else
-                echo -e "${RED}Invalid user input${NF}"
+                echo -e "${RED}Invalid user input, try again by entering valid input${NF}"
+                try_again
         fi
-
 }
 
-# Intructions
-echo -e "${RED}Do not enter numbers starting with leading zero or decimal numbers${NF}"
-# Prompt user input
+# Initial user warning
+echo -e "${RED}Do not enter numbers starting with zero and zero${NF}"
+sleep 0.5
+
+# user input
 read -p "Enter the first number: " first_number
 read -p "Enter the second number: " second_number
 
@@ -88,8 +83,9 @@ then
                 echo -e "${RED}User input --> Second number field is empty${NF}"
         fi
 
-# User input and validate
-# Validation passes, calculate the sum 
+# user input is not empty
+# validate user input i.e. check it contain only integer values
+# add the numbers, display the sum and call the try_again function
 elif [ -n "$first_number" ] && [ -n "$second_number" ]
 then
         if ! first_number_check || ! second_number_check
@@ -97,17 +93,17 @@ then
                 lines
                 if ! first_number_check
                 then
-                        echo -e "${RED}The first number field must contain only positive or negative integers${NF}"
+                        echo -e "${RED}First number field must contain only numeric values${NF}"
                 fi
                 if ! second_number_check
                 then
-                        echo -e "${RED}The Second number field must contain only positive or negative integers${NF}"
+                        echo -e "${RED}Second number field must contain only numeric values${NF}"
                 fi
         elif first_number_check && second_number_check
         then
                 lines
                 sum=$(($first_number+$second_number))
                 echo "First number: $first_number plus Second number: $second_number --> $sum"
-                new_number
+                try_again
         fi
 fi
