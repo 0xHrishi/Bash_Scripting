@@ -1,80 +1,80 @@
 #!/bin/bash
 
-# Description: This script accepts two positive integers (no leading zeros, no decimals)
-#              and allows the user to perform basic arithmetic operations:
-#              Addition, Subtraction, Multiplication, Power, Quotient, and Remainder.
+# Description : A menu-driven calculator written in Bash. Performs basic arithmetic operations
 
 function lines {
-        echo "***************************************************************"
+        echo "*****************************************************"
 }
 
-# color codes for error
-RED='\033[0;31m'
+
+# color codes
+RED='\033[1;31m'
 NF='\033[0m'
 
-# Function to check the user input must contain only numeric values
+# function to check user input
 function first_number_check {
-        [[ $first_number =~ ^[1-9][0-9]*$ ]]
+        [[ $first_number =~ ^-?[1-9][0-9]*$ ]]
 }
 function second_number_check {
-        [[ $second_number =~ ^[1-9][0-9]*$ ]]
+        [[ $second_number =~ ^-?[1-9][0-9]*$ ]]
 }
 
-# User input instructions
-echo -e "${RED}Do not enter numbers leading with 0 or 0 or decimal values${NF}"
+# warning 
+echo -e "${RED}Do not enter numbers starting with zero or a single digit zero${NF}"
 sleep 0.2
+echo
 # user input
 read -p "Enter the first number: " first_number
 read -p "Enter the second number: " second_number
 
-# user input empty
+# user input is empty
 if [ -z "$first_number" ] || [ -z "$second_number" ]
 then
         lines
         if [ -z "$first_number" ]
         then
-                echo -e "${RED}User input --> First number field is empty"
+                echo -e "${RED}User input --> First number field is empty${NF}"
         fi
         if [ -z "$second_number" ]
         then
-                echo -e "${RED}User input --> Second number field is empty"
+                echo -e "${RED}User input --> Second number field is empty${NF}"
         fi
+
 # user input not empty
-# validation check
-# validation passes --  If both numbers are valid, show menu
-# Perform operation based on user choice
-elif [ -n "$first_number" ] && [ -n "$second_number" ]
-then
+# validation check i.e. user input contain only integer values
+# calidation pass --> Display calculator menu
+# perform operation based on user choice
+else
         if ! first_number_check || ! second_number_check
         then
                 lines
                 if ! first_number_check
                 then
-                        echo -e "${RED}First number field must contain only numeric values${NF}"
+                        echo -e "${RED}First number field must contain only integer values${NF}"
                 fi
                 if ! second_number_check
                 then
-                        echo -e "${RED}Second number field must contain only numeric values${NF}"
+                        echo -e "${RED}Second number field must contain only integer values${NF}"
                 fi
-        elif first_number_check && second_number_check
-        then
+        else
                 lines
-                echo "Press 1 for Addition"
-                echo "Press 2 for Subtraction"
-                echo "Press 3 for Multiplication"
-                echo "Press 4 for Power"
-                echo "Press 5 for Quotient"
-                echo "Press 6 for Remainder"
+                echo "Press 1 --> Addition"
+                echo "Press 2 --> Subtraction"
+                echo "Press 3 --> Multiplication"
+                echo "Press 4 --> Power"
+                echo "Press 5 --> Divide (Quotient)"
+                echo "Press 6 --> Divide (Remainder)"
                 read choice
+
                 lines
                 case $choice in
                         1)
-                                add=$(($first_number+$second_number))
-                                echo "First number: $first_number plus Second number: $second_number --> $add"
+                                sum=$(($first_number+$second_number))
+                                echo "First number: $first_number plus Second number: $second_number --> $sum"
                                 ;;
                         2)
-                                sub=$(($first_number-$second_number))
-                                echo "First number: $first_number subtract Second number: $second_number --> $sub"
+                                minus=$(($first_number-$second_number))
+                                echo "First number: $first_number minus Second number: $second_number --> $minus"
                                 ;;
                         3)
                                 multiply=$(($first_number*$second_number))
@@ -86,7 +86,7 @@ then
                                 ;;
                         5)
                                 quotient=$(($first_number/$second_number))
-                                echo "First number: $first_number divide (Quotient) Second number: $second_number --> $quotient"
+                                echo "First number: $first_number divide (quotient) Second number: $second_number --> $quotient"
                                 ;;
                         6)
                                 remainder=$(($first_number%$second_number))
@@ -95,5 +95,8 @@ then
                         *)
                                 echo -e "${RED}Invalid user input${NF}"
                 esac
+
+
         fi
+
 fi
