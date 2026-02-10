@@ -1,68 +1,71 @@
 #!/bin/bash
-# Description : Converts temperatures between Celsius and Fahrenheit
+
+# simple bash script to convert the temp from celsius to fahrenheit and vice versa
 
 function lines {
-        echo "***************************************************************"
+        echo "*****************************************"
 }
 
-#color codes for error messages
-RED='\033[0;31m'
+# color codes for error messages
+RED='\033[1;31m'
 NF='\033[0m'
 
-# Function to validate Celsius input (integer or decimal, positive or negative)
+# function to validate user input
 function celsius_check {
         [[ $celsius =~ ^-?[0-9.]+$ ]]
 }
+function fahrenheit_check {
+        [[ $fahrenheit =~ ^-?[0-9.]+$ ]]
+}
+
+# display message
+echo -e "${RED}From Celsius to Fahrenheit${NF}"
+lines
 # user input
-read -p "Enter the temperature in Celsius: " celsius
+read -p "Enter the temperature in celsius: " celsius
 
 # user input empty
 if [ -z "$celsius" ]
 then
         lines
         echo -e "${RED}User input --> Celsius field is empty${NF}"
-
 # user input not empty
-# validation check 
-# Convert Celsius to Fahrenheit
+# validate user input
+# validation pass, convert the temp
 else
         lines
         if ! celsius_check
         then
-                echo -e "${RED}Celsuis field must contain only numeric values${NF}"
+                echo -e "${RED}Celsius field must contain only numeric values${NF}"
         else
                 celsius_to_fahrenheit=$(bc <<< "scale=2; ($celsius * 9 / 5) + 32")
-                echo "Celsius --> $celsius"
-                echo "Celsius to Fahrenheit --> $celsius_to_fahrenheit"
+                echo "Temp in Celsius --> $celsius"
+                echo "Temp in Fahrenheit --> $celsius_to_fahrenheit"
         fi
 fi
 
-
-echo
-echo
-# Function to validate Fahrenheit input (integer or decimal, positive or negative)
-function fahrenheit_check {
-        [[ $fahrenheit =~ ^-?[0-9.]+$ ]]
-}
-read -p "Enter the temperature in Fahrenheit: " fahrenheit
-
+lines
+# display message
+echo -e "${RED}From Fahrenheit to Celsius${NF}"
+sleep 0.2
+# user input
+read -p "Enter the temperature in fahrenheit: " fahrenheit
 if [ -z "$fahrenheit" ]
 then
         lines
         echo -e "${RED}User input --> Fahrenheit field is empty${NF}"
 
-
 # user input not empty
-# validation check 
-# Convert Fahrenheit to Celsius
+# validate user input
+# validation pass, convert the temp
 else
-        lines
         if ! fahrenheit_check
         then
+                lines
                 echo -e "${RED}Fahrenheit field must contain only numeric values${NF}"
         else
                 fahrenheit_to_celsius=$(bc <<< "scale=2; (5.0 / 9) * ($fahrenheit - 32)")
-                echo "Celsius --> $fahrenheit"
-                echo "Celsius to Fahrenheit --> $fahrenheit_to_celsius"
+                echo "Temp in Fahrenheit --> $fahrenheit"
+                echo "Temp in Fahrenheit --> $fahrenheit_to_celsius"
         fi
 fi
