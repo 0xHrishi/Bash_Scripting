@@ -66,6 +66,6 @@ else
         else
                 fahrenheit_to_celsius=$(bc <<< "scale=2; (5.0 / 9) * ($fahrenheit - 32)")
                 echo "Temp in Fahrenheit --> $fahrenheit"
-                echo "Temp in Fahrenheit --> $fahrenheit_to_celsius"
+                echo "Temp in Celsius --> $fahrenheit_to_celsius"
         fi
 fi
