@@ -1,163 +1,81 @@
 #!/bin/bash
-###############################################################
-# Script Name : Simple Network Host Scanner
-#
-# Description :
-#   - The user enters:
-#         1) Network part (e.g., 192.168.100)
-#         2) First host number
-#         3) Last host number
-#
-#   - The script validates:
-#         • Network input contains only digits and dots,
-#           and does not start with zero.
-#             → Regex used: ^[1-9][0-9.]*$
-#
-#         • First and last host must be ONLY digits.
-#             → Regex used: ^[0-9]+$
-#
-#   - If input is valid, it scans hosts using ping.
-#   - Active hosts are stored temporarily and printed at the end.
-###############################################################
+#   This script performs a simple network ping sweep.
 
-# Prints a separation line for clean output
 function lines {
-        echo "*************************************************************"
+        echo "******************************************************"
 }
-
-# Checks if network part is valid (digits + dots, no leading zero)
+# color codes for error messages
+RED='\033[1;31m'
+NF='\033[0m'
+# function to validate user input
 function network_check {
-        [[ $network =~ ^[1-9][0-9.]*$ ]]
+        [[ $network =~ ^([0-9]{1,3}\.){2}[0-9]{1,3}$ ]]
+}
+function first_host_check {
+        [[ $first_host =~ ^[0-9]{1,3}$ ]]
+}
+function last_host_check {
+        [[ $last_host =~ ^[0-9]{1,3}$ ]]
 }
 
-# Checks if first host number is valid (digits only)
-# Checks if last host number is valid (digits only)
-function first_check {
-        [[ $first =~ ^[0-9]+$ ]]
-}
-function last_check {
-        [[ $last =~ ^[0-9]+$ ]]
-}
+# user input
+read -p "Enter the network part such as 1.1.1: " network
+read -p "Enter the first host: " first_host
+read -p "Enter the last host: " last_host
 
-
-# --------------------------------------------------------------
-# User Input
-# --------------------------------------------------------------
-read -p "Enter the network part, eg 10.10.10: " network
-read -p "Enter the first host: " first
-read -p "Enter the last host: " last
-
-# --------------------------------------------------------------
-# EMPTY FIELD VALIDATION
-# If any of the fields are empty, print which ones are empty.
-# --------------------------------------------------------------
-if [ -z "$network" ] || [ -z "$first" ] || [ -z "$last" ]
+# user input empty
+if [ -z "$network" ] || [ -z "$first_host" ] || [ -z "$last_host" ]
 then
-        if [ -n "$network" ] && [ -z "$first" ] && [ -z "$last" ]
+        lines
+        if [ -z "$network" ]
         then
-                lines
-                echo "User input -- First host field is empty"
-                echo "User input -- Last host field is empty"
-        elif [ -n "$network" ] && [ -n "$first" ] && [ -z "$last" ]
+                echo -e "${RED}User input --> Network field is empty${NF}"
+        fi
+        if [ -z "$first_host" ]
         then
-                lines
-                echo "User input -- Last host field is empty"
-        elif [ -n "$network" ] && [ -z "$first" ] && [ -n "$last" ]
+                echo -e "${RED}User input --> First host is empty${NF}"
+        fi
+        if [ -z "$last_host" ]
         then
-                lines
-                echo "User input -- First host field is empty"
-        elif [ -z "$network" ] && [ -n "$first" ] && [ -n "$last" ]
-        then
-                lines
-                echo "User input -- Network part field is empty"
-        elif [ -z "$network" ] && [ -z "$first" ] && [ -n "$last" ]
-        then
-                lines
-                echo "User input -- Network part field is empty"
-                echo "User input -- First host field is empty"
-        elif [ -z "$network" ] && [ -n "$first" ] && [ -z "$last" ]
-        then
-                lines
-                echo "User input -- Network part field is empty"
-                echo "User input -- Last host field is empty"
-        elif [ -z "$network" ] && [ -z "$first" ] && [ -z "$last" ]
-        then
-                lines
-                echo "User input -- Network part field is empty"
-                echo "User input -- First host field is empty"
-                echo "User input -- Last host field is empty"
+                echo -e "${RED}User input --> Last host is empty${NF}"
         fi
 
-# --------------------------------------------------------------
-# INPUT FORMAT VALIDATION 
-# Valid input -- MAIN HOST SCANNING LOOP
-# Store only the IP address extracted from ping output
-# DISPLAY FINAL ACTIVE HOSTS
-# --------------------------------------------------------------
-elif [ -n "$network" ] && [ -n "$first" ] && [ -n "$last" ]
-then
-        if ! network_check || ! first_check || ! last_check
+# user input not empty
+# validate user input
+# Ensure last host is not greater than 255
+# Loop through host range
+# If ping successful, print active host IP
+else
+        if ! network_check || ! first_host_check || ! last_host_check
         then
-                if network_check && ! first_check && ! last_check
+                lines
+                if ! network_check
                 then
-                        lines
-                        echo "User input -- First host field has invalid entry"
-                        echo "User input -- Last host field has invalid entry"
-                elif network_check && first_check && ! last_check
-                then
-                        lines
-                        echo "User input -- Last host field has invalid entry"
-                elif network_check && ! first_check && last_check
-                then
-                        lines
-                        echo "User input -- First host field has invalid entry"
-                elif ! network_check && first_check && last_check
-                then
-                        lines
-                        echo "User input -- Network part has invalid entry"
-                elif ! network_check && ! first_check && last_check
-                then
-                        lines
-                        echo "User input -- Network part has invalid entry"
-                        echo "User input -- First host field has invalid entry"
-                elif ! network_check && first_check && ! last_check
-                then
-                        lines
-                        echo "User input -- Network part has invalid entry"
-                        echo "User input -- Last host field has invalid entry"
-                elif ! network_check && ! first_check && ! last_check
-                then
-                        lines
-                        echo "User input -- Network part has invalid entry"
-                        echo "User input -- First host field has invalid entry"
-                        echo "User input -- Last host field has invalid entry"
+                        echo -e "${RED}Kindly check the network user input${NF}"
                 fi
-        elif network_check && first_check && last_check
-        then
-                for host_alive in $(seq $first $last)
-                do
-                        ping -c 2 $network.$host_alive &>/dev/null
-
-                        if [ $? -eq 0 ]
-                        then
-                                lines
-                                echo "Active -- $network.$host_alive"
-                                ping -c 2 $network.$host_alive | grep -i "64" | cut -d " " -f4 | tr -d ":" >>./host_alive &
-                                sleep 0.1
-                        else
-                                lines
-                                echo "Not active -- $network.$host_alive"
-                                sleep 0.1
-                                continue
-                        fi
-                done
+                if ! first_host_check
+                then
+                        echo -e "${RED}Kindly check the first host user input${NF}"
+                fi
+                if ! last_host_check
+                then
+                        echo -e "${RED}Kindly check the last host user input${NF}"
+                fi
+        else
                 lines
-                cat ./host_alive | sort | uniq
+                if [ $last_host -gt 255 ]
+                then
+                        echo -e "${RED}last host cannot be greater than 255${NF}"
+                else
+                        for network_sweep in $(seq $first_host $last_host)
+                        do
+                                ping -c 1 "$network.$network_sweep" &>/dev/null &
+
+                                if [ $? -eq 0 ]
+                                then
+                                        ping -c 1 "$network.$network_sweep" | grep -i "64 bytes" | cut -d " " -f4 | tr -d ":" &
+                                fi
+                        done
+                fi
         fi
-
 fi
-
-# --------------------------------------------------------------
-# CLEANUP
-# --------------------------------------------------------------
-rm -rf ./host_alive
